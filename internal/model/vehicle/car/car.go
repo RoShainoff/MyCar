@@ -1,6 +1,9 @@
 package car
 
-import "MyCar/internal/model/vehicle"
+import (
+	"MyCar/internal/model/vehicle"
+	"fmt"
+)
 
 type Car struct {
 	vehicle.Vehicle
@@ -34,7 +37,7 @@ func (c *Car) SetDriveType(driveTypeKind DriveTypeKind) {
 	c.driveType = driveTypeKind.GetDriveType()
 }
 
-func (c *Car) BodyType() BodyType {
+func (c *Car) GetBodyType() BodyType {
 	return c.bodyType
 }
 
@@ -48,4 +51,8 @@ func (c *Car) GetTransmissionType() TransmissionType {
 
 func (c *Car) SetTransmissionType(transmissionTypeKind TransmissionTypeKind) {
 	c.transmissionType = transmissionTypeKind.GetTransmissionType()
+}
+
+func (c *Car) GetGeneralInfo() string {
+	return fmt.Sprintf("This %s %s was made in %d and has VIN %s.", c.GetBodyType(), c.GetBrand(), c.GetYear(), c.GetVin())
 }

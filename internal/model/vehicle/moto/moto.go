@@ -1,6 +1,9 @@
 package moto
 
-import "MyCar/internal/model/vehicle"
+import (
+	"MyCar/internal/model/vehicle"
+	"fmt"
+)
 
 type Moto struct {
 	vehicle.Vehicle
@@ -22,6 +25,14 @@ func (m *Moto) GetCategory() Category {
 	return m.category
 }
 
+func (m *Moto) GetCategoryName() string {
+	return m.category.name
+}
+
 func (m *Moto) GetBrand() Brand {
 	return m.brand
+}
+
+func (m *Moto) GetGeneralInfo() string {
+	return fmt.Sprintf("This %s was made in %d and has VIN %s. Categorised as a %s", m.GetBrand(), m.GetYear(), m.GetVin(), m.GetCategoryName())
 }

@@ -1,5 +1,15 @@
 package vehicle
 
+import (
+	"MyCar/internal/model"
+	"fmt"
+	"time"
+)
+
+type GenericVehicle interface {
+	GetGeneralInfo() string
+}
+
 type Vehicle struct {
 	id          int
 	ownerId     int
@@ -8,6 +18,7 @@ type Vehicle struct {
 	year        int
 	plate       string
 	vin         string
+	auditFields model.AuditFields
 }
 
 func (v *Vehicle) GetId() int {
@@ -60,6 +71,20 @@ func (v *Vehicle) GetVin() string {
 
 func (v *Vehicle) SetVin(vin string) {
 	v.vin = vin
+}
+
+func (v *Vehicle) GetCreatedBy() string        { return v.auditFields.GetCreatedBy() }
+func (v *Vehicle) GetCreatedAtUtc() time.Time  { return v.auditFields.GetCreatedAtUtc() }
+func (v *Vehicle) GetModifiedBy() string       { return v.auditFields.GetModifiedBy() }
+func (v *Vehicle) GetModifiedAtUtc() time.Time { return v.auditFields.GetModifiedAtUtc() }
+
+func (v *Vehicle) SetCreatedBy(user string)     { v.auditFields.SetCreatedBy(user) }
+func (v *Vehicle) SetCreatedAtUtc(t time.Time)  { v.auditFields.SetCreatedAtUtc(t) }
+func (v *Vehicle) SetModifiedBy(user string)    { v.auditFields.SetModifiedBy(user) }
+func (v *Vehicle) SetModifiedAtUtc(t time.Time) { v.auditFields.SetModifiedAtUtc(t) }
+
+func (v *Vehicle) GetGeneralInfo() string {
+	return fmt.Sprintf("This vehicle was made in %d and has VIN %s", v.GetYear(), v.GetVin())
 }
 
 func NewVehicle(id, ownerID int, fuelType FuelType, vehicleType Type, year int, plate string) (*Vehicle, error) {

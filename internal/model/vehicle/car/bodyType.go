@@ -84,8 +84,8 @@ var bodyTypeNames = map[BodyTypeKind]string{
 	Cabriolet:      "Кабриолет",
 }
 
-func (b BodyTypeKind) String() string {
-	if name, ok := bodyTypeNames[b]; ok {
+func (b BodyType) String() string {
+	if name, ok := bodyTypeNames[b.id]; ok {
 		return name
 	}
 	return "Неизвестно"
