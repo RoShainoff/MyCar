@@ -2,11 +2,12 @@ package expense
 
 import (
 	"fmt"
+	"github.com/google/uuid"
 	"time"
 )
 
 type Expense struct {
-	id           int
+	id           uuid.UUID
 	vehicleId    int
 	category     Category
 	amount       float64
@@ -16,7 +17,7 @@ type Expense struct {
 	note         string
 }
 
-func NewExpense(id, vehicleId int, category Category, amount float64, currency string, exchangeRate float64, date time.Time, note string) (*Expense, error) {
+func NewExpense(id uuid.UUID, vehicleId int, category Category, amount float64, currency string, exchangeRate float64, date time.Time, note string) (*Expense, error) {
 	if !isValidCategory(category) {
 		return nil, fmt.Errorf("invalid expense category: %s", category)
 	}
@@ -35,7 +36,7 @@ func NewExpense(id, vehicleId int, category Category, amount float64, currency s
 	}, nil
 }
 
-func (e *Expense) GetID() int {
+func (e *Expense) GetID() uuid.UUID {
 	return e.id
 }
 

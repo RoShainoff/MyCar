@@ -3,6 +3,7 @@ package car
 import (
 	"MyCar/internal/model/vehicle"
 	"fmt"
+	"github.com/google/uuid"
 )
 
 type Car struct {
@@ -13,7 +14,7 @@ type Car struct {
 	TransmissionType TransmissionType
 }
 
-func NewCar(id int, ownerID int, fuelType vehicle.FuelType, brand Brand, year int, plate string, driveType DriveTypeKind, bodyTypeKind BodyTypeKind, transmissionTypeKind TransmissionTypeKind) *Car {
+func NewCar(id uuid.UUID, ownerID int, fuelType vehicle.FuelType, brand Brand, year int, plate string, driveType DriveTypeKind, bodyTypeKind BodyTypeKind, transmissionTypeKind TransmissionTypeKind) *Car {
 	newVehicle, _ := vehicle.NewVehicle(id, ownerID, fuelType, vehicle.Car, year, plate)
 
 	return &Car{

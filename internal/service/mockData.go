@@ -6,11 +6,12 @@ import (
 	"MyCar/internal/model/vehicle/car"
 	"MyCar/internal/model/vehicle/moto"
 	"fmt"
+	"github.com/google/uuid"
 	"time"
 )
 
 func NewVehicle(logInfo bool) *vehicle.Vehicle {
-	newVehicle, _ := vehicle.NewVehicle(1, 1, vehicle.Diesel, vehicle.Car, 1998, "0064EE-5")
+	newVehicle, _ := vehicle.NewVehicle(uuid.New(), 1, vehicle.Diesel, vehicle.Car, 1998, "0064EE-5")
 
 	if logInfo {
 		fmt.Println("Новое ТС успешно создана:")
@@ -25,7 +26,7 @@ func NewVehicle(logInfo bool) *vehicle.Vehicle {
 }
 
 func NewCar(logInfo bool) *car.Car {
-	newCar := car.NewCar(1, 1, vehicle.Diesel, car.AlfaRomeo, 1998, "0064EE-5", car.FWD, car.Sedan, car.TransmissionTypeManual)
+	newCar := car.NewCar(uuid.New(), 1, vehicle.Diesel, car.AlfaRomeo, 1998, "0064EE-5", car.FWD, car.Sedan, car.TransmissionTypeManual)
 
 	if logInfo {
 		fmt.Println("Новая машина успешно создана:")
@@ -41,7 +42,7 @@ func NewCar(logInfo bool) *car.Car {
 }
 
 func NewMoto(logInfo bool) *moto.Moto {
-	newMoto := moto.NewMoto(1, 1, vehicle.Diesel, moto.Minsk, 1971, "МАИ 1974", moto.Classic)
+	newMoto := moto.NewMoto(uuid.New(), 1, vehicle.Diesel, moto.Minsk, 1971, "МАИ 1974", moto.Classic)
 
 	if logInfo {
 		fmt.Println("Новый мотоцикл успешно создан:")
@@ -57,7 +58,7 @@ func NewMoto(logInfo bool) *moto.Moto {
 }
 
 func NewExpense(logInfo bool) *expense.Expense {
-	newExpense, _ := expense.NewExpense(1, 101, expense.Fuel, 2500.0, "RUB", 1.0, time.Now(), "Заправка на трассе")
+	newExpense, _ := expense.NewExpense(uuid.New(), 101, expense.Fuel, 2500.0, "RUB", 1.0, time.Now(), "Заправка на трассе")
 
 	if logInfo {
 		fmt.Println("Новая трата успешно создана:")

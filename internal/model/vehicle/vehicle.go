@@ -3,6 +3,7 @@ package vehicle
 import (
 	"MyCar/internal/model"
 	"fmt"
+	"github.com/google/uuid"
 	"time"
 )
 
@@ -11,7 +12,7 @@ type GenericVehicle interface {
 }
 
 type Vehicle struct {
-	Id          int
+	Id          uuid.UUID
 	OwnerId     int
 	FuelType    FuelType
 	VehicleType Type
@@ -21,13 +22,9 @@ type Vehicle struct {
 	AuditFields model.AuditFields
 }
 
-func (v *Vehicle) GetId() int {
-	return v.Id
-}
+func (v *Vehicle) GetId() uuid.UUID { return v.Id }
 
-func (v *Vehicle) SetId(id int) {
-	v.Id = id
-}
+func (v *Vehicle) SetId(id uuid.UUID) { v.Id = id }
 
 func (v *Vehicle) GetOwnerId() int {
 	return v.OwnerId
@@ -87,7 +84,7 @@ func (v *Vehicle) GetGeneralInfo() string {
 	return fmt.Sprintf("This vehicle was made in %d and has VIN %s", v.GetYear(), v.GetVin())
 }
 
-func NewVehicle(id, ownerID int, fuelType FuelType, vehicleType Type, year int, plate string) (*Vehicle, error) {
+func NewVehicle(id uuid.UUID, ownerID int, fuelType FuelType, vehicleType Type, year int, plate string) (*Vehicle, error) {
 	return &Vehicle{
 		Id:          id,
 		OwnerId:     ownerID,
