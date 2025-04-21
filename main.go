@@ -2,7 +2,9 @@ package main
 
 import (
 	"MyCar/internal/model/vehicle"
+	"MyCar/internal/repository"
 	"MyCar/internal/service"
+	"context"
 	"fmt"
 	"os"
 	"os/signal"
@@ -10,19 +12,20 @@ import (
 )
 
 func main() {
-	stop := make(chan struct{})
-	vehicleChan := make(chan vehicle.GenericVehicle)
-
-	service.GenerateAndSendVehicle(vehicleChan, stop)
-	service.ReceiveAndStoreVehicle(vehicleChan, stop)
-	service.MonitorAndLog(stop)
-
 	fmt.Println("System running... Press Ctrl+C to stop")
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	<-c
-	fmt.Println("Stopping...")
+	repository.LoadAll()
 
-	close(stop)
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+
+	vehicleChan := make(chan vehicle.GenericVehicle, 10)
+
+	service.GenerateAndSendVehicle(ctx, vehicleChan)
+	service.ReceiveAndStoreVehicle(ctx, vehicleChan)
+	service.MonitorAndLog(ctx)
+
+	<-ctx.Done()
+	fmt.Println("\nShutting down gracefully...")
+
 	time.Sleep(1 * time.Second)
 }

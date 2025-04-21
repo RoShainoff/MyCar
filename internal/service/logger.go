@@ -1,50 +1,56 @@
 package service
 
 import (
-	"MyCar/internal/repository"
+	"context"
 	"fmt"
 	"time"
+
+	"MyCar/internal/repository"
 )
 
-func MonitorAndLog(stop <-chan struct{}) {
+func MonitorAndLog(ctx context.Context) {
 	go func() {
-		var lastVehicleCount, lastCarCount, lastMotoCount int
+		// Получаем текущие размеры — считаем их уже "залогированными"
+		lastVehicleCount := repository.GetVehiclesCount()
+		lastCarCount := repository.GetCarCount()
+		lastMotoCount := repository.GetMotoCount()
 
-		ticker := time.NewTicker(200 * time.Millisecond)
+		ticker := time.NewTicker(5 * time.Second)
 		defer ticker.Stop()
 
 		for {
 			select {
 			case <-ticker.C:
-				vehicles := repository.GetVehicles()
-				cars := repository.GetCars()
-				motos := repository.GetMotos()
+				currentVehicles := repository.GetVehicles()
+				currentCars := repository.GetCars()
+				currentMotos := repository.GetMotos()
 
-				if len(vehicles) > lastVehicleCount {
-					fmt.Println("New vehicles:")
-					for _, v := range vehicles[lastVehicleCount:] {
+				if len(currentVehicles) > lastVehicleCount {
+					fmt.Println("\n[LOG] New vehicles:")
+					for _, v := range currentVehicles[lastVehicleCount:] {
 						fmt.Printf("- %s\n", v.GetGeneralInfo())
 					}
-					lastVehicleCount = len(vehicles)
+					lastVehicleCount = len(currentVehicles)
 				}
 
-				if len(cars) > lastCarCount {
-					fmt.Println("New cars:")
-					for _, c := range cars[lastCarCount:] {
+				if len(currentCars) > lastCarCount {
+					fmt.Println("\n[LOG] New cars:")
+					for _, c := range currentCars[lastCarCount:] {
 						fmt.Printf("- %s\n", c.GetGeneralInfo())
 					}
-					lastCarCount = len(cars)
+					lastCarCount = len(currentCars)
 				}
 
-				if len(motos) > lastMotoCount {
-					fmt.Println("New motos:")
-					for _, m := range motos[lastMotoCount:] {
+				if len(currentMotos) > lastMotoCount {
+					fmt.Println("\n[LOG] New motos:")
+					for _, m := range currentMotos[lastMotoCount:] {
 						fmt.Printf("- %s\n", m.GetGeneralInfo())
 					}
-					lastMotoCount = len(motos)
+					lastMotoCount = len(currentMotos)
 				}
 
-			case <-stop:
+			case <-ctx.Done():
+				fmt.Println("[LOG] Monitor stopped.")
 				return
 			}
 		}

@@ -11,77 +11,77 @@ type GenericVehicle interface {
 }
 
 type Vehicle struct {
-	id          int
-	ownerId     int
-	fuelType    FuelType
-	vehicleType Type
-	year        int
-	plate       string
-	vin         string
-	auditFields model.AuditFields
+	Id          int
+	OwnerId     int
+	FuelType    FuelType
+	VehicleType Type
+	Year        int
+	Plate       string
+	Vin         string
+	AuditFields model.AuditFields
 }
 
 func (v *Vehicle) GetId() int {
-	return v.id
+	return v.Id
 }
 
 func (v *Vehicle) SetId(id int) {
-	v.id = id
+	v.Id = id
 }
 
 func (v *Vehicle) GetOwnerId() int {
-	return v.ownerId
+	return v.OwnerId
 }
 
 func (v *Vehicle) SetOwnerID(ownerId int) {
-	v.ownerId = ownerId
+	v.OwnerId = ownerId
 }
 
 func (v *Vehicle) GetFuelType() FuelType {
-	return v.fuelType
+	return v.FuelType
 }
 
 func (v *Vehicle) SetFuelType(fuelType FuelType) {
-	v.fuelType = fuelType
+	v.FuelType = fuelType
 }
 
-func (v *Vehicle) VehicleType() Type {
-	return v.vehicleType
+func (v *Vehicle) GetVehicleType() Type {
+	return v.VehicleType
 }
 
 func (v *Vehicle) SetVehicleType(vehicleType Type) {
-	v.vehicleType = vehicleType
+	v.VehicleType = vehicleType
 }
 
 func (v *Vehicle) GetYear() int {
-	return v.year
+	return v.Year
 }
 
 func (v *Vehicle) SetYear(year int) {
-	v.year = year
+	v.Year = year
 }
 
 func (v *Vehicle) GetPlate() string {
-	return v.plate
+	return v.Plate
 }
 
 func (v *Vehicle) GetVin() string {
-	return v.vin
+	return v.Vin
 }
 
 func (v *Vehicle) SetVin(vin string) {
-	v.vin = vin
+	v.Vin = vin
 }
 
-func (v *Vehicle) GetCreatedBy() string        { return v.auditFields.GetCreatedBy() }
-func (v *Vehicle) GetCreatedAtUtc() time.Time  { return v.auditFields.GetCreatedAtUtc() }
-func (v *Vehicle) GetModifiedBy() string       { return v.auditFields.GetModifiedBy() }
-func (v *Vehicle) GetModifiedAtUtc() time.Time { return v.auditFields.GetModifiedAtUtc() }
+func (v *Vehicle) GetCreatedBy() string        { return v.AuditFields.GetCreatedBy() }
+func (v *Vehicle) GetCreatedAtUtc() time.Time  { return v.AuditFields.GetCreatedAtUtc() }
+func (v *Vehicle) GetModifiedBy() string       { return v.AuditFields.GetModifiedBy() }
+func (v *Vehicle) GetModifiedAtUtc() time.Time { return v.AuditFields.GetModifiedAtUtc() }
 
-func (v *Vehicle) SetCreatedBy(user string)     { v.auditFields.SetCreatedBy(user) }
-func (v *Vehicle) SetCreatedAtUtc(t time.Time)  { v.auditFields.SetCreatedAtUtc(t) }
-func (v *Vehicle) SetModifiedBy(user string)    { v.auditFields.SetModifiedBy(user) }
-func (v *Vehicle) SetModifiedAtUtc(t time.Time) { v.auditFields.SetModifiedAtUtc(t) }
+func (v *Vehicle) SetCreatedBy(user string)     { v.AuditFields.SetCreatedBy(user) }
+func (v *Vehicle) SetCreatedAtUtc(t time.Time)  { v.AuditFields.SetCreatedAtUtc(t) }
+func (v *Vehicle) SetModifiedBy(user string)    { v.AuditFields.SetModifiedBy(user) }
+func (v *Vehicle) SetModifiedAtUtc(t time.Time) { v.AuditFields.SetModifiedAtUtc(t) }
 
 func (v *Vehicle) GetGeneralInfo() string {
 	return fmt.Sprintf("This vehicle was made in %d and has VIN %s", v.GetYear(), v.GetVin())
@@ -89,11 +89,11 @@ func (v *Vehicle) GetGeneralInfo() string {
 
 func NewVehicle(id, ownerID int, fuelType FuelType, vehicleType Type, year int, plate string) (*Vehicle, error) {
 	return &Vehicle{
-		id:          id,
-		ownerId:     ownerID,
-		fuelType:    fuelType,
-		vehicleType: vehicleType,
-		year:        year,
-		plate:       plate,
+		Id:          id,
+		OwnerId:     ownerID,
+		FuelType:    fuelType,
+		VehicleType: vehicleType,
+		Year:        year,
+		Plate:       plate,
 	}, nil
 }
