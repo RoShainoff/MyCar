@@ -7,8 +7,8 @@ import (
 
 type Moto struct {
 	vehicle.Vehicle
-	brand    Brand
-	category Category
+	Brand    Brand
+	Category Category
 }
 
 func NewMoto(id, ownerID int, fuelType vehicle.FuelType, brand Brand, year int, plate string, category CategoryKind) *Moto {
@@ -22,15 +22,15 @@ func NewMoto(id, ownerID int, fuelType vehicle.FuelType, brand Brand, year int, 
 }
 
 func (m *Moto) GetCategory() Category {
-	return m.category
+	return m.Category
 }
 
 func (m *Moto) GetCategoryName() string {
-	return m.category.name
+	return m.Category.name
 }
 
 func (m *Moto) GetBrand() Brand {
-	return m.brand
+	return m.Brand
 }
 
 func (m *Moto) GetGeneralInfo() string {

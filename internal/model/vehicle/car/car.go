@@ -7,10 +7,10 @@ import (
 
 type Car struct {
 	vehicle.Vehicle
-	brand            Brand
-	driveType        DriveType
-	bodyType         BodyType
-	transmissionType TransmissionType
+	Brand            Brand
+	DriveType        DriveType
+	BodyType         BodyType
+	TransmissionType TransmissionType
 }
 
 func NewCar(id int, ownerID int, fuelType vehicle.FuelType, brand Brand, year int, plate string, driveType DriveTypeKind, bodyTypeKind BodyTypeKind, transmissionTypeKind TransmissionTypeKind) *Car {
@@ -26,31 +26,31 @@ func NewCar(id int, ownerID int, fuelType vehicle.FuelType, brand Brand, year in
 }
 
 func (c *Car) GetBrand() Brand {
-	return c.brand
+	return c.Brand
 }
 
 func (c *Car) GetDriveType() DriveType {
-	return c.driveType
+	return c.DriveType
 }
 
 func (c *Car) SetDriveType(driveTypeKind DriveTypeKind) {
-	c.driveType = driveTypeKind.GetDriveType()
+	c.DriveType = driveTypeKind.GetDriveType()
 }
 
 func (c *Car) GetBodyType() BodyType {
-	return c.bodyType
+	return c.BodyType
 }
 
 func (c *Car) SetBodyType(bodyTypeKind BodyTypeKind) {
-	c.bodyType = bodyTypeKind.GetBodyType()
+	c.BodyType = bodyTypeKind.GetBodyType()
 }
 
 func (c *Car) GetTransmissionType() TransmissionType {
-	return c.transmissionType
+	return c.TransmissionType
 }
 
 func (c *Car) SetTransmissionType(transmissionTypeKind TransmissionTypeKind) {
-	c.transmissionType = transmissionTypeKind.GetTransmissionType()
+	c.TransmissionType = transmissionTypeKind.GetTransmissionType()
 }
 
 func (c *Car) GetGeneralInfo() string {

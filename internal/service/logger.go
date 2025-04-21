@@ -1,51 +1,31 @@
 package service
 
 import (
-	"MyCar/internal/repository"
+	"MyCar/internal/model/vehicle"
+	"MyCar/internal/model/vehicle/car"
+	"MyCar/internal/model/vehicle/moto"
+	"context"
 	"fmt"
-	"time"
 )
 
-func MonitorAndLog(stop <-chan struct{}) {
+func MonitorAndLog(ctx context.Context, events <-chan vehicle.GenericVehicle) {
 	go func() {
-		var lastVehicleCount, lastCarCount, lastMotoCount int
-
-		ticker := time.NewTicker(200 * time.Millisecond)
-		defer ticker.Stop()
-
 		for {
 			select {
-			case <-ticker.C:
-				vehicles := repository.GetVehicles()
-				cars := repository.GetCars()
-				motos := repository.GetMotos()
-
-				if len(vehicles) > lastVehicleCount {
-					fmt.Println("New vehicles:")
-					for _, v := range vehicles[lastVehicleCount:] {
-						fmt.Printf("- %s\n", v.GetGeneralInfo())
-					}
-					lastVehicleCount = len(vehicles)
-				}
-
-				if len(cars) > lastCarCount {
-					fmt.Println("New cars:")
-					for _, c := range cars[lastCarCount:] {
-						fmt.Printf("- %s\n", c.GetGeneralInfo())
-					}
-					lastCarCount = len(cars)
-				}
-
-				if len(motos) > lastMotoCount {
-					fmt.Println("New motos:")
-					for _, m := range motos[lastMotoCount:] {
-						fmt.Printf("- %s\n", m.GetGeneralInfo())
-					}
-					lastMotoCount = len(motos)
-				}
-
-			case <-stop:
+			case <-ctx.Done():
+				fmt.Println("[LOG] Monitor stopped.")
 				return
+			case v := <-events:
+				switch v := v.(type) {
+				case *vehicle.Vehicle:
+					fmt.Printf("[LOG] New vehicle: %s\n", v.GetGeneralInfo())
+				case *car.Car:
+					fmt.Printf("[LOG] New car: %s\n", v.GetGeneralInfo())
+				case *moto.Moto:
+					fmt.Printf("[LOG] New moto: %s\n", v.GetGeneralInfo())
+				default:
+					fmt.Println("Unknown vehicle type")
+				}
 			}
 		}
 	}()

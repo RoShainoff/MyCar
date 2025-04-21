@@ -15,18 +15,18 @@ type Auditable interface {
 }
 
 type AuditFields struct {
-	createdBy     string
-	createdAtUtc  time.Time
-	modifiedBy    string
-	modifiedAtUtc time.Time
+	CreatedBy     string
+	CreatedAtUtc  time.Time
+	ModifiedBy    string
+	ModifiedAtUtc time.Time
 }
 
-func (a *AuditFields) GetCreatedBy() string        { return a.createdBy }
-func (a *AuditFields) GetCreatedAtUtc() time.Time  { return a.createdAtUtc }
-func (a *AuditFields) GetModifiedBy() string       { return a.modifiedBy }
-func (a *AuditFields) GetModifiedAtUtc() time.Time { return a.modifiedAtUtc }
+func (a *AuditFields) GetCreatedBy() string        { return a.CreatedBy }
+func (a *AuditFields) GetCreatedAtUtc() time.Time  { return a.CreatedAtUtc }
+func (a *AuditFields) GetModifiedBy() string       { return a.ModifiedBy }
+func (a *AuditFields) GetModifiedAtUtc() time.Time { return a.ModifiedAtUtc }
 
-func (a *AuditFields) SetCreatedBy(user string)     { a.createdBy = user }
-func (a *AuditFields) SetCreatedAtUtc(t time.Time)  { a.createdAtUtc = t }
-func (a *AuditFields) SetModifiedBy(user string)    { a.modifiedBy = user }
-func (a *AuditFields) SetModifiedAtUtc(t time.Time) { a.modifiedAtUtc = t }
+func (a *AuditFields) SetCreatedBy(user string)     { a.CreatedBy = user }
+func (a *AuditFields) SetCreatedAtUtc(t time.Time)  { a.CreatedAtUtc = t }
+func (a *AuditFields) SetModifiedBy(user string)    { a.ModifiedBy = user }
+func (a *AuditFields) SetModifiedAtUtc(t time.Time) { a.ModifiedAtUtc = t }

@@ -2,30 +2,34 @@ package service
 
 import (
 	"MyCar/internal/model/vehicle"
+	"context"
+	"fmt"
 	"math/rand"
 	"time"
 )
 
-func GenerateAndSendVehicle(ch chan<- vehicle.GenericVehicle, stop <-chan struct{}) {
+func GenerateAndSendVehicle(ctx context.Context, ch chan vehicle.GenericVehicle) {
 	go func() {
-		ticker := time.NewTicker(500 * time.Millisecond)
-		defer ticker.Stop()
-
 		for {
 			select {
-			case <-ticker.C:
+			case <-ctx.Done():
+				fmt.Println("[GEN] Generator stopped.")
+				return
+			default:
 				var v vehicle.GenericVehicle
 				r := rand.Intn(3)
 				if r == 0 {
 					v = NewVehicle(false)
 				} else if r == 1 {
 					v = NewCar(false)
-				} else if r == 2 {
+				} else {
 					v = NewMoto(false)
 				}
+
 				ch <- v
-			case <-stop:
-				return
+				fmt.Println("[GEN] Sent to channel:", v.GetGeneralInfo())
+
+				time.Sleep(1 * time.Second)
 			}
 		}
 	}()
