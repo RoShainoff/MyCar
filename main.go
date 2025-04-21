@@ -18,11 +18,12 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
-	vehicleChan := make(chan vehicle.GenericVehicle, 10)
+	vehicleChan := make(chan vehicle.GenericVehicle)
+	eventsChan := make(chan vehicle.GenericVehicle)
 
 	service.GenerateAndSendVehicle(ctx, vehicleChan)
-	service.ReceiveAndStoreVehicle(ctx, vehicleChan)
-	service.MonitorAndLog(ctx)
+	service.ReceiveAndStoreVehicle(ctx, vehicleChan, eventsChan)
+	service.MonitorAndLog(ctx, eventsChan)
 
 	<-ctx.Done()
 	fmt.Println("\nShutting down gracefully...")

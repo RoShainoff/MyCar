@@ -72,42 +72,6 @@ func StoreGenericVehicle(v vehicle.GenericVehicle) {
 	}
 }
 
-func GetVehicles() []*vehicle.Vehicle {
-	vehiclesMu.RLock()
-	defer vehiclesMu.RUnlock()
-	return append([]*vehicle.Vehicle(nil), vehicles...)
-}
-
-func GetCars() []*car.Car {
-	carsMu.RLock()
-	defer carsMu.RUnlock()
-	return append([]*car.Car(nil), cars...)
-}
-
-func GetMotos() []*moto.Moto {
-	motosMu.RLock()
-	defer motosMu.RUnlock()
-	return append([]*moto.Moto(nil), motos...)
-}
-
-func GetVehiclesCount() int {
-	vehiclesMu.RLock()
-	defer vehiclesMu.RUnlock()
-	return len(vehicles)
-}
-
-func GetCarCount() int {
-	carsMu.RLock()
-	defer carsMu.RUnlock()
-	return len(cars)
-}
-
-func GetMotoCount() int {
-	motosMu.RLock()
-	defer motosMu.RUnlock()
-	return len(motos)
-}
-
 // ------------------ SAVE/LOAD JSON ------------------
 
 func appendToJSON(filename string, source any, mu *sync.RWMutex) {

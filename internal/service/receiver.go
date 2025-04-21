@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func ReceiveAndStoreVehicle(ctx context.Context, ch chan vehicle.GenericVehicle) {
+func ReceiveAndStoreVehicle(ctx context.Context, ch <-chan vehicle.GenericVehicle, events chan<- vehicle.GenericVehicle) {
 	go func() {
 		for {
 			select {
@@ -15,6 +15,8 @@ func ReceiveAndStoreVehicle(ctx context.Context, ch chan vehicle.GenericVehicle)
 				fmt.Printf("[RECV] Received vehicle: %s\n", v.GetGeneralInfo())
 
 				repository.StoreGenericVehicle(v)
+
+				events <- v
 			case <-ctx.Done():
 				fmt.Println("[RECV] Receiver stopped.")
 				return
