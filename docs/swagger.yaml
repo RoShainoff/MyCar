@@ -1,0 +1,1980 @@
+definitions:
+  car.BodyType:
+    type: object
+  car.BodyTypeKind:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    type: integer
+    x-enum-varnames:
+    - BodyStyleNone
+    - Sedan
+    - Hatchback
+    - Hatchback3Door
+    - Hatchback5Door
+    - Liftback
+    - SUV
+    - SUV3Door
+    - SUV5Door
+    - Wagon
+    - Coupe
+    - Minivan
+    - Pickup
+    - Limousine
+    - Van
+    - Cabriolet
+  car.Brand:
+    enum:
+    - Abarth
+    - AC
+    - Acura
+    - Adler
+    - Aito
+    - Aiways
+    - Aixam
+    - Alfa Romeo
+    - Alpina
+    - Alpine
+    - Ambertruck
+    - AMC
+    - Arcfox
+    - Aro
+    - Asia
+    - Aston Martin
+    - Aurus
+    - Austin
+    - Autobianchi
+    - Avatr
+    - BAIC
+    - Bajaj
+    - Baltijas Dzips
+    - Baojun
+    - BAW
+    - Belgee
+    - Bentley
+    - Bestune
+    - Borgward
+    - Brilliance
+    - Bugatti
+    - Buick
+    - BYD
+    - Cadillac
+    - Chana
+    - Changan
+    - Changfeng
+    - Changhe
+    - Chevrolet
+    - Chrysler
+    - Ciimo (Dongfeng-Honda)
+    - Citroen
+    - Coda
+    - Cupra
+    - Dacia
+    - Dadi
+    - Daewoo
+    - Daihatsu
+    - Daimler
+    - Datsun
+    - Dayun
+    - Delage
+    - Denza
+    - Derways
+    - Dodge
+    - Dongfeng
+    - Doninvest
+    - Donkervoort
+    - DS
+    - DW Hower
+    - Eagle
+    - Enovate (Enoreve)
+    - Everus
+    - Evolute
+    - Excalibur
+    - Exeed
+    - Facel Vega
+    - FAW
+    - Ferrari
+    - Fiat
+    - Fisker
+    - Forthing
+    - Foton
+    - FSO
+    - FSR
+    - GAC
+    - GAC Aion
+    - GAC Trumpchi
+    - Genesis
+    - Geo
+    - GMC
+    - Great Wall
+    - Hafei
+    - Haima
+    - Hanteng
+    - Haval
+    - Hawtai
+    - Hennessey
+    - HiPhi
+    - Honda
+    - Hongqi
+    - Hozon
+    - Hudson
+    - Hummer
+    - iCar
+    - IM Motors (Zhiji)
+    - Ineos
+    - Infiniti
+    - Innocenti
+    - International Harvester
+    - Iran Khodro
+    - Isuzu
+    - JAC
+    - Jaecoo
+    - Jaguar
+    - Jeep
+    - Jetour
+    - Jetta
+    - Jidu
+    - Jinbei
+    - JMC
+    - Kaiyi
+    - Kawei
+    - KGM
+    - Knewstar
+    - Koenigsegg
+    - KTM AG
+    - Lamborghini
+    - Lancia
+    - Land Rover
+    - Landwind
+    - Leapmotor
+    - LEVC
+    - Lexus
+    - Liebao Motor
+    - Lifan
+    - Lincoln
+    - Lingxi
+    - Livan
+    - LiXiang
+    - Lotus
+    - Lucid
+    - Luxeed
+    - Luxgen
+    - Lynk & Co
+    - M-Hero
+    - Maextro
+    - Mahindra
+    - Maple
+    - Marussia
+    - Maserati
+    - Maxus
+    - Maybach
+    - Mazda
+    - McLaren
+    - Mercury
+    - Metrocab
+    - MG
+    - Mini
+    - Mitsubishi
+    - Mitsuoka
+    - Morgan
+    - Nevo
+    - Nio
+    - Oldsmobile
+    - Omoda
+    - Opel
+    - Ora
+    - Oshan
+    - Oting
+    - Packard
+    - Pagani
+    - Peugeot
+    - Plymouth
+    - Polar Stone (Jishi)
+    - Polestar
+    - Pontiac
+    - Porsche
+    - Proton
+    - Puch
+    - Qingling
+    - Ram
+    - Ravon
+    - Reliant
+    - Renault
+    - Renault Samsung
+    - Rising Auto
+    - Rivian
+    - Roewe
+    - Rolls-Royce
+    - Rover
+    - Rox
+    - Saab
+    - Santana
+    - Saturn
+    - Scion
+    - SEAT
+    - Seres
+    - ShuangHuan
+    - Simca
+    - Skoda
+    - Skywell
+    - Smart
+    - Solaris
+    - Sollers
+    - Soueast
+    - SsangYong
+    - Stelato
+    - Steyr
+    - Subaru
+    - Suzuki
+    - SWM
+    - Tank
+    - Tata
+    - Tatra
+    - Tesla
+    - Tianma
+    - Tianye
+    - Trabant
+    - TVR
+    - Vauxhall
+    - Venucia
+    - VGV
+    - Volkswagen
+    - Автокам
+    - Амберавто
+    - ГАЗ
+    - Иж
+    - Канонир
+    - ЛуАЗ
+    - Москвич
+    - СМЗ
+    - ТагАЗ
+    - УАЗ
+    type: string
+    x-enum-varnames:
+    - Abarth
+    - Ac
+    - Acura
+    - Adler
+    - Aito
+    - Aiways
+    - Aixam
+    - AlfaRomeo
+    - Alpina
+    - Alpine
+    - Ambertruck
+    - Amc
+    - Arcfox
+    - Aro
+    - Asia
+    - AstonMartin
+    - Aurus
+    - Austin
+    - Autobianchi
+    - Avatr
+    - Baic
+    - Bajaj
+    - BaltijasDzips
+    - Baojun
+    - Baw
+    - Belgee
+    - Bentley
+    - Bestune
+    - Borgward
+    - Brilliance
+    - Bugatti
+    - Buick
+    - Byd
+    - Cadillac
+    - Chana
+    - Changan
+    - Changfeng
+    - Changhe
+    - Chevrolet
+    - Chrysler
+    - Ciimo
+    - Citroen
+    - Coda
+    - Cupra
+    - Dacia
+    - Dadi
+    - Daewoo
+    - Daihatsu
+    - Daimler
+    - Datsun
+    - Dayun
+    - Delage
+    - Denza
+    - Derways
+    - Dodge
+    - Dongfeng
+    - Doninvest
+    - Donkervoort
+    - Ds
+    - Dwhower
+    - Eagle
+    - Enovate
+    - Everus
+    - Evolute
+    - Excalibur
+    - Exeed
+    - FacelVega
+    - Faw
+    - Ferrari
+    - Fiat
+    - Fisker
+    - Forthing
+    - Foton
+    - Fso
+    - Fsr
+    - Gac
+    - GacAion
+    - GacTrumpchi
+    - Genesis
+    - Geo
+    - Gmc
+    - GreatWall
+    - Hafei
+    - Haima
+    - Hanteng
+    - Haval
+    - Hawtai
+    - Hennessey
+    - Hiphi
+    - Honda
+    - Hongqi
+    - Hozon
+    - Hudson
+    - Hummer
+    - Icar
+    - ImMotors
+    - Ineos
+    - Infiniti
+    - Innocenti
+    - InternationalHarvester
+    - IranKhodro
+    - Isuzu
+    - Jac
+    - Jaecoo
+    - Jaguar
+    - Jeep
+    - Jetour
+    - Jetta
+    - Jidu
+    - Jinbei
+    - Jmc
+    - Kaiyi
+    - Kawei
+    - Kgm
+    - Knewstar
+    - Koenigsegg
+    - KtmAg
+    - Lamborghini
+    - Lancia
+    - LandRover
+    - Landwind
+    - Leapmotor
+    - Levc
+    - Lexus
+    - LiebaoMotor
+    - Lifan
+    - Lincoln
+    - Lingxi
+    - Livan
+    - LiXiang
+    - Lotus
+    - Lucid
+    - Luxeed
+    - Luxgen
+    - LynkAndCo
+    - MHero
+    - Maextro
+    - Mahindra
+    - Maple
+    - Marussia
+    - Maserati
+    - Maxus
+    - Maybach
+    - Mazda
+    - Mclaren
+    - Mercury
+    - Metrocab
+    - Mg
+    - Mini
+    - Mitsubishi
+    - Mitsuoka
+    - Morgan
+    - Nevo
+    - Nio
+    - Oldsmobile
+    - Omoda
+    - Opel
+    - Ora
+    - Oshan
+    - Oting
+    - Packard
+    - Pagani
+    - Peugeot
+    - Plymouth
+    - PolarStone
+    - Polestar
+    - Pontiac
+    - Porsche
+    - Proton
+    - Puch
+    - Qingling
+    - Ram
+    - Ravon
+    - Reliant
+    - Renault
+    - RenaultSamsung
+    - RisingAuto
+    - Rivian
+    - Roewe
+    - RollsRoyce
+    - Rover
+    - Rox
+    - Saab
+    - Santana
+    - Saturn
+    - Scion
+    - Seat
+    - Seres
+    - ShuangHuan
+    - Simca
+    - Skoda
+    - Skywell
+    - Smart
+    - Solaris
+    - Sollers
+    - Soueast
+    - SsangYong
+    - Stelato
+    - Steyr
+    - Subaru
+    - Suzuki
+    - Swm
+    - Tank
+    - Tata
+    - Tatra
+    - Tesla
+    - Tianma
+    - Tianye
+    - Trabant
+    - Tvr
+    - Vauxhall
+    - Venucia
+    - Vgv
+    - Volkswagen
+    - Avtokam
+    - Amberavto
+    - GAZ
+    - Izh
+    - Kanonir
+    - LuAZ
+    - Moskvich
+    - SMZ
+    - TagAZ
+    - UAZ
+  car.Car:
+    properties:
+      auditFields:
+        $ref: '#/definitions/model.AuditFields'
+      bodyType:
+        $ref: '#/definitions/car.BodyType'
+      brand:
+        $ref: '#/definitions/car.Brand'
+      driveType:
+        $ref: '#/definitions/car.DriveType'
+      fuelType:
+        $ref: '#/definitions/vehicle.FuelType'
+      id:
+        type: string
+      plate:
+        type: string
+      transmissionType:
+        $ref: '#/definitions/car.TransmissionType'
+      userId:
+        type: string
+      vehicleType:
+        $ref: '#/definitions/vehicle.Type'
+      vin:
+        type: string
+      year:
+        type: integer
+    type: object
+  car.DriveType:
+    properties:
+      id:
+        $ref: '#/definitions/car.DriveTypeKind'
+      name:
+        type: string
+      parentId:
+        $ref: '#/definitions/car.DriveTypeKind'
+    type: object
+  car.DriveTypeKind:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    type: integer
+    x-enum-comments:
+      AWD: Новый родительский тип
+    x-enum-varnames:
+    - UnknownDriveType
+    - FWD
+    - RWD
+    - AWD
+    - PermanentAWD
+    - SwitchableAWD
+  car.TransmissionType:
+    properties:
+      id:
+        $ref: '#/definitions/car.TransmissionTypeKind'
+      name:
+        type: string
+      parentId:
+        $ref: '#/definitions/car.TransmissionTypeKind'
+    type: object
+  car.TransmissionTypeKind:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    type: integer
+    x-enum-varnames:
+    - TransmissionTypeUnknown
+    - TransmissionTypeAuto
+    - TransmissionTypeAutomatic
+    - TransmissionTypeRobot
+    - TransmissionTypeCVT
+    - TransmissionTypeManual
+  expense.Category:
+    enum:
+    - Fuel
+    - Repair
+    - Maintenance
+    - Insurance
+    - Taxes
+    - Other
+    type: string
+    x-enum-varnames:
+    - Fuel
+    - Repair
+    - Maintenance
+    - Insurance
+    - Taxes
+    - Other
+  expense.Expense:
+    properties:
+      amount:
+        type: number
+      auditFields:
+        $ref: '#/definitions/model.AuditFields'
+      category:
+        $ref: '#/definitions/expense.Category'
+      currency:
+        type: string
+      date:
+        type: string
+      exchangeRate:
+        type: number
+      id:
+        type: string
+      note:
+        type: string
+      vehicleId:
+        type: string
+    type: object
+  handler.AuthReq:
+    description: User authentication credentials
+    properties:
+      Login:
+        example: user123
+        type: string
+      Password:
+        example: securePassword123
+        type: string
+    required:
+    - Login
+    - Password
+    type: object
+  handler.CarRq:
+    properties:
+      body_type:
+        $ref: '#/definitions/car.BodyTypeKind'
+      brand:
+        $ref: '#/definitions/car.Brand'
+      drive_type:
+        $ref: '#/definitions/car.DriveTypeKind'
+      fuel_type:
+        $ref: '#/definitions/vehicle.FuelType'
+      plate:
+        type: string
+      transmission_type:
+        $ref: '#/definitions/car.TransmissionTypeKind'
+      vin:
+        type: string
+      year:
+        type: integer
+    required:
+    - body_type
+    - brand
+    - drive_type
+    - fuel_type
+    - plate
+    - transmission_type
+    - vin
+    - year
+    type: object
+  handler.ExpenseRq:
+    properties:
+      amount:
+        type: number
+      category:
+        $ref: '#/definitions/expense.Category'
+      currency:
+        type: string
+      date:
+        type: string
+      exchange_rate:
+        type: number
+      note:
+        type: string
+      vehicle_id:
+        type: string
+    required:
+    - amount
+    - category
+    - currency
+    - date
+    - vehicle_id
+    type: object
+  handler.MotoRq:
+    properties:
+      brand:
+        $ref: '#/definitions/moto.Brand'
+      category:
+        $ref: '#/definitions/moto.CategoryKind'
+      fuel_type:
+        $ref: '#/definitions/vehicle.FuelType'
+      plate:
+        type: string
+      transmission_type:
+        $ref: '#/definitions/moto.TransmissionTypeKind'
+      vin:
+        type: string
+      year:
+        type: integer
+    required:
+    - brand
+    - category
+    - fuel_type
+    - plate
+    - transmission_type
+    - vin
+    - year
+    type: object
+  handler.UserReq:
+    description: User creation/update request
+    properties:
+      Email:
+        example: john@doe.com
+        type: string
+      Login:
+        example: user123
+        type: string
+      Name:
+        example: John
+        type: string
+      Password:
+        example: securePassword123
+        type: string
+      Surname:
+        example: Doe
+        type: string
+    required:
+    - Login
+    - Password
+    type: object
+  handler.UserRsp:
+    description: User response data
+    properties:
+      Id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+      Login:
+        example: user123
+        type: string
+      Name:
+        example: John
+        type: string
+      Surname:
+        example: Doe
+        type: string
+    type: object
+  handler.response:
+    properties:
+      error:
+        example: message
+        type: string
+    type: object
+  model.AuditFields:
+    properties:
+      createdAtUtc:
+        type: string
+      createdBy:
+        type: string
+      modifiedAtUtc:
+        type: string
+      modifiedBy:
+        type: string
+    type: object
+  moto.Brand:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+    - 64
+    - 65
+    - 66
+    - 67
+    - 68
+    - 69
+    - 70
+    - 71
+    - 72
+    - 73
+    - 74
+    - 75
+    - 76
+    - 77
+    - 78
+    - 79
+    - 80
+    - 81
+    - 82
+    - 83
+    - 84
+    - 85
+    - 86
+    - 87
+    - 88
+    - 89
+    - 90
+    - 91
+    - 92
+    - 93
+    - 94
+    - 95
+    - 96
+    - 97
+    - 98
+    - 99
+    - 100
+    - 101
+    - 102
+    - 103
+    - 104
+    - 105
+    - 106
+    - 107
+    - 108
+    - 109
+    - 110
+    - 111
+    - 112
+    - 113
+    - 114
+    - 115
+    - 116
+    - 117
+    - 118
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    - 127
+    - 128
+    - 129
+    - 130
+    - 131
+    - 132
+    - 133
+    - 134
+    - 135
+    - 136
+    - 137
+    - 138
+    - 139
+    - 140
+    - 141
+    - 142
+    - 143
+    - 144
+    - 145
+    - 146
+    - 147
+    - 148
+    - 149
+    - 150
+    - 151
+    - 152
+    - 153
+    - 154
+    - 155
+    - 156
+    - 157
+    - 158
+    - 159
+    - 160
+    - 161
+    - 162
+    - 163
+    - 164
+    - 165
+    - 166
+    - 167
+    - 168
+    - 169
+    - 170
+    - 171
+    - 172
+    - 173
+    - 174
+    - 175
+    - 176
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 192
+    - 193
+    - 194
+    - 195
+    - 196
+    - 197
+    - 198
+    - 199
+    - 200
+    - 201
+    - 202
+    - 203
+    - 204
+    - 205
+    - 206
+    - 207
+    - 208
+    - 209
+    - 210
+    - 211
+    - 212
+    - 213
+    - 214
+    - 215
+    - 216
+    - 217
+    - 218
+    - 219
+    - 220
+    - 221
+    - 222
+    - 223
+    - 224
+    - 225
+    - 226
+    - 227
+    - 228
+    type: integer
+    x-enum-varnames:
+    - UnknownBrand
+    - Aermacchi
+    - AJP
+    - Alfer
+    - Amazonas
+    - AmericanEagle
+    - AmericanIronHorse
+    - Anaig
+    - Apollo
+    - Aprilia
+    - Ardie
+    - Armada
+    - AstonMartin
+    - Ataki
+    - ATK
+    - Avantis
+    - Bajaj
+    - Baltmotors
+    - Bamx
+    - Bars
+    - Bashan
+    - Benda
+    - Benelli
+    - Beta
+    - Bianchi
+    - Bifei
+    - BigBearChoppers
+    - BigDogMotorcycles
+    - Blata
+    - BoomTrikes
+    - BossHoss
+    - Brabus
+    - BRP
+    - BRZ
+    - BSA
+    - BSE
+    - Buell
+    - Cagiva
+    - Carver
+    - CCM
+    - Centurion
+    - CFMoto
+    - CH_Racing
+    - ChangJiang
+    - Cobra
+    - CPI
+    - CR_S
+    - Cronus
+    - CRZ
+    - Curtiss
+    - Cyclone
+    - CZ
+    - Darex
+    - Dayun
+    - Deller
+    - Derbi
+    - DesertRaven
+    - Draxter
+    - Energica
+    - Eurotex
+    - EVA
+    - ExpertMoto
+    - Falcon
+    - FidelisEtFortis
+    - Fighter
+    - Forsage
+    - Fosti
+    - Fuego
+    - FullCrew
+    - Futong
+    - FXmoto
+    - Gmax
+    - Gaokin
+    - GasGas
+    - Geon
+    - Gilera
+    - GR
+    - Groza
+    - Gryphon
+    - GXmoto
+    - Hasky
+    - Hero
+    - Highland
+    - Horwin
+    - Huangpeng
+    - Husaberg
+    - Husqvarna
+    - Hyosung
+    - Indian
+    - Irbis
+    - Iride
+    - ItalianVolt
+    - Jawa
+    - JHL
+    - JiangsuSunhou
+    - JMC
+    - JohnnyPag
+    - Jose
+    - K2R
+    - Keeway
+    - Kews
+    - KinlonMotors
+    - Koshine
+    - Kove
+    - KXD
+    - Kymco
+    - Lem
+    - Lifan
+    - Lito
+    - Loncin
+    - Magni
+    - Mikilon
+    - Minsk
+    - Montesa
+    - Motax
+    - MotoGuzzi
+    - MotoMorini
+    - Mowgli
+    - MVAgusta
+    - MZ
+    - Nexus
+    - Nicot
+    - Nitro
+    - NIU
+    - Norton
+    - Ohvale
+    - Omaks
+    - OrangeCountyChoppers
+    - Orion
+    - Oxo
+    - Pannonia
+    - Patron
+    - Pitrace
+    - PitsterPro
+    - Polaris
+    - Polini
+    - Procida
+    - Progasi
+    - Promax
+    - PWRRacing
+    - QJMotor
+    - Racer
+    - RegalRaptor
+    - Regulmoto
+    - Rewaco
+    - Rhino
+    - Rieju
+    - Rmoto
+    - Rockot
+    - Roliz
+    - RoyalEnfield
+    - S2Motors
+    - Sachs
+    - Sagitta
+    - Saxon
+    - Scanmoto
+    - Scorpa
+    - Sharmax
+    - Sherco
+    - Shineray
+    - SimarglElektro
+    - Simson
+    - Skygo
+    - Sonik
+    - SPR
+    - SSSR
+    - Stark
+    - Stels
+    - Stingray
+    - SuperSoco
+    - SurRon
+    - Swift
+    - SWM
+    - Sym
+    - Tacita
+    - Talaria
+    - TaoMotor
+    - Tinbot
+    - Titan
+    - TMRacing
+    - TMBK
+    - Triumph
+    - TRRS
+    - TVS
+    - UM
+    - Upbeat
+    - Vanderhall
+    - Vertigo
+    - Victory
+    - Vinto
+    - Viper
+    - VMC
+    - Voge
+    - Voxan
+    - Wanderer
+    - Wanqiang
+    - Wels
+    - WhiteSiberia
+    - Wuxi
+    - XGZ
+    - Xingyue
+    - Xmotos
+    - Yacota
+    - Yamasaki
+    - Yangtze
+    - YCF
+    - Yinxiang
+    - Zero
+    - ZIPMotors
+    - ZM
+    - Zongshen
+    - Zontes
+    - Zundapp
+    - Zuum
+    - Zuumav
+    - Gyurza
+    - Dnepr
+    - ZID
+    - IZH
+    - IzhTechMash
+    - Kovrovets
+    - LvivMotozavod
+    - MMZ
+    - Motoalfa
+    - Motomir
+    - PMZ
+    - RMZ
+    - TMZ
+    - Ural
+  moto.Category:
+    type: object
+  moto.CategoryKind:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    type: integer
+    x-enum-varnames:
+    - CategoryKindNone
+    - Offroad
+    - Road
+    - Cruisers
+    - Sports
+    - Supermoto
+    - Trikes
+    - Tourism
+    - Allround
+    - Enduro
+    - DualPurpose
+    - SportEnduro
+    - TouringEnduro
+    - Naked
+    - RoadBike
+    - Classic
+    - Custom
+    - Cruiser
+    - Chopper
+    - Cross
+    - Speedway
+    - Kids
+    - Minibike
+    - Pitbike
+    - Trial
+    - Sportbike
+    - SportTouring
+    - Supersport
+    - Trike
+    - ThreeWheeler
+  moto.Moto:
+    properties:
+      auditFields:
+        $ref: '#/definitions/model.AuditFields'
+      brand:
+        $ref: '#/definitions/moto.Brand'
+      category:
+        $ref: '#/definitions/moto.Category'
+      fuelType:
+        $ref: '#/definitions/vehicle.FuelType'
+      id:
+        type: string
+      plate:
+        type: string
+      transmissionType:
+        $ref: '#/definitions/moto.TransmissionType'
+      userId:
+        type: string
+      vehicleType:
+        $ref: '#/definitions/vehicle.Type'
+      vin:
+        type: string
+      year:
+        type: integer
+    type: object
+  moto.TransmissionType:
+    properties:
+      id:
+        $ref: '#/definitions/moto.TransmissionTypeKind'
+      name:
+        type: string
+      parentId:
+        $ref: '#/definitions/moto.TransmissionTypeKind'
+    type: object
+  moto.TransmissionTypeKind:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    type: integer
+    x-enum-varnames:
+    - TransmissionTypeUnknown
+    - TransmissionTypeAuto
+    - TransmissionTypeAutomatic
+    - TransmissionTypeRobot
+    - TransmissionTypeCVT
+    - TransmissionTypeManual
+  vehicle.FuelType:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    type: integer
+    x-enum-varnames:
+    - UnknownFuelType
+    - Petrol
+    - PetrolPropaneButane
+    - PetrolMethane
+    - PetrolHybrid
+    - Diesel
+    - DieselHybrid
+    - Electric
+  vehicle.Type:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - UnknownVehicleType
+    - Car
+    - Motorcycle
+host: localhost:8080
+info:
+  contact: {}
+  description: API for MyCar application
+  title: MyCar API
+  version: "1.0"
+paths:
+  /api/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login user and get authentication token
+      parameters:
+      - description: User credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.AuthReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns JWT token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.response'
+      summary: Authenticate user
+      tags:
+      - auth
+  /api/car:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new car for the authenticated user
+      parameters:
+      - description: Car creation data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CarRq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns ID of created car
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Create a new car
+      tags:
+      - cars
+  /api/car/{id}:
+    delete:
+      description: Deletes an existing car for the authenticated user
+      parameters:
+      - description: Car ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Car deleted successfully
+        "400":
+          description: Invalid car ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Car not found
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Delete a car
+      tags:
+      - cars
+    get:
+      description: Возвращает автомобиль по идентификатору для аутентифицированного
+        пользователя
+      parameters:
+      - description: Car ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Данные автомобиля
+          schema:
+            $ref: '#/definitions/car.Car'
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Автомобиль не найден
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Получить автомобиль по ID
+      tags:
+      - cars
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing car for the authenticated user
+      parameters:
+      - description: Car ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Car update data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CarRq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Car updated successfully
+        "400":
+          description: Invalid request data or ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Car not found
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Update a car
+      tags:
+      - cars
+  /api/expense:
+    post:
+      consumes:
+      - application/json
+      description: Создаёт новый расход для пользователя
+      parameters:
+      - description: Данные расхода
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.ExpenseRq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ID созданного расхода
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Некорректные данные
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Создать расход
+      tags:
+      - expenses
+  /api/expense/{id}:
+    delete:
+      description: Удаляет расход по ID
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Расход удалён
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Расход не найден
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Удалить расход
+      tags:
+      - expenses
+    get:
+      description: Возвращает расход по идентификатору
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Данные расхода
+          schema:
+            $ref: '#/definitions/expense.Expense'
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Расход не найден
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Получить расход по ID
+      tags:
+      - expenses
+    put:
+      consumes:
+      - application/json
+      description: Обновляет существующий расход
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Данные расхода
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.ExpenseRq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Расход обновлён
+        "400":
+          description: Некорректные данные или ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Расход не найден
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Обновить расход
+      tags:
+      - expenses
+  /api/moto:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new moto for the authenticated user
+      parameters:
+      - description: Moto creation data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.MotoRq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns ID of created moto
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Create a new moto
+      tags:
+      - motos
+  /api/moto/{id}:
+    delete:
+      description: Deletes an existing moto for the authenticated user
+      parameters:
+      - description: Moto ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Moto deleted successfully
+        "400":
+          description: Invalid moto ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Moto not found
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Delete a moto
+      tags:
+      - motos
+    get:
+      description: Возвращает мотоцикл по идентификатору для аутентифицированного
+        пользователя
+      parameters:
+      - description: Moto ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Данные мотоцикла
+          schema:
+            $ref: '#/definitions/moto.Moto'
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Мотоцикл не найден
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Получить мотоцикл по ID
+      tags:
+      - motos
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing moto for the authenticated user
+      parameters:
+      - description: Moto ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Moto update data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.MotoRq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Moto updated successfully
+        "400":
+          description: Invalid request data or ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Moto not found
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Update a moto
+      tags:
+      - motos
+  /api/user:
+    delete:
+      description: Delete account for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Account deleted successfully
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Delete user account
+      tags:
+      - users
+    get:
+      description: Get profile information for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Returns user profile data
+          schema:
+            $ref: '#/definitions/handler.UserRsp'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Get user profile
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Register a new user in the system
+      parameters:
+      - description: User registration data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UserReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            type: integer
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/handler.response'
+        "409":
+          description: User already exists
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      summary: Create a new user
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update profile information for the authenticated user
+      parameters:
+      - description: User update data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Profile updated successfully
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Update user profile
+      tags:
+      - users
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

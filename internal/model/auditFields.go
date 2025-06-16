@@ -1,32 +1,35 @@
 package model
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"time"
+)
 
 type Auditable interface {
-	GetCreatedBy() string
+	GetCreatedBy() uuid.UUID
 	GetCreatedAtUtc() time.Time
-	GetModifiedBy() string
+	GetModifiedBy() uuid.UUID
 	GetModifiedAtUtc() time.Time
 
-	SetCreatedBy(user string)
+	SetCreatedBy(userId uuid.UUID)
 	SetCreatedAtUtc(t time.Time)
-	SetModifiedBy(user string)
+	SetModifiedBy(userId uuid.UUID)
 	SetModifiedAtUtc(t time.Time)
 }
 
 type AuditFields struct {
-	CreatedBy     string
+	CreatedBy     uuid.UUID
 	CreatedAtUtc  time.Time
-	ModifiedBy    string
+	ModifiedBy    uuid.UUID
 	ModifiedAtUtc time.Time
 }
 
-func (a *AuditFields) GetCreatedBy() string        { return a.CreatedBy }
+func (a *AuditFields) GetCreatedBy() uuid.UUID     { return a.CreatedBy }
 func (a *AuditFields) GetCreatedAtUtc() time.Time  { return a.CreatedAtUtc }
-func (a *AuditFields) GetModifiedBy() string       { return a.ModifiedBy }
+func (a *AuditFields) GetModifiedBy() uuid.UUID    { return a.ModifiedBy }
 func (a *AuditFields) GetModifiedAtUtc() time.Time { return a.ModifiedAtUtc }
 
-func (a *AuditFields) SetCreatedBy(user string)     { a.CreatedBy = user }
-func (a *AuditFields) SetCreatedAtUtc(t time.Time)  { a.CreatedAtUtc = t }
-func (a *AuditFields) SetModifiedBy(user string)    { a.ModifiedBy = user }
-func (a *AuditFields) SetModifiedAtUtc(t time.Time) { a.ModifiedAtUtc = t }
+func (a *AuditFields) SetCreatedBy(userId uuid.UUID)  { a.CreatedBy = userId }
+func (a *AuditFields) SetCreatedAtUtc(t time.Time)    { a.CreatedAtUtc = t }
+func (a *AuditFields) SetModifiedBy(userId uuid.UUID) { a.ModifiedBy = userId }
+func (a *AuditFields) SetModifiedAtUtc(t time.Time)   { a.ModifiedAtUtc = t }

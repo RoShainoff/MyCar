@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"MyCar/internal/model"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -61,14 +62,14 @@ func StoreMoto(m *moto.Moto) {
 	appendToJSON(motosJSON, m, &motosStoreMu)
 }
 
-func StoreGenericVehicle(v vehicle.GenericVehicle) {
-	switch v := v.(type) {
+func StoreGenericVehicle(be model.BusinessEntity) {
+	switch be := be.(type) {
 	case *car.Car:
-		StoreCar(v)
+		StoreCar(be)
 	case *moto.Moto:
-		StoreMoto(v)
+		StoreMoto(be)
 	case *vehicle.Vehicle:
-		StoreVehicle(v)
+		StoreVehicle(be)
 	}
 }
 

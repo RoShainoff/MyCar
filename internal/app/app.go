@@ -1,0 +1,110 @@
+package app
+
+import (
+	"MyCar/config"
+	_ "MyCar/docs"
+	"MyCar/internal/http/handler"
+	"MyCar/internal/http/middleware"
+	"MyCar/internal/repository"
+	"MyCar/internal/service"
+	"context"
+	"errors"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
+)
+
+func Run() {
+	fmt.Println("System running... Press Ctrl+C to stop")
+
+	cfg, err := config.MustLoad()
+	if err != nil {
+		log.Fatalf("Config error: %s", err)
+	}
+
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+
+	//businessEntitiesChan := make(chan model.BusinessEntity)
+	//eventsChan := make(chan model.BusinessEntity)
+
+	//service.GenerateAndSendVehicle(ctx, businessEntitiesChan)
+	//service.ReceiveAndStoreVehicle(ctx, businessEntitiesChan, eventsChan)
+	//service.MonitorAndLog(ctx, eventsChan)
+
+	repo := repository.NewPlainRepository()
+	repo.LoadAll()
+	jwtService := service.NewJwtService(cfg)
+	authService := service.NewAuthService(repo, jwtService)
+	carService := service.NewCarService(repo)
+	motoService := service.NewMotoService(repo)
+	expenseService := service.NewExpenseService(repo)
+	userService := service.NewUserService(repo)
+
+	authHandler := handler.NewAuthHandler(authService)
+	carHandler := handler.NewCarHandler(carService)
+	motoHandler := handler.NewMotoHandler(motoService)
+	expenseHandler := handler.NewExpenseHandler(expenseService)
+	userHandler := handler.NewUserHandler(userService)
+
+	r := gin.Default()
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	authMiddleware := middleware.AuthMiddleware(authService)
+
+	protected := r.Group("/api")
+	protected.Use(authMiddleware)
+	{
+		protected.GET("/user", userHandler.GetUser)
+		protected.PUT("/user", userHandler.UpdateUser)
+		protected.DELETE("/user", userHandler.DeleteUser)
+
+		protected.POST("/car", carHandler.CreateCar)
+		protected.GET("/car/:id", carHandler.GetCarById)
+		protected.PUT("/car/:id", carHandler.UpdateCar)
+		protected.DELETE("/car/:id", carHandler.DeleteCar)
+
+		protected.POST("/moto", motoHandler.CreateMoto)
+		protected.GET("/moto/:id", motoHandler.GetMotoById)
+		protected.PUT("/moto/:id", motoHandler.UpdateMoto)
+		protected.DELETE("/moto/:id", motoHandler.DeleteMoto)
+
+		protected.POST("/expense", expenseHandler.CreateExpense)
+		protected.GET("/expense/:id", expenseHandler.GetExpenseById)
+		protected.PUT("/expense/:id", expenseHandler.UpdateExpense)
+		protected.DELETE("/expense/:id", expenseHandler.DeleteExpense)
+	}
+
+	r.POST("/api/auth/login", authHandler.Login)
+	r.POST("/api/user", userHandler.CreateUser)
+
+	srv := &http.Server{
+		Addr:         fmt.Sprintf(":%d", cfg.Server.Port),
+		Handler:      r,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  60 * time.Second,
+	}
+
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("Server error: %s", err)
+		}
+	}()
+
+	log.Printf("Server started on port %d", cfg.Server.Port)
+
+	fmt.Println("System running... Press Ctrl+C to stop")
+
+	<-ctx.Done()
+	fmt.Println("\nShutting down gracefully...")
+
+	time.Sleep(1 * time.Second)
+}

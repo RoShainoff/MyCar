@@ -14,8 +14,8 @@ type Car struct {
 	TransmissionType TransmissionType
 }
 
-func NewCar(id uuid.UUID, ownerID int, fuelType vehicle.FuelType, brand Brand, year int, plate string, driveType DriveTypeKind, bodyTypeKind BodyTypeKind, transmissionTypeKind TransmissionTypeKind) *Car {
-	newVehicle, _ := vehicle.NewVehicle(id, ownerID, fuelType, vehicle.Car, year, plate)
+func NewCar(id uuid.UUID, userId uuid.UUID, fuelType vehicle.FuelType, brand Brand, year int, plate string, driveType DriveTypeKind, bodyTypeKind BodyTypeKind, transmissionTypeKind TransmissionTypeKind) *Car {
+	newVehicle, _ := vehicle.NewVehicle(id, userId, fuelType, vehicle.Car, year, plate)
 
 	return &Car{
 		*newVehicle,
@@ -34,6 +34,10 @@ func (c *Car) GetDriveType() DriveType {
 	return c.DriveType
 }
 
+func (c *Car) GetDriveTypeKind() DriveTypeKind {
+	return c.DriveType.Id
+}
+
 func (c *Car) SetDriveType(driveTypeKind DriveTypeKind) {
 	c.DriveType = driveTypeKind.GetDriveType()
 }
@@ -42,12 +46,20 @@ func (c *Car) GetBodyType() BodyType {
 	return c.BodyType
 }
 
+func (c *Car) GetBodyTypeKind() BodyTypeKind {
+	return c.BodyType.id
+}
+
 func (c *Car) SetBodyType(bodyTypeKind BodyTypeKind) {
 	c.BodyType = bodyTypeKind.GetBodyType()
 }
 
 func (c *Car) GetTransmissionType() TransmissionType {
 	return c.TransmissionType
+}
+
+func (c *Car) GetTransmissionTypeKind() TransmissionTypeKind {
+	return c.TransmissionType.Id
 }
 
 func (c *Car) SetTransmissionType(transmissionTypeKind TransmissionTypeKind) {

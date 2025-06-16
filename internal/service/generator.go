@@ -1,14 +1,14 @@
 package service
 
 import (
-	"MyCar/internal/model/vehicle"
+	"MyCar/internal/model"
 	"context"
 	"fmt"
 	"math/rand"
 	"time"
 )
 
-func GenerateAndSendVehicle(ctx context.Context, ch chan vehicle.GenericVehicle) {
+func GenerateAndSendVehicle(ctx context.Context, ch chan model.BusinessEntity) {
 	go func() {
 		for {
 			select {
@@ -16,18 +16,18 @@ func GenerateAndSendVehicle(ctx context.Context, ch chan vehicle.GenericVehicle)
 				fmt.Println("[GEN] Generator stopped.")
 				return
 			default:
-				var v vehicle.GenericVehicle
+				var be model.BusinessEntity
 				r := rand.Intn(3)
 				if r == 0 {
-					v = NewVehicle(false)
+					be = NewVehicle(false)
 				} else if r == 1 {
-					v = NewCar(false)
+					be = NewCar(false)
 				} else {
-					v = NewMoto(false)
+					be = NewMoto(false)
 				}
 
-				ch <- v
-				fmt.Println("[GEN] Sent to channel:", v.GetGeneralInfo())
+				ch <- be
+				fmt.Println("[GEN] Sent to channel:", be.GetGeneralInfo())
 
 				time.Sleep(1 * time.Second)
 			}
