@@ -51,6 +51,11 @@ func (h *CarHandler) CreateCar(c *gin.Context) {
 	userId := c.MustGet("UserId").(uuid.UUID)
 	newCar := car.NewCar(uuid.Nil, userId, req.FuelType, req.Brand, req.Year, req.Plate, req.DriveType, req.BodyType, req.TransmissionType)
 
+	if err := newCar.Validate(); err != nil {
+		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
+		return
+	}
+
 	id, err := h.service.CreateCar(newCar, userId)
 	if err != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
@@ -118,6 +123,11 @@ func (h *CarHandler) UpdateCar(c *gin.Context) {
 	}
 
 	updatedCar := car.NewCar(id, userId, req.FuelType, req.Brand, req.Year, req.Plate, req.DriveType, req.BodyType, req.TransmissionType)
+
+	if err := updatedCar.Validate(); err != nil {
+		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
+		return
+	}
 
 	updateErr := h.service.UpdateCar(id, userId, updatedCar)
 	if updateErr != nil {
