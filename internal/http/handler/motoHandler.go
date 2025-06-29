@@ -51,6 +51,11 @@ func (h *MotoHandler) CreateMoto(c *gin.Context) {
 	newMoto := moto.NewMoto(uuid.Nil, userId, req.FuelType, req.Brand, req.Year, req.Plate, req.Category, moto.TransmissionTypeManual)
 	newMoto.SetVin(req.Vin)
 
+	if err := newMoto.Validate(); err != nil {
+		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
+		return
+	}
+
 	id, err := h.service.CreateMoto(newMoto, userId)
 	if err != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
@@ -119,6 +124,11 @@ func (h *MotoHandler) UpdateMoto(c *gin.Context) {
 
 	updatedMoto := moto.NewMoto(id, userId, req.FuelType, req.Brand, req.Year, req.Plate, req.Category, req.TransmissionType)
 	updatedMoto.SetVin(req.Vin)
+
+	if err := updatedMoto.Validate(); err != nil {
+		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
+		return
+	}
 
 	updateErr := h.service.UpdateMoto(id, userId, updatedMoto)
 	if updateErr != nil {

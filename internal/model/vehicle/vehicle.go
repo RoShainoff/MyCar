@@ -2,6 +2,7 @@ package vehicle
 
 import (
 	"MyCar/internal/model"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"time"
@@ -62,4 +63,21 @@ func NewVehicle(id uuid.UUID, userId uuid.UUID, fuelType FuelType, vehicleType T
 	vehicle.SetCreatedAtUtc(time.Now())
 
 	return vehicle, nil
+}
+
+func (v *Vehicle) Validate() error {
+	currentYear := time.Now().Year()
+	if v.Year < 1910 || v.Year > currentYear {
+		return errors.New("year must be between 1910 and current year")
+	}
+	if v.Plate == "" {
+		return errors.New("plate must not be empty")
+	}
+	if v.FuelType == UnknownFuelType {
+		return errors.New("fuel type must be specified")
+	}
+	if v.VehicleType == UnknownVehicleType {
+		return errors.New("vehicle type must be specified")
+	}
+	return nil
 }

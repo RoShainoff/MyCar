@@ -49,6 +49,12 @@ func (h *ExpenseHandler) CreateExpense(c *gin.Context) {
 	}
 	userId := c.MustGet("UserId").(uuid.UUID)
 	newExpense := expense.NewExpense(uuid.Nil, req.VehicleId, req.Category, req.Amount, req.Currency, req.ExchangeRate /*parse date*/, time.Now(), req.Note)
+
+	if err := newExpense.Validate(); err != nil {
+		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
+		return
+	}
+
 	id, err := h.service.CreateExpense(newExpense, userId)
 	if err != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
@@ -115,6 +121,12 @@ func (h *ExpenseHandler) UpdateExpense(c *gin.Context) {
 		return
 	}
 	updatedExpense := expense.NewExpense(id, req.VehicleId, req.Category, req.Amount, req.Currency, req.ExchangeRate /*parse date*/, time.Now(), req.Note)
+
+	if err := updatedExpense.Validate(); err != nil {
+		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
+		return
+	}
+
 	updateErr := h.service.UpdateExpense(id, userId, updatedExpense)
 	if updateErr != nil {
 		errorResponse(c, http.StatusInternalServerError, updateErr.Error())

@@ -2,6 +2,7 @@ package expense
 
 import (
 	"MyCar/internal/model"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"time"
@@ -151,4 +152,23 @@ func (e *Expense) GetAuditFields() model.AuditFields {
 
 func (e *Expense) SetAuditFields(a model.AuditFields) {
 	e.AuditFields = a
+}
+
+func (e *Expense) Validate() error {
+	if e.VehicleId == uuid.Nil {
+		return errors.New("vehicleId must be specified")
+	}
+	if !isValidCategory(e.Category) {
+		return errors.New("invalid expense category")
+	}
+	if e.Amount <= 0 {
+		return errors.New("amount must be positive")
+	}
+	if e.Currency == "" {
+		return errors.New("currency must not be empty")
+	}
+	if e.Date.After(time.Now()) {
+		return errors.New("date cannot be in the future")
+	}
+	return nil
 }
