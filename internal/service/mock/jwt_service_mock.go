@@ -14,6 +14,7 @@ type JwtServiceMock struct {
 func (m *JwtServiceMock) GetToken(id uuid.UUID) (string, *model.ApplicationError) {
 	return m.GetTokenFunc(id)
 }
+
 func (m *JwtServiceMock) ParseToken(tokenString string) (*auth.Claims, *model.ApplicationError) {
 	return m.ParseTokenFunc(tokenString)
 }
