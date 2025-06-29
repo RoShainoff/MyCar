@@ -605,6 +605,22 @@ definitions:
       vehicleId:
         type: string
     type: object
+  handler.AttachmentRq:
+    properties:
+      entity_id:
+        type: string
+      entity_type:
+        $ref: '#/definitions/model.AttachmentType'
+      file_name:
+        type: string
+      mime_type:
+        type: string
+    required:
+    - entity_id
+    - entity_type
+    - file_name
+    - mime_type
+    type: object
   handler.AuthReq:
     description: User authentication credentials
     properties:
@@ -738,6 +754,19 @@ definitions:
         example: message
         type: string
     type: object
+  model.Attachment:
+    properties:
+      auditFields:
+        $ref: '#/definitions/model.AuditFields'
+    type: object
+  model.AttachmentType:
+    enum:
+    - expense
+    - vehicle
+    type: string
+    x-enum-varnames:
+    - AttachmentTypeExpense
+    - AttachmentTypeVehicle
   model.AuditFields:
     properties:
       createdAtUtc:
@@ -1364,6 +1393,114 @@ info:
   title: MyCar API
   version: "1.0"
 paths:
+  /api/attachment:
+    post:
+      consumes:
+      - application/json
+      description: Загружает новое вложение для пользователя
+      parameters:
+      - description: Данные вложения
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.AttachmentRq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ID созданного вложения
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Некорректные данные
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Загрузить вложение
+      tags:
+      - attachments
+  /api/attachment/{id}:
+    delete:
+      description: Удаляет вложение по ID
+      parameters:
+      - description: Attachment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Вложение удалено
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Вложение не найдено
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Удалить вложение
+      tags:
+      - attachments
+    get:
+      description: Возвращает вложение по идентификатору
+      parameters:
+      - description: Attachment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Данные вложения
+          schema:
+            $ref: '#/definitions/model.Attachment'
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/handler.response'
+        "401":
+          description: Неавторизован
+          schema:
+            $ref: '#/definitions/handler.response'
+        "404":
+          description: Вложение не найдено
+          schema:
+            $ref: '#/definitions/handler.response'
+        "500":
+          description: Внутренняя ошибка
+          schema:
+            $ref: '#/definitions/handler.response'
+      security:
+      - BearerAuth: []
+      summary: Получить вложение по ID
+      tags:
+      - attachments
   /api/auth/login:
     post:
       consumes:

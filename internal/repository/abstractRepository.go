@@ -16,16 +16,20 @@ type AbstractRepository interface {
 	GetCars() []*car.Car
 	GetMotos() []*moto.Moto
 	GetExpenses() []*expense.Expense
+	GetAttachments() []*model.Attachment
 	GetUserById(id uuid.UUID) (*auth.User, *model.ApplicationError)
 	GetCarById(id uuid.UUID, userId uuid.UUID) (*car.Car, *model.ApplicationError)
 	GetMotoById(id uuid.UUID, userId uuid.UUID) (*moto.Moto, *model.ApplicationError)
 	GetExpenseById(id uuid.UUID, userId uuid.UUID) (*expense.Expense, *model.ApplicationError)
+	GetAttachmentById(id uuid.UUID, userId uuid.UUID) (*model.Attachment, *model.ApplicationError)
 	GetUsersCount() int
 	GetCarsCount() int
 	GetMotosCount() int
 	GetExpensesCount() int
+	GetAttachmentsCount() int
 	GetUser(login, password string) (*auth.User, *model.ApplicationError)
 	GetCarsByUserId(userId uuid.UUID) []*car.Car
 	GetMotosByUserId(userId uuid.UUID) []*moto.Moto
 	GetExpensesByUserId(userId uuid.UUID) []*expense.Expense
+	GetAttachmentsByUserId(userId uuid.UUID) []*model.Attachment
 }
