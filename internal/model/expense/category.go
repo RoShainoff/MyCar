@@ -1,14 +1,14 @@
 package expense
 
-type Category int
+type Category string
 
 const (
-	Fuel Category = iota
-	Repair
-	Maintenance
-	Insurance
-	Taxes
-	Other
+	Fuel        Category = "Fuel"
+	Repair      Category = "Repair"
+	Maintenance Category = "Maintenance"
+	Insurance   Category = "Insurance"
+	Taxes       Category = "Taxes"
+	Other       Category = "Other"
 )
 
 func isValidCategory(cat Category) bool {

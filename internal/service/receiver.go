@@ -1,22 +1,22 @@
 package service
 
 import (
-	"MyCar/internal/model/vehicle"
+	"MyCar/internal/model"
 	"MyCar/internal/repository"
 	"context"
 	"fmt"
 )
 
-func ReceiveAndStoreVehicle(ctx context.Context, ch <-chan vehicle.GenericVehicle, events chan<- vehicle.GenericVehicle) {
+func ReceiveAndStoreVehicle(ctx context.Context, ch <-chan model.BusinessEntity, events chan<- model.BusinessEntity) {
 	go func() {
 		for {
 			select {
-			case v := <-ch:
-				fmt.Printf("[RECV] Received vehicle: %s\n", v.GetGeneralInfo())
+			case be := <-ch:
+				fmt.Printf("[RECV] Received entity: %s\n", be.GetGeneralInfo())
 
-				repository.StoreGenericVehicle(v)
+				repository.StoreGenericVehicle(be)
 
-				events <- v
+				events <- be
 			case <-ctx.Done():
 				fmt.Println("[RECV] Receiver stopped.")
 				return
