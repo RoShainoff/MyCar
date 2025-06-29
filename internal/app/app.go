@@ -31,13 +31,6 @@ func Run() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
-	//businessEntitiesChan := make(chan model.BusinessEntity)
-	//eventsChan := make(chan model.BusinessEntity)
-
-	//service.GenerateAndSendVehicle(ctx, businessEntitiesChan)
-	//service.ReceiveAndStoreVehicle(ctx, businessEntitiesChan, eventsChan)
-	//service.MonitorAndLog(ctx, eventsChan)
-
 	repo := repository.NewPlainRepository()
 	repo.LoadAll()
 	jwtService := service.NewJwtService(cfg)
@@ -46,12 +39,14 @@ func Run() {
 	motoService := service.NewMotoService(repo)
 	expenseService := service.NewExpenseService(repo)
 	userService := service.NewUserService(repo)
+	attachmentService := service.NewAttachmentService(repo)
 
 	authHandler := handler.NewAuthHandler(authService)
 	carHandler := handler.NewCarHandler(carService)
 	motoHandler := handler.NewMotoHandler(motoService)
 	expenseHandler := handler.NewExpenseHandler(expenseService)
 	userHandler := handler.NewUserHandler(userService)
+	attachmentHandler := handler.NewAttachmentHandler(attachmentService)
 
 	r := gin.Default()
 
@@ -80,6 +75,10 @@ func Run() {
 		protected.GET("/expense/:id", expenseHandler.GetExpenseById)
 		protected.PUT("/expense/:id", expenseHandler.UpdateExpense)
 		protected.DELETE("/expense/:id", expenseHandler.DeleteExpense)
+
+		protected.POST("/attachment", attachmentHandler.UploadAttachment)
+		protected.GET("/attachment/:id", attachmentHandler.GetAttachmentById)
+		protected.DELETE("/attachment/:id", attachmentHandler.DeleteAttachment)
 	}
 
 	r.POST("/api/auth/login", authHandler.Login)
