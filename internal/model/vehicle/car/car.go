@@ -2,6 +2,7 @@ package car
 
 import (
 	"MyCar/internal/model/vehicle"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 )
@@ -68,4 +69,23 @@ func (c *Car) SetTransmissionType(transmissionTypeKind TransmissionTypeKind) {
 
 func (c *Car) GetGeneralInfo() string {
 	return fmt.Sprintf("This %s %s was made in %d and has VIN %s.", c.GetBodyType(), c.GetBrand(), c.GetYear(), c.GetVin())
+}
+
+func (c *Car) Validate() error {
+	if err := c.Vehicle.Validate(); err != nil {
+		return err
+	}
+	if c.Brand == "" {
+		return errors.New("brand must be specified")
+	}
+	if c.DriveType.Id == UnknownDriveType {
+		return errors.New("drive type must be specified")
+	}
+	if c.BodyType.id == BodyStyleNone {
+		return errors.New("body type must be specified")
+	}
+	if c.TransmissionType.Id == TransmissionTypeUnknown {
+		return errors.New("transmission type must be specified")
+	}
+	return nil
 }

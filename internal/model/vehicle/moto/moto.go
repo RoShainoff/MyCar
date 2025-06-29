@@ -2,6 +2,7 @@ package moto
 
 import (
 	"MyCar/internal/model/vehicle"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 )
@@ -105,4 +106,20 @@ func (m *Moto) GetGeneralInfo() string {
 
 func (m *Moto) GetCategoryName() string {
 	return m.Category.name
+}
+
+func (m *Moto) Validate() error {
+	if err := m.Vehicle.Validate(); err != nil {
+		return err
+	}
+	if m.Brand == UnknownBrand {
+		return errors.New("brand must be specified")
+	}
+	if m.Category.id == CategoryKindNone {
+		return errors.New("category must be specified")
+	}
+	if m.TransmissionType.Id == TransmissionTypeUnknown {
+		return errors.New("transmission type must be specified")
+	}
+	return nil
 }
