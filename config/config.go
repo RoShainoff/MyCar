@@ -1,19 +1,36 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
 )
 
 type Config struct {
-	Server Server `yaml:"server"`
-	App    App    `yaml:"app"`
+	Server        Server        `yaml:"server"`
+	SQLDatabase   SQLDatabase   `yaml:"sqlDatabase"`
+	NoSQLDatabase NoSQLDatabase `yaml:"noSqlDatabase"`
+	App           App           `yaml:"app"`
 }
 
 type Server struct {
 	Port int `yaml:"port"`
+}
+
+type SQLDatabase struct {
+	Host            string `yaml:"host"`
+	Port            int    `yaml:"port"`
+	User            string `yaml:"user"`
+	Password        string `yaml:"password"`
+	Name            string `yaml:"name"`
+	SSLMode         string `yaml:"sslmode"`
+	MaxIdleConns    int    `yaml:"maxIdleConns"`
+	MaxOpenConns    int    `yaml:"maxOpenConns"`
+	ConnMaxLifetime int    `yaml:"connMaxLifetime"`
+}
+
+type NoSQLDatabase struct {
+	URI string `yaml:"uri"`
 }
 
 type App struct {
@@ -26,12 +43,12 @@ func MustLoad() (*Config, error) {
 
 	data, err := os.ReadFile("config/config.yaml")
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("failed to read config file: %w", err))
+		return nil, fmt.Errorf("failed to read config file: %w", err)
 	}
 
-	err = yaml.Unmarshal(data, &config)
+	err = yaml.Unmarshal(data, config)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("failed to unmarshal config: %w", err))
+		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
 	}
 
 	return config, nil

@@ -11,34 +11,37 @@ import (
 )
 
 const (
-	usersFile    = "users.json"
-	carsFile     = "cars.json"
-	motosFile    = "motos.json"
-	expensesFile = "expenses.json"
+	usersFile       = "users.json"
+	carsFile        = "cars.json"
+	motosFile       = "motos.json"
+	expensesFile    = "expenses.json"
+	attachmentsFile = "attachments.json"
 )
 
 type PlainRepository struct {
-	users    *BusinessEntityStorage[*auth.User]
-	cars     *BusinessEntityStorage[*car.Car]
-	motos    *BusinessEntityStorage[*moto.Moto]
-	expenses *BusinessEntityStorage[*expense.Expense]
+	users       *BusinessEntityStorage[*auth.User]
+	cars        *BusinessEntityStorage[*car.Car]
+	motos       *BusinessEntityStorage[*moto.Moto]
+	expenses    *BusinessEntityStorage[*expense.Expense]
+	attachments *BusinessEntityStorage[*model.Attachment]
 }
 
 func NewPlainRepository() *PlainRepository {
 	return &PlainRepository{
-		users:    NewBusinessEntityStorage[*auth.User](usersFile),
-		cars:     NewBusinessEntityStorage[*car.Car](carsFile),
-		motos:    NewBusinessEntityStorage[*moto.Moto](motosFile),
-		expenses: NewBusinessEntityStorage[*expense.Expense](expensesFile),
+		users:       NewBusinessEntityStorage[*auth.User](usersFile),
+		cars:        NewBusinessEntityStorage[*car.Car](carsFile),
+		motos:       NewBusinessEntityStorage[*moto.Moto](motosFile),
+		expenses:    NewBusinessEntityStorage[*expense.Expense](expensesFile),
+		attachments: NewBusinessEntityStorage[*model.Attachment](attachmentsFile),
 	}
 }
 
 func (r *PlainRepository) LoadAll() {
-	// Load all entities from their respective files
 	r.users.Load()
 	r.cars.Load()
 	r.motos.Load()
 	r.expenses.Load()
+	r.attachments.Load()
 }
 
 func (r *PlainRepository) SaveEntity(entity model.BusinessEntity) (uuid.UUID, *model.ApplicationError) {
@@ -51,6 +54,8 @@ func (r *PlainRepository) SaveEntity(entity model.BusinessEntity) (uuid.UUID, *m
 		return r.expenses.Save(e)
 	case *auth.User:
 		return r.users.Save(e)
+	case *model.Attachment:
+		return r.attachments.Save(e)
 	}
 	return uuid.Nil, nil
 }
@@ -65,6 +70,8 @@ func (r *PlainRepository) DeleteEntity(entity model.BusinessEntity) *model.Appli
 		return r.expenses.Delete(e, true)
 	case *auth.User:
 		return r.users.Delete(e, true)
+	case *model.Attachment:
+		return r.attachments.Delete(e, true)
 	}
 	return nil
 }
@@ -83,6 +90,10 @@ func (r *PlainRepository) GetMotos() []*moto.Moto {
 
 func (r *PlainRepository) GetExpenses() []*expense.Expense {
 	return r.expenses.GetAll()
+}
+
+func (r *PlainRepository) GetAttachments() []*model.Attachment {
+	return r.attachments.GetAll()
 }
 
 func (r *PlainRepository) GetUserById(id uuid.UUID) (*auth.User, *model.ApplicationError) {
@@ -120,31 +131,30 @@ func (r *PlainRepository) GetExpensesCount() int {
 	return len(r.expenses.GetAll())
 }
 
+func (r *PlainRepository) GetAttachmentsCount() int {
+	return len(r.expenses.GetAll())
+}
+
 func (r *PlainRepository) GetUser(login, password string) (*auth.User, *model.ApplicationError) {
 	users := r.users.GetAll()
-
 	for _, user := range users {
-
 		if user.Login == login {
 			arePasswordsEqual, err := utils.CompareHashAndPassword(user.Password, password)
-
 			if err != nil {
 				return nil, err
 			}
-
 			if arePasswordsEqual {
 				return user, nil
 			}
 		}
 	}
-
 	return nil, model.NewApplicationError(model.ErrorTypeNotFound, "Пользователь не найден", nil)
 }
 
 func (r *PlainRepository) GetCarsByUserId(userId uuid.UUID) []*car.Car {
 	var result []*car.Car
 	for _, c := range r.cars.GetAll() {
-		if c.Vehicle.GetUserId() == userId { // или другой способ сравнения
+		if c.Vehicle.GetUserId() == userId {
 			result = append(result, c)
 		}
 	}
@@ -166,6 +176,27 @@ func (r *PlainRepository) GetExpensesByUserId(userId uuid.UUID) []*expense.Expen
 	for _, e := range r.expenses.GetAll() {
 		if e.GetCreatedBy() == userId {
 			result = append(result, e)
+		}
+	}
+	return result
+}
+
+func (r *PlainRepository) GetAttachmentById(id uuid.UUID, userId uuid.UUID) (*model.Attachment, *model.ApplicationError) {
+	att, err := r.attachments.GetById(id)
+	if err != nil {
+		return nil, err
+	}
+	if att.GetCreatedBy() != userId {
+		return nil, model.NewApplicationError(model.ErrorTypeNotFound, "Вложение не найдено", nil)
+	}
+	return att, nil
+}
+
+func (r *PlainRepository) GetAttachmentsByUserId(userId uuid.UUID) []*model.Attachment {
+	var result []*model.Attachment
+	for _, a := range r.attachments.GetAll() {
+		if a.GetCreatedBy() == userId {
+			result = append(result, a)
 		}
 	}
 	return result
