@@ -56,11 +56,16 @@ func (r *MongoRepository) SaveEntity(entity model.BusinessEntity) (uuid.UUID, *m
 	if !ok {
 		return uuid.Nil, model.NewApplicationError(model.ErrorTypeDatabase, "Unsupported entity type", nil)
 	}
-	isNew := att.GetId() == uuid.Nil
+	id := att.GetId()
+	isNew := id == uuid.Nil
 	if isNew {
 		att.SetId(uuid.New())
 	}
-	filter := bson.M{"id": att.GetId().String()}
+
+	id = att.GetId()
+	filter := bson.D{
+		{"id", primitive.Binary{Subtype: 0, Data: id[:]}},
+	}
 	update := bson.M{"$set": att}
 	opts := options.Update().SetUpsert(true)
 	_, err := r.collection.UpdateOne(context.Background(), filter, update, opts)
@@ -80,7 +85,11 @@ func (r *MongoRepository) DeleteEntity(entity model.BusinessEntity) *model.Appli
 	if !ok {
 		return model.NewApplicationError(model.ErrorTypeDatabase, "Unsupported entity type", nil)
 	}
-	_, err := r.collection.DeleteOne(context.Background(), bson.M{"id": att.GetId().String()})
+	id := att.GetId()
+	filter := bson.D{
+		{"id", primitive.Binary{Subtype: 0, Data: id[:]}},
+	}
+	_, err := r.collection.DeleteOne(context.Background(), filter)
 	if err != nil {
 		return model.NewApplicationError(model.ErrorTypeDatabase, "Mongo delete error", err)
 	}
@@ -108,6 +117,7 @@ func (r *MongoRepository) GetAttachmentById(id uuid.UUID, userId uuid.UUID) (*mo
 	var att model.Attachment
 	filter := bson.D{
 		{"id", primitive.Binary{Subtype: 0, Data: id[:]}},
+		{"auditfields.createdby", primitive.Binary{Subtype: 0, Data: userId[:]}},
 	}
 	err := r.collection.FindOne(context.Background(), filter).Decode(&att)
 	if err != nil {
@@ -120,7 +130,10 @@ func (r *MongoRepository) GetAttachmentById(id uuid.UUID, userId uuid.UUID) (*mo
 }
 
 func (r *MongoRepository) GetAttachmentsByUserId(userId uuid.UUID) []*model.Attachment {
-	cursor, err := r.collection.Find(context.Background(), bson.M{"auditfields.createdby": userId})
+	filter := bson.D{
+		{"id", primitive.Binary{Subtype: 0, Data: userId[:]}},
+	}
+	cursor, err := r.collection.Find(context.Background(), filter)
 	if err != nil {
 		return nil
 	}
