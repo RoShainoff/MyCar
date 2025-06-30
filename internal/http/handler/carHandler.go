@@ -158,8 +158,9 @@ func (h *CarHandler) DeleteCar(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "Invalid car ID")
 		return
 	}
-	err = h.service.DeleteCar(id, userId)
-	if err != nil {
+
+	deleteErr := h.service.DeleteCar(id, userId)
+	if deleteErr != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}

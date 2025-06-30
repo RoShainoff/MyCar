@@ -75,7 +75,7 @@ func (c *Car) Validate() error {
 	if err := c.Vehicle.Validate(); err != nil {
 		return err
 	}
-	if c.Brand == "" {
+	if c.Brand == UnknownBrand {
 		return errors.New("brand must be specified")
 	}
 	if c.DriveType.Id == UnknownDriveType {
