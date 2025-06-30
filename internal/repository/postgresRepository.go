@@ -59,43 +59,93 @@ func (r *PostgresRepository) SaveEntity(entity model.BusinessEntity) (uuid.UUID,
 	ctx := context.Background()
 	switch e := entity.(type) {
 	case *auth.User:
-		id := uuid.New()
-		_, err := r.db.Exec(`INSERT INTO users (id, login, password, created_at_utc) VALUES ($1, $2, $3, $4)`,
-			id, e.Login, e.Password, time.Now().UTC())
+		id := e.Id
+		if id == uuid.Nil {
+			id = uuid.New()
+		}
+		_, err := r.db.Exec(`
+			INSERT INTO users (id, login, password, created_at_utc)
+			VALUES ($1, $2, $3, $4)
+			ON CONFLICT (id) DO UPDATE SET
+				login = EXCLUDED.login,
+				password = EXCLUDED.password
+		`, id, e.Login, e.Password, time.Now().UTC())
 		if err != nil {
 			return uuid.Nil, model.NewApplicationError(model.ErrorTypeDatabase, "SaveEntity error", err)
 		}
-		r.logChange(ctx, "insert", "user", id, e)
+		r.logChange(ctx, "upsert", "user", id, e)
 		return id, nil
 	case *car.Car:
-		id := uuid.New()
-		_, err := r.db.Exec(`INSERT INTO cars (id, user_id, fuel_type_id, vehicle_type_id, year, plate, vin, brand_id, drive_type_id, body_type_id, transmission_type_id, created_at_utc) 
-			VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
-			id, e.UserId, e.FuelType, e.VehicleType, e.Year, e.Plate, e.Vin, e.Brand.Id, e.DriveType.Id, e.BodyType.Id, e.TransmissionType.Id, time.Now().UTC())
+		id := e.Id
+		if id == uuid.Nil {
+			id = uuid.New()
+		}
+		_, err := r.db.Exec(`
+			INSERT INTO cars (id, user_id, fuel_type_id, vehicle_type_id, year, plate, vin, brand_id, drive_type_id, body_type_id, transmission_type_id, created_at_utc)
+			VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+			ON CONFLICT (id) DO UPDATE SET
+				user_id = EXCLUDED.user_id,
+				fuel_type_id = EXCLUDED.fuel_type_id,
+				vehicle_type_id = EXCLUDED.vehicle_type_id,
+				year = EXCLUDED.year,
+				plate = EXCLUDED.plate,
+				vin = EXCLUDED.vin,
+				brand_id = EXCLUDED.brand_id,
+				drive_type_id = EXCLUDED.drive_type_id,
+				body_type_id = EXCLUDED.body_type_id,
+				transmission_type_id = EXCLUDED.transmission_type_id
+		`, id, e.UserId, e.FuelType, e.VehicleType, e.Year, e.Plate, e.Vin, e.Brand.Id, e.DriveType.Id, e.BodyType.Id, e.TransmissionType.Id, time.Now().UTC())
 		if err != nil {
 			return uuid.Nil, model.NewApplicationError(model.ErrorTypeDatabase, "SaveEntity error", err)
 		}
-		r.logChange(ctx, "insert", "car", id, e)
+		r.logChange(ctx, "upsert", "car", id, e)
 		return id, nil
 	case *moto.Moto:
-		id := uuid.New()
-		_, err := r.db.Exec(`INSERT INTO motos (id, user_id, fuel_type_id, vehicle_type_id, year, plate, vin, brand_id, category_id, transmission_type_id, created_at_utc) 
-			VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
-			id, e.UserId, e.FuelType, e.VehicleType, e.Year, e.Plate, e.Vin, e.Brand.Id, e.Category.Id, e.TransmissionType.Id, time.Now().UTC())
+		id := e.Id
+		if id == uuid.Nil {
+			id = uuid.New()
+		}
+		_, err := r.db.Exec(`
+			INSERT INTO motos (id, user_id, fuel_type_id, vehicle_type_id, year, plate, vin, brand_id, category_id, transmission_type_id, created_at_utc)
+			VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+			ON CONFLICT (id) DO UPDATE SET
+				user_id = EXCLUDED.user_id,
+				fuel_type_id = EXCLUDED.fuel_type_id,
+				vehicle_type_id = EXCLUDED.vehicle_type_id,
+				year = EXCLUDED.year,
+				plate = EXCLUDED.plate,
+				vin = EXCLUDED.vin,
+				brand_id = EXCLUDED.brand_id,
+				category_id = EXCLUDED.category_id,
+				transmission_type_id = EXCLUDED.transmission_type_id
+		`, id, e.UserId, e.FuelType, e.VehicleType, e.Year, e.Plate, e.Vin, e.Brand.Id, e.Category.Id, e.TransmissionType.Id, time.Now().UTC())
 		if err != nil {
 			return uuid.Nil, model.NewApplicationError(model.ErrorTypeDatabase, "SaveEntity error", err)
 		}
-		r.logChange(ctx, "insert", "moto", id, e)
+		r.logChange(ctx, "upsert", "moto", id, e)
 		return id, nil
 	case *expense.Expense:
-		id := uuid.New()
-		_, err := r.db.Exec(`INSERT INTO expenses (id, vehicle_type_id, vehicle_id, category_id, amount, currency, exchange_rate, date, note, created_at_utc) 
-			VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-			id, e.VehicleType, e.VehicleId, e.Category, e.Amount, e.Currency, e.ExchangeRate, e.Date, e.Note, time.Now().UTC())
+		id := e.Id
+		if id == uuid.Nil {
+			id = uuid.New()
+		}
+		_, err := r.db.Exec(`
+			INSERT INTO expenses (id, vehicle_type_id, vehicle_id, category_id, amount, currency, exchange_rate, date, note, created_at_utc)
+			VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+			ON CONFLICT (id) DO UPDATE SET
+				vehicle_type_id = EXCLUDED.vehicle_type_id,
+				vehicle_id = EXCLUDED.vehicle_id,
+				category_id = EXCLUDED.category_id,
+				amount = EXCLUDED.amount,
+				currency = EXCLUDED.currency,
+				exchange_rate = EXCLUDED.exchange_rate,
+				date = EXCLUDED.date,
+				note = EXCLUDED.note
+		`, id, e.VehicleType, e.VehicleId, e.Category, e.Amount, e.Currency, e.ExchangeRate, e.Date, e.Note, time.Now().UTC())
 		if err != nil {
 			return uuid.Nil, model.NewApplicationError(model.ErrorTypeDatabase, "SaveEntity error", err)
 		}
-		r.logChange(ctx, "insert", "expense", id, e)
+		r.logChange(ctx, "upsert", "expense", id, e)
 		return id, nil
 	default:
 		return uuid.Nil, model.NewApplicationError(model.ErrorTypeDatabase, "Unknown entity type", nil)
