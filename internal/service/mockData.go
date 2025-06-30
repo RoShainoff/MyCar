@@ -62,7 +62,7 @@ func NewExpense(logInfo bool) *expense.Expense {
 
 	if logInfo {
 		fmt.Println("Новая трата успешно создана:")
-		fmt.Printf("ID: %d\n", newExpense.GetCategory())
+		fmt.Printf("ID: %d\n", newExpense.Id)
 		fmt.Printf("CarID: %d\n", newExpense.GetVehicleId())
 		fmt.Printf("Категория: %s\n", newExpense.GetCategory())
 		fmt.Printf("Сумма: %.2f\n", newExpense.GetAmount())

@@ -159,8 +159,8 @@ func (h *MotoHandler) DeleteMoto(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "Invalid moto ID")
 		return
 	}
-	err = h.service.DeleteMoto(id, userId)
-	if err != nil {
+	deleteErr := h.service.DeleteMoto(id, userId)
+	if deleteErr != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}

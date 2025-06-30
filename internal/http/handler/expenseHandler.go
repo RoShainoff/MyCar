@@ -158,8 +158,8 @@ func (h *ExpenseHandler) DeleteExpense(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "Invalid expense ID")
 		return
 	}
-	err = h.service.DeleteExpense(id, userId)
-	if err != nil {
+	deleteErr := h.service.DeleteExpense(id, userId)
+	if deleteErr != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}

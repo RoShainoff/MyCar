@@ -17,7 +17,7 @@ func TestExpense_Validate(t *testing.T) {
 			name: "valid expense",
 			e: expense.Expense{
 				VehicleId: uuid.New(),
-				Category:  expense.Fuel,
+				Category:  expense.Fuel.GetCategory(),
 				Amount:    100,
 				Currency:  "RUB",
 				Date:      time.Now(),
@@ -28,7 +28,7 @@ func TestExpense_Validate(t *testing.T) {
 			name: "zero amount",
 			e: expense.Expense{
 				VehicleId: uuid.New(),
-				Category:  expense.Fuel,
+				Category:  expense.Fuel.GetCategory(),
 				Amount:    0,
 				Currency:  "RUB",
 				Date:      time.Now(),
@@ -39,7 +39,7 @@ func TestExpense_Validate(t *testing.T) {
 			name: "future date",
 			e: expense.Expense{
 				VehicleId: uuid.New(),
-				Category:  expense.Fuel,
+				Category:  expense.Fuel.GetCategory(),
 				Amount:    100,
 				Currency:  "RUB",
 				Date:      time.Now().Add(24 * time.Hour),
