@@ -2040,8 +2040,43 @@ const docTemplate = `{
                     "items": {
                         "type": "integer"
                     }
+                },
+                "entityId": {
+                    "type": "string"
+                },
+                "entityType": {
+                    "$ref": "#/definitions/model.AttachmentType"
+                },
+                "fileName": {
+                    "type": "string"
+                },
+                "filePath": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "mimeType": {
+                    "type": "string"
+                },
+                "uploadedAt": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
                 }
             }
+        },
+        "model.AttachmentType": {
+            "type": "string",
+            "enum": [
+                "expense",
+                "vehicle"
+            ],
+            "x-enum-varnames": [
+                "AttachmentTypeExpense",
+                "AttachmentTypeVehicle"
+            ]
         },
         "model.AuditFields": {
             "type": "object",

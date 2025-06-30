@@ -776,7 +776,31 @@ definitions:
         items:
           type: integer
         type: array
+      entityId:
+        type: string
+      entityType:
+        $ref: '#/definitions/model.AttachmentType'
+      fileName:
+        type: string
+      filePath:
+        type: string
+      id:
+        type: string
+      mimeType:
+        type: string
+      uploadedAt:
+        type: string
+      userId:
+        type: string
     type: object
+  model.AttachmentType:
+    enum:
+    - expense
+    - vehicle
+    type: string
+    x-enum-varnames:
+    - AttachmentTypeExpense
+    - AttachmentTypeVehicle
   model.AuditFields:
     properties:
       createdAtUtc:
