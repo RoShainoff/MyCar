@@ -3,9 +3,9 @@ package handler
 import (
 	"MyCar/internal/model"
 	"MyCar/internal/service"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"io"
 	"net/http"
 	"time"
 )
@@ -30,38 +30,57 @@ func NewAttachmentHandler(s service.AbstractAttachmentService) AttachmentHandler
 // @Summary Загрузить вложение
 // @Description Загружает новое вложение для пользователя
 // @Tags attachments
-// @Accept json
+// @Accept multipart/form-data
 // @Produce json
 // @Security BearerAuth
-// @Param input body AttachmentRq true "Данные вложения"
+// @Param entity_type formData string true "Тип сущности"
+// @Param entity_id formData string true "ID сущности"
+// @Param file formData file true "Файл"
 // @Success 200 {object} map[string]interface{} "ID созданного вложения"
 // @Failure 400 {object} response "Некорректные данные"
 // @Failure 401 {object} response "Неавторизован"
 // @Failure 500 {object} response "Внутренняя ошибка"
 // @Router /api/attachment [post]
 func (h *AttachmentHandler) UploadAttachment(c *gin.Context) {
-	var req AttachmentRq
-	if err := c.ShouldBindJSON(&req); err != nil {
-		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Invalid request: %s", err.Error()))
+	entityType := c.PostForm("entity_type")
+	entityIdStr := c.PostForm("entity_id")
+	fileHeader, err := c.FormFile("file")
+	if err != nil {
+		errorResponse(c, http.StatusBadRequest, "Файл обязателен")
+		return
+	}
+	entityId, err := uuid.Parse(entityIdStr)
+	if err != nil {
+		errorResponse(c, http.StatusBadRequest, "Некорректный entity_id")
+		return
+	}
+	file, err := fileHeader.Open()
+	if err != nil {
+		errorResponse(c, http.StatusBadRequest, "Ошибка открытия файла")
+		return
+	}
+	defer file.Close()
+	data, err := io.ReadAll(file)
+	if err != nil {
+		errorResponse(c, http.StatusInternalServerError, "Ошибка чтения файла")
 		return
 	}
 	userId := c.MustGet("UserId").(uuid.UUID)
-	filePath := "/uploads/" + req.FileName
 	uploadedAt := time.Now()
-
 	attachment := model.NewAttachment(
 		uuid.Nil,
-		req.EntityType,
-		req.EntityId,
-		filePath,
-		req.FileName,
-		req.MimeType,
+		model.AttachmentType(entityType),
+		entityId,
+		"", // filePath не нужен, если храним в MongoDB
+		fileHeader.Filename,
+		fileHeader.Header.Get("Content-Type"),
 		uploadedAt,
 		userId,
+		data,
 	)
-	id, err := h.service.CreateAttachment(attachment, userId)
-	if err != nil {
-		errorResponse(c, http.StatusInternalServerError, err.Error())
+	id, errApp := h.service.CreateAttachment(attachment, userId)
+	if errApp != nil {
+		errorResponse(c, http.StatusInternalServerError, errApp.Error())
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"id": id})

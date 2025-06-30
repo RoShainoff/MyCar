@@ -11,7 +11,7 @@ sqlDatabase:
   maxOpenConns: 50
   connMaxLifetime: 300
 noSqlDatabase:
-  uri: "mongodb://mongo:27017/mycar"
+  uri: "mongodb://localhost:27017/mycar"
 redis:
   addr: "localhost:6379"
   db: 0

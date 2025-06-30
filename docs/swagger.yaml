@@ -632,22 +632,6 @@ definitions:
       vehicleType:
         $ref: '#/definitions/vehicle.Type'
     type: object
-  handler.AttachmentRq:
-    properties:
-      entity_id:
-        type: string
-      entity_type:
-        $ref: '#/definitions/model.AttachmentType'
-      file_name:
-        type: string
-      mime_type:
-        type: string
-    required:
-    - entity_id
-    - entity_type
-    - file_name
-    - mime_type
-    type: object
   handler.AuthReq:
     description: User authentication credentials
     properties:
@@ -788,31 +772,11 @@ definitions:
     properties:
       auditFields:
         $ref: '#/definitions/model.AuditFields'
-      entityId:
-        type: string
-      entityType:
-        $ref: '#/definitions/model.AttachmentType'
-      fileName:
-        type: string
-      filePath:
-        type: string
-      id:
-        type: string
-      mimeType:
-        type: string
-      uploadedAt:
-        type: string
-      userId:
-        type: string
+      data:
+        items:
+          type: integer
+        type: array
     type: object
-  model.AttachmentType:
-    enum:
-    - expense
-    - vehicle
-    type: string
-    x-enum-varnames:
-    - AttachmentTypeExpense
-    - AttachmentTypeVehicle
   model.AuditFields:
     properties:
       createdAtUtc:
@@ -1456,15 +1420,24 @@ paths:
   /api/attachment:
     post:
       consumes:
-      - application/json
+      - multipart/form-data
       description: Загружает новое вложение для пользователя
       parameters:
-      - description: Данные вложения
-        in: body
-        name: input
+      - description: Тип сущности
+        in: formData
+        name: entity_type
         required: true
-        schema:
-          $ref: '#/definitions/handler.AttachmentRq'
+        type: string
+      - description: ID сущности
+        in: formData
+        name: entity_id
+        required: true
+        type: string
+      - description: Файл
+        in: formData
+        name: file
+        required: true
+        type: file
       produces:
       - application/json
       responses:

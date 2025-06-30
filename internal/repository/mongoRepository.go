@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
@@ -105,7 +106,10 @@ func (r *MongoRepository) GetAttachments() []*model.Attachment {
 
 func (r *MongoRepository) GetAttachmentById(id uuid.UUID, userId uuid.UUID) (*model.Attachment, *model.ApplicationError) {
 	var att model.Attachment
-	err := r.collection.FindOne(context.Background(), bson.M{"id": id.String(), "auditfields.createdby": userId}).Decode(&att)
+	filter := bson.D{
+		{"id", primitive.Binary{Subtype: 0, Data: id[:]}},
+	}
+	err := r.collection.FindOne(context.Background(), filter).Decode(&att)
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, model.NewApplicationError(model.ErrorTypeNotFound, "Вложение не найдено", nil)

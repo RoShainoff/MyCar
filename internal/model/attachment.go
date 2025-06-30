@@ -13,18 +13,19 @@ const (
 )
 
 type Attachment struct {
-	Id          uuid.UUID
-	UserId      uuid.UUID
-	EntityType  AttachmentType
-	EntityId    uuid.UUID
-	FilePath    string
-	FileName    string
-	MimeType    string
-	UploadedAt  time.Time
-	AuditFields AuditFields
+	Id          uuid.UUID      `bson:"id"`
+	UserId      uuid.UUID      `bson:"user_id"`
+	EntityType  AttachmentType `bson:"entity_type"`
+	EntityId    uuid.UUID      `bson:"entity_id"`
+	FilePath    string         `bson:"file_path"`
+	FileName    string         `bson:"file_name"`
+	MimeType    string         `bson:"mime_type"`
+	UploadedAt  time.Time      `bson:"uploaded_at"`
+	Data        []byte         `bson:"data"`
+	AuditFields AuditFields    `bson:"auditfields"`
 }
 
-func NewAttachment(id uuid.UUID, entityType AttachmentType, entityId uuid.UUID, filePath, fileName, mimeType string, uploadedAt time.Time, createdBy uuid.UUID) *Attachment {
+func NewAttachment(id uuid.UUID, entityType AttachmentType, entityId uuid.UUID, filePath, fileName, mimeType string, uploadedAt time.Time, createdBy uuid.UUID, data []byte) *Attachment {
 	return &Attachment{
 		Id:         id,
 		EntityType: entityType,
@@ -33,6 +34,7 @@ func NewAttachment(id uuid.UUID, entityType AttachmentType, entityId uuid.UUID, 
 		FileName:   fileName,
 		MimeType:   mimeType,
 		UploadedAt: uploadedAt,
+		Data:       data,
 		AuditFields: AuditFields{
 			CreatedBy:    createdBy,
 			CreatedAtUtc: time.Now(),

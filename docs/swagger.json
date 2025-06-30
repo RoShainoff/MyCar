@@ -17,7 +17,7 @@
                 ],
                 "description": "Загружает новое вложение для пользователя",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -28,13 +28,25 @@
                 "summary": "Загрузить вложение",
                 "parameters": [
                     {
-                        "description": "Данные вложения",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handler.AttachmentRq"
-                        }
+                        "type": "string",
+                        "description": "Тип сущности",
+                        "name": "entity_type",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID сущности",
+                        "name": "entity_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Файл",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1820,29 +1832,6 @@
                 }
             }
         },
-        "handler.AttachmentRq": {
-            "type": "object",
-            "required": [
-                "entity_id",
-                "entity_type",
-                "file_name",
-                "mime_type"
-            ],
-            "properties": {
-                "entity_id": {
-                    "type": "string"
-                },
-                "entity_type": {
-                    "$ref": "#/definitions/model.AttachmentType"
-                },
-                "file_name": {
-                    "type": "string"
-                },
-                "mime_type": {
-                    "type": "string"
-                }
-            }
-        },
         "handler.AuthReq": {
             "description": "User authentication credentials",
             "type": "object",
@@ -2039,42 +2028,13 @@
                 "auditFields": {
                     "$ref": "#/definitions/model.AuditFields"
                 },
-                "entityId": {
-                    "type": "string"
-                },
-                "entityType": {
-                    "$ref": "#/definitions/model.AttachmentType"
-                },
-                "fileName": {
-                    "type": "string"
-                },
-                "filePath": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "mimeType": {
-                    "type": "string"
-                },
-                "uploadedAt": {
-                    "type": "string"
-                },
-                "userId": {
-                    "type": "string"
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
-        },
-        "model.AttachmentType": {
-            "type": "string",
-            "enum": [
-                "expense",
-                "vehicle"
-            ],
-            "x-enum-varnames": [
-                "AttachmentTypeExpense",
-                "AttachmentTypeVehicle"
-            ]
         },
         "model.AuditFields": {
             "type": "object",
