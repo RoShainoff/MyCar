@@ -3,6 +3,7 @@ package car
 type Brand string
 
 const (
+	UnknownBrand           Brand = "Unknown"
 	Abarth                 Brand = "Abarth"
 	Ac                     Brand = "AC"
 	Acura                  Brand = "Acura"
