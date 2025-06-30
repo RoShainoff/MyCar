@@ -3,6 +3,7 @@ package handler
 import (
 	"MyCar/internal/model"
 	"MyCar/internal/model/expense"
+	"MyCar/internal/model/vehicle"
 	"MyCar/internal/service/mock"
 	"bytes"
 	"encoding/json"
@@ -31,6 +32,7 @@ func TestExpenseHandler_CreateExpense(t *testing.T) {
 
 	reqBody := ExpenseRq{
 		VehicleId:    uuid.New(),
+		VehicleType:  vehicle.Car,
 		Category:     expense.Fuel,
 		Amount:       100.5,
 		Currency:     "RUB",
@@ -60,7 +62,7 @@ func TestExpenseHandler_CreateExpense(t *testing.T) {
 func TestExpenseHandler_GetExpenseById(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	mockedId := uuid.New()
-	mockExpense := expense.NewExpense(mockedId, uuid.New(), expense.Fuel, 100.5, "RUB", 1.0, time.Now(), "Заправка")
+	mockExpense := expense.NewExpense(mockedId, uuid.New(), vehicle.Car, expense.Fuel, 100.5, "RUB", 1.0, time.Now(), "Заправка")
 	mockService := &mock.ExpenseServiceMock{
 		GetExpenseByIdFunc: func(id, userId uuid.UUID) (*expense.Expense, *model.ApplicationError) {
 			return mockExpense, nil
@@ -106,6 +108,7 @@ func TestExpenseHandler_UpdateExpense(t *testing.T) {
 
 	reqBody := ExpenseRq{
 		VehicleId:    uuid.New(),
+		VehicleType:  vehicle.Car,
 		Category:     expense.Fuel,
 		Amount:       200.0,
 		Currency:     "RUB",

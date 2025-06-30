@@ -14,11 +14,11 @@ type Moto struct {
 	TransmissionType TransmissionType
 }
 
-func NewMoto(id uuid.UUID, userId uuid.UUID, fuelType vehicle.FuelType, brand Brand, year int, plate string, category CategoryKind, transmission TransmissionTypeKind) *Moto {
+func NewMoto(id uuid.UUID, userId uuid.UUID, fuelType vehicle.FuelType, brand BrandKind, year int, plate string, category CategoryKind, transmission TransmissionTypeKind) *Moto {
 	newVehicle, _ := vehicle.NewVehicle(id, userId, fuelType, vehicle.Motorcycle, year, plate)
 	return &Moto{
 		*newVehicle,
-		brand,
+		brand.GetBrand(),
 		category.GetCategory(),
 		TransmissionTypeKind.GetTransmissionType(transmission),
 	}
@@ -29,7 +29,7 @@ func (m *Moto) GetCategory() Category {
 }
 
 func (m *Moto) GetCategoryKind() CategoryKind {
-	return m.Category.id
+	return m.Category.Id
 }
 
 func (m *Moto) SetCategory(category CategoryKind) {
@@ -105,17 +105,17 @@ func (m *Moto) GetGeneralInfo() string {
 }
 
 func (m *Moto) GetCategoryName() string {
-	return m.Category.name
+	return m.Category.Name
 }
 
 func (m *Moto) Validate() error {
 	if err := m.Vehicle.Validate(); err != nil {
 		return err
 	}
-	if m.Brand == UnknownBrand {
+	if m.Brand.Id == UnknownBrand {
 		return errors.New("brand must be specified")
 	}
-	if m.Category.id == CategoryKindNone {
+	if m.Category.Id == CategoryKindNone {
 		return errors.New("category must be specified")
 	}
 	if m.TransmissionType.Id == TransmissionTypeUnknown {

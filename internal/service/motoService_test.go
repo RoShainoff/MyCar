@@ -53,7 +53,7 @@ func TestMotoService_UpdateMoto_Success(t *testing.T) {
 
 	updatedMoto := &moto.Moto{}
 	updatedMoto.SetId(mockedId)
-	updatedMoto.SetBrand(moto.Minsk)
+	updatedMoto.SetBrand(moto.Minsk.GetBrand())
 
 	mockRepo := &mock.AbstractRepositoryMock{
 		GetMotoByIdFunc: func(id uuid.UUID, userId uuid.UUID) (*moto.Moto, *model.ApplicationError) {
@@ -68,7 +68,7 @@ func TestMotoService_UpdateMoto_Success(t *testing.T) {
 	if err != nil {
 		t.Fatalf("не ожидалась ошибка: %v", err)
 	}
-	if existingMoto.Brand != moto.Minsk {
+	if existingMoto.Brand != moto.Minsk.GetBrand() {
 		t.Error("бренд не обновился")
 	}
 }

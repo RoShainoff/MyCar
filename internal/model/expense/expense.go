@@ -2,6 +2,7 @@ package expense
 
 import (
 	"MyCar/internal/model"
+	"MyCar/internal/model/vehicle"
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
@@ -10,6 +11,7 @@ import (
 
 type Expense struct {
 	Id           uuid.UUID
+	VehicleType  vehicle.Type
 	VehicleId    uuid.UUID
 	Category     Category
 	Amount       float64
@@ -23,7 +25,8 @@ type Expense struct {
 func NewExpense(
 	id uuid.UUID,
 	vehicleId uuid.UUID,
-	category Category,
+	vehicleType vehicle.Type,
+	category CategoryKind,
 	amount float64,
 	currency string,
 	exchangeRate float64,
@@ -32,8 +35,9 @@ func NewExpense(
 ) *Expense {
 	return &Expense{
 		Id:           id,
+		VehicleType:  vehicleType,
 		VehicleId:    vehicleId,
-		Category:     category,
+		Category:     category.GetCategory(),
 		Amount:       amount,
 		Currency:     currency,
 		ExchangeRate: exchangeRate,
@@ -52,6 +56,14 @@ func (e *Expense) GetId() uuid.UUID {
 
 func (e *Expense) SetId(id uuid.UUID) {
 	e.Id = id
+}
+
+func (e *Expense) GetVehicleType() vehicle.Type {
+	return e.VehicleType
+}
+
+func (e *Expense) SetVehicleType(t vehicle.Type) {
+	e.VehicleType = t
 }
 
 func (e *Expense) GetCreatedBy() uuid.UUID {

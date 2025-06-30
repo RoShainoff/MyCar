@@ -8,8 +8,9 @@ import (
 
 type Config struct {
 	Server        Server        `yaml:"server"`
-	SQLDatabase   SQLDatabase   `yaml:"sqlDatabase"`
-	NoSQLDatabase NoSQLDatabase `yaml:"noSqlDatabase"`
+	SqlDatabase   SqlDatabase   `yaml:"sqlDatabase"`
+	NoSqlDatabase NoSqlDatabase `yaml:"noSqlDatabase"`
+	Redis         Redis         `yaml:"redis"`
 	App           App           `yaml:"app"`
 }
 
@@ -17,20 +18,27 @@ type Server struct {
 	Port int `yaml:"port"`
 }
 
-type SQLDatabase struct {
+type SqlDatabase struct {
 	Host            string `yaml:"host"`
 	Port            int    `yaml:"port"`
 	User            string `yaml:"user"`
 	Password        string `yaml:"password"`
 	Name            string `yaml:"name"`
-	SSLMode         string `yaml:"sslmode"`
+	Sslmode         string `yaml:"sslmode"`
 	MaxIdleConns    int    `yaml:"maxIdleConns"`
 	MaxOpenConns    int    `yaml:"maxOpenConns"`
 	ConnMaxLifetime int    `yaml:"connMaxLifetime"`
 }
 
-type NoSQLDatabase struct {
-	URI string `yaml:"uri"`
+type NoSqlDatabase struct {
+	Uri string `yaml:"uri"`
+}
+
+type Redis struct {
+	Addr          string `yaml:"addr"`
+	DB            int    `yaml:"db"`
+	Password      string `yaml:"password"`
+	LogTTLSeconds int    `yaml:"logTTLSeconds"`
 }
 
 type App struct {
@@ -39,17 +47,16 @@ type App struct {
 }
 
 func MustLoad() (*Config, error) {
-	config := &Config{}
-
-	data, err := os.ReadFile("config/config.yaml")
+	f, err := os.Open("config/config.yaml")
 	if err != nil {
-		return nil, fmt.Errorf("failed to read config file: %w", err)
+		return nil, fmt.Errorf("open config: %w", err)
 	}
+	defer f.Close()
 
-	err = yaml.Unmarshal(data, config)
-	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
+	var cfg Config
+	d := yaml.NewDecoder(f)
+	if err := d.Decode(&cfg); err != nil {
+		return nil, fmt.Errorf("decode config: %w", err)
 	}
-
-	return config, nil
+	return &cfg, nil
 }

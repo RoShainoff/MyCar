@@ -31,8 +31,23 @@ func Run() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
-	repo := repository.NewPlainRepository()
-	repo.LoadAll()
+	pgDsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=%s",
+		cfg.SqlDatabase.Host, cfg.SqlDatabase.User, cfg.SqlDatabase.Password, cfg.SqlDatabase.Name, cfg.SqlDatabase.Sslmode)
+	redisAddr := cfg.Redis.Addr
+	logTTL := time.Duration(cfg.Redis.LogTTLSeconds) * time.Second
+
+	pgRepo, err := repository.NewPostgresRepository(pgDsn, redisAddr, logTTL)
+	if err != nil {
+		log.Fatalf("PostgresRepository error: %s", err)
+	}
+
+	mongoRepo, err := repository.NewMongoRepository(cfg.NoSqlDatabase.Uri, redisAddr, logTTL)
+	if err != nil {
+		log.Fatalf("MongoRepository error: %s", err)
+	}
+
+	repo := repository.NewCombinedRepository(pgRepo, mongoRepo)
+
 	jwtService := service.NewJwtService(cfg)
 	authService := service.NewAuthService(repo, jwtService)
 	carService := service.NewCarService(repo)

@@ -12,6 +12,11 @@ sqlDatabase:
   connMaxLifetime: 300
 noSqlDatabase:
   uri: "mongodb://mongo:27017/mycar"
+redis:
+  addr: "redis:6379"
+  db: 0
+  password: ""
+  logTTLSeconds: 86400
 app:
   secret: "salt1234%"
   tokenTtlHours: 5

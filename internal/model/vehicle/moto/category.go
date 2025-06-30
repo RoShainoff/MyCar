@@ -36,59 +36,59 @@ const (
 )
 
 type Category struct {
-	id               CategoryKind
-	name             string
-	parentCategoryId CategoryKind
+	Id               CategoryKind
+	Name             string
+	ParentCategoryId CategoryKind
 }
 
 var ParentCategories = []Category{
-	{id: Offroad, name: "Внедорожные"},
-	{id: Road, name: "Дорожные"},
-	{id: Cruisers, name: "Круизеры/Чопперы"},
-	{id: Sports, name: "Спортивные"},
-	{id: Supermoto, name: "Супермото"},
-	{id: Trikes, name: "Трайки"},
-	{id: Tourism, name: "Туристические"},
+	{Id: Offroad, Name: "Внедорожные"},
+	{Id: Road, Name: "Дорожные"},
+	{Id: Cruisers, Name: "Круизеры/Чопперы"},
+	{Id: Sports, Name: "Спортивные"},
+	{Id: Supermoto, Name: "Супермото"},
+	{Id: Trikes, Name: "Трайки"},
+	{Id: Tourism, Name: "Туристические"},
 }
 
 var ChildCategories = []Category{
 	// Подкатегории внедорожных
-	{id: Allround, name: "Allround", parentCategoryId: Offroad},
-	{id: Enduro, name: "Внедорожный Эндуро", parentCategoryId: Offroad},
-	{id: DualPurpose, name: "Мотоцикл повышенной проходимости", parentCategoryId: Offroad},
-	{id: SportEnduro, name: "Спортивный Эндуро", parentCategoryId: Offroad},
-	{id: TouringEnduro, name: "Туристический Эндуро", parentCategoryId: Offroad},
+	{Id: Allround, Name: "Allround", ParentCategoryId: Offroad},
+	{Id: Enduro, Name: "Внедорожный Эндуро", ParentCategoryId: Offroad},
+	{Id: DualPurpose, Name: "Мотоцикл повышенной проходимости", ParentCategoryId: Offroad},
+	{Id: SportEnduro, Name: "Спортивный Эндуро", ParentCategoryId: Offroad},
+	{Id: TouringEnduro, Name: "Туристический Эндуро", ParentCategoryId: Offroad},
 
 	// Подкатегории дорожных
-	{id: Naked, name: "Naked bike", parentCategoryId: Road},
-	{id: RoadBike, name: "Дорожный", parentCategoryId: Road},
-	{id: Classic, name: "Классик", parentCategoryId: Road},
+	{Id: Naked, Name: "Naked bike", ParentCategoryId: Road},
+	{Id: RoadBike, Name: "Дорожный", ParentCategoryId: Road},
+	{Id: Classic, Name: "Классик", ParentCategoryId: Road},
 
 	// Подкатегории круизеров
-	{id: Custom, name: "Кастом", parentCategoryId: Cruisers},
-	{id: Cruiser, name: "Круизер", parentCategoryId: Cruisers},
-	{id: Chopper, name: "Чоппер", parentCategoryId: Cruisers},
+	{Id: Custom, Name: "Кастом", ParentCategoryId: Cruisers},
+	{Id: Cruiser, Name: "Круизер", ParentCategoryId: Cruisers},
+	{Id: Chopper, Name: "Чоппер", ParentCategoryId: Cruisers},
 
 	// Подкатегории спортивных
-	{id: Cross, name: "Кросс", parentCategoryId: Sports},
-	{id: Speedway, name: "Speedway", parentCategoryId: Sports},
-	{id: Kids, name: "Детский", parentCategoryId: Sports},
-	{id: Minibike, name: "Минибайк", parentCategoryId: Sports},
-	{id: Pitbike, name: "Питбайк", parentCategoryId: Sports},
-	{id: Trial, name: "Триал", parentCategoryId: Sports},
-	{id: Sportbike, name: "Спорт-байк", parentCategoryId: Sports},
-	{id: SportTouring, name: "Спорт-туризм", parentCategoryId: Sports},
-	{id: Supersport, name: "Супер-спорт", parentCategoryId: Sports},
+	{Id: Cross, Name: "Кросс", ParentCategoryId: Sports},
+	{Id: Speedway, Name: "Speedway", ParentCategoryId: Sports},
+	{Id: Kids, Name: "Детский", ParentCategoryId: Sports},
+	{Id: Minibike, Name: "Минибайк", ParentCategoryId: Sports},
+	{Id: Pitbike, Name: "Питбайк", ParentCategoryId: Sports},
+	{Id: Trial, Name: "Триал", ParentCategoryId: Sports},
+	{Id: Sportbike, Name: "Спорт-байк", ParentCategoryId: Sports},
+	{Id: SportTouring, Name: "Спорт-туризм", ParentCategoryId: Sports},
+	{Id: Supersport, Name: "Супер-спорт", ParentCategoryId: Sports},
 
 	// Подкатегории трайков
-	{id: Trike, name: "Трайк", parentCategoryId: Trikes},
-	{id: ThreeWheeler, name: "Трицикл", parentCategoryId: Trikes},
+	{Id: Trike, Name: "Трайк", ParentCategoryId: Trikes},
+	{Id: ThreeWheeler, Name: "Трицикл", ParentCategoryId: Trikes},
 }
 
 func (id CategoryKind) GetSubcategories() []Category {
 	var result []Category
 	for _, c := range ChildCategories {
-		if c.parentCategoryId == id {
+		if c.ParentCategoryId == id {
 			result = append(result, c)
 		}
 	}
@@ -98,7 +98,7 @@ func (id CategoryKind) GetSubcategories() []Category {
 func (id CategoryKind) GetParentCategory() Category {
 	var result Category
 	for _, c := range ParentCategories {
-		if c.id == id {
+		if c.Id == id {
 			return c
 		}
 	}
@@ -108,7 +108,7 @@ func (id CategoryKind) GetParentCategory() Category {
 func (id CategoryKind) GetCategory() Category {
 	var result Category
 	for _, c := range ChildCategories {
-		if c.id == id {
+		if c.Id == id {
 			return c
 		}
 	}
@@ -117,8 +117,8 @@ func (id CategoryKind) GetCategory() Category {
 
 func (cc Category) GetCategoryName() string {
 	for _, c := range ChildCategories {
-		if c.id == cc.id {
-			return c.name
+		if c.Id == cc.Id {
+			return c.Name
 		}
 	}
 	return "Unknown"

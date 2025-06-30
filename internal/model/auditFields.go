@@ -18,10 +18,10 @@ type Auditable interface {
 }
 
 type AuditFields struct {
-	CreatedBy     uuid.UUID
-	CreatedAtUtc  time.Time
-	ModifiedBy    uuid.UUID
-	ModifiedAtUtc time.Time
+	CreatedBy     uuid.UUID `bson:"createdby"`
+	CreatedAtUtc  time.Time `bson:"createdatutc"`
+	ModifiedBy    uuid.UUID `bson:"modifiedby"`
+	ModifiedAtUtc time.Time `bson:"modifiedatutc"`
 }
 
 func (a *AuditFields) GetCreatedBy() uuid.UUID     { return a.CreatedBy }

@@ -15,7 +15,7 @@ type MotoHandler struct {
 }
 
 type MotoRq struct {
-	Brand            moto.Brand                `json:"brand" binding:"required"`
+	Brand            moto.BrandKind            `json:"brand" binding:"required"`
 	Category         moto.CategoryKind         `json:"category" binding:"required"`
 	TransmissionType moto.TransmissionTypeKind `json:"transmission_type" binding:"required"`
 	FuelType         vehicle.FuelType          `json:"fuel_type" binding:"required"`
@@ -159,7 +159,6 @@ func (h *MotoHandler) DeleteMoto(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "Invalid moto ID")
 		return
 	}
-
 	deleteErr := h.service.DeleteMoto(id, userId)
 	if deleteErr != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())

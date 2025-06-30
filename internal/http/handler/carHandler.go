@@ -15,7 +15,7 @@ type CarHandler struct {
 }
 
 type CarRq struct {
-	Brand            car.Brand                `json:"brand" binding:"required"`
+	Brand            car.BrandKind            `json:"brand" binding:"required"`
 	DriveType        car.DriveTypeKind        `json:"drive_type" binding:"required"`
 	BodyType         car.BodyTypeKind         `json:"body_type" binding:"required"`
 	TransmissionType car.TransmissionTypeKind `json:"transmission_type" binding:"required"`
@@ -158,7 +158,6 @@ func (h *CarHandler) DeleteCar(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "Invalid car ID")
 		return
 	}
-
 	deleteErr := h.service.DeleteCar(id, userId)
 	if deleteErr != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())

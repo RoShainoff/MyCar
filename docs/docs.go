@@ -24,7 +24,7 @@ const docTemplate = `{
                 ],
                 "description": "Загружает новое вложение для пользователя",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -35,13 +35,25 @@ const docTemplate = `{
                 "summary": "Загрузить вложение",
                 "parameters": [
                     {
-                        "description": "Данные вложения",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handler.AttachmentRq"
-                        }
+                        "type": "string",
+                        "description": "Тип сущности",
+                        "name": "entity_type",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID сущности",
+                        "name": "entity_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Файл",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1130,7 +1142,18 @@ const docTemplate = `{
     },
     "definitions": {
         "car.BodyType": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/car.BodyTypeKind"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parentStyleId": {
+                    "$ref": "#/definitions/car.BodyTypeKind"
+                }
+            }
         },
         "car.BodyTypeKind": {
             "type": "integer",
@@ -1172,234 +1195,247 @@ const docTemplate = `{
             ]
         },
         "car.Brand": {
-            "type": "string",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/car.BrandKind"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "car.BrandKind": {
+            "type": "integer",
             "enum": [
-                "Abarth",
-                "AC",
-                "Acura",
-                "Adler",
-                "Aito",
-                "Aiways",
-                "Aixam",
-                "Alfa Romeo",
-                "Alpina",
-                "Alpine",
-                "Ambertruck",
-                "AMC",
-                "Arcfox",
-                "Aro",
-                "Asia",
-                "Aston Martin",
-                "Aurus",
-                "Austin",
-                "Autobianchi",
-                "Avatr",
-                "BAIC",
-                "Bajaj",
-                "Baltijas Dzips",
-                "Baojun",
-                "BAW",
-                "Belgee",
-                "Bentley",
-                "Bestune",
-                "Borgward",
-                "Brilliance",
-                "Bugatti",
-                "Buick",
-                "BYD",
-                "Cadillac",
-                "Chana",
-                "Changan",
-                "Changfeng",
-                "Changhe",
-                "Chevrolet",
-                "Chrysler",
-                "Ciimo (Dongfeng-Honda)",
-                "Citroen",
-                "Coda",
-                "Cupra",
-                "Dacia",
-                "Dadi",
-                "Daewoo",
-                "Daihatsu",
-                "Daimler",
-                "Datsun",
-                "Dayun",
-                "Delage",
-                "Denza",
-                "Derways",
-                "Dodge",
-                "Dongfeng",
-                "Doninvest",
-                "Donkervoort",
-                "DS",
-                "DW Hower",
-                "Eagle",
-                "Enovate (Enoreve)",
-                "Everus",
-                "Evolute",
-                "Excalibur",
-                "Exeed",
-                "Facel Vega",
-                "FAW",
-                "Ferrari",
-                "Fiat",
-                "Fisker",
-                "Forthing",
-                "Foton",
-                "FSO",
-                "FSR",
-                "GAC",
-                "GAC Aion",
-                "GAC Trumpchi",
-                "Genesis",
-                "Geo",
-                "GMC",
-                "Great Wall",
-                "Hafei",
-                "Haima",
-                "Hanteng",
-                "Haval",
-                "Hawtai",
-                "Hennessey",
-                "HiPhi",
-                "Honda",
-                "Hongqi",
-                "Hozon",
-                "Hudson",
-                "Hummer",
-                "iCar",
-                "IM Motors (Zhiji)",
-                "Ineos",
-                "Infiniti",
-                "Innocenti",
-                "International Harvester",
-                "Iran Khodro",
-                "Isuzu",
-                "JAC",
-                "Jaecoo",
-                "Jaguar",
-                "Jeep",
-                "Jetour",
-                "Jetta",
-                "Jidu",
-                "Jinbei",
-                "JMC",
-                "Kaiyi",
-                "Kawei",
-                "KGM",
-                "Knewstar",
-                "Koenigsegg",
-                "KTM AG",
-                "Lamborghini",
-                "Lancia",
-                "Land Rover",
-                "Landwind",
-                "Leapmotor",
-                "LEVC",
-                "Lexus",
-                "Liebao Motor",
-                "Lifan",
-                "Lincoln",
-                "Lingxi",
-                "Livan",
-                "LiXiang",
-                "Lotus",
-                "Lucid",
-                "Luxeed",
-                "Luxgen",
-                "Lynk \u0026 Co",
-                "M-Hero",
-                "Maextro",
-                "Mahindra",
-                "Maple",
-                "Marussia",
-                "Maserati",
-                "Maxus",
-                "Maybach",
-                "Mazda",
-                "McLaren",
-                "Mercury",
-                "Metrocab",
-                "MG",
-                "Mini",
-                "Mitsubishi",
-                "Mitsuoka",
-                "Morgan",
-                "Nevo",
-                "Nio",
-                "Oldsmobile",
-                "Omoda",
-                "Opel",
-                "Ora",
-                "Oshan",
-                "Oting",
-                "Packard",
-                "Pagani",
-                "Peugeot",
-                "Plymouth",
-                "Polar Stone (Jishi)",
-                "Polestar",
-                "Pontiac",
-                "Porsche",
-                "Proton",
-                "Puch",
-                "Qingling",
-                "Ram",
-                "Ravon",
-                "Reliant",
-                "Renault",
-                "Renault Samsung",
-                "Rising Auto",
-                "Rivian",
-                "Roewe",
-                "Rolls-Royce",
-                "Rover",
-                "Rox",
-                "Saab",
-                "Santana",
-                "Saturn",
-                "Scion",
-                "SEAT",
-                "Seres",
-                "ShuangHuan",
-                "Simca",
-                "Skoda",
-                "Skywell",
-                "Smart",
-                "Solaris",
-                "Sollers",
-                "Soueast",
-                "SsangYong",
-                "Stelato",
-                "Steyr",
-                "Subaru",
-                "Suzuki",
-                "SWM",
-                "Tank",
-                "Tata",
-                "Tatra",
-                "Tesla",
-                "Tianma",
-                "Tianye",
-                "Trabant",
-                "TVR",
-                "Vauxhall",
-                "Venucia",
-                "VGV",
-                "Volkswagen",
-                "Автокам",
-                "Амберавто",
-                "ГАЗ",
-                "Иж",
-                "Канонир",
-                "ЛуАЗ",
-                "Москвич",
-                "СМЗ",
-                "ТагАЗ",
-                "УАЗ"
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108,
+                109,
+                110,
+                111,
+                112,
+                113,
+                114,
+                115,
+                116,
+                117,
+                118,
+                119,
+                120,
+                121,
+                122,
+                123,
+                124,
+                125,
+                126,
+                127,
+                128,
+                129,
+                130,
+                131,
+                132,
+                133,
+                134,
+                135,
+                136,
+                137,
+                138,
+                139,
+                140,
+                141,
+                142,
+                143,
+                144,
+                145,
+                146,
+                147,
+                148,
+                149,
+                150,
+                151,
+                152,
+                153,
+                154,
+                155,
+                156,
+                157,
+                158,
+                159,
+                160,
+                161,
+                162,
+                163,
+                164,
+                165,
+                166,
+                167,
+                168,
+                169,
+                170,
+                171,
+                172,
+                173,
+                174,
+                175,
+                176,
+                177,
+                178,
+                179,
+                180,
+                181,
+                182,
+                183,
+                184,
+                185,
+                186,
+                187,
+                188,
+                189,
+                190,
+                191,
+                192,
+                193,
+                194,
+                195,
+                196,
+                197,
+                198,
+                199,
+                200,
+                201,
+                202,
+                203,
+                204,
+                205,
+                206,
+                207,
+                208,
+                209,
+                210,
+                211,
+                212,
+                213,
+                214,
+                215,
+                216,
+                217,
+                218,
+                219,
+                220,
+                221,
+                222,
+                223,
+                224
             ],
             "x-enum-varnames": [
+                "UnknownBrand",
                 "Abarth",
                 "Ac",
                 "Acura",
@@ -1616,14 +1652,14 @@ const docTemplate = `{
                 "Volkswagen",
                 "Avtokam",
                 "Amberavto",
-                "GAZ",
+                "Gaz",
                 "Izh",
                 "Kanonir",
                 "LuAZ",
                 "Moskvich",
-                "SMZ",
-                "TagAZ",
-                "UAZ"
+                "Smz",
+                "Tagaz",
+                "Uaz"
             ]
         },
         "car.Car": {
@@ -1737,16 +1773,29 @@ const docTemplate = `{
             ]
         },
         "expense.Category": {
-            "type": "string",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/expense.CategoryKind"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "expense.CategoryKind": {
+            "type": "integer",
             "enum": [
-                "Fuel",
-                "Repair",
-                "Maintenance",
-                "Insurance",
-                "Taxes",
-                "Other"
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
             ],
             "x-enum-varnames": [
+                "UnknownCategory",
                 "Fuel",
                 "Repair",
                 "Maintenance",
@@ -1784,29 +1833,9 @@ const docTemplate = `{
                 },
                 "vehicleId": {
                     "type": "string"
-                }
-            }
-        },
-        "handler.AttachmentRq": {
-            "type": "object",
-            "required": [
-                "entity_id",
-                "entity_type",
-                "file_name",
-                "mime_type"
-            ],
-            "properties": {
-                "entity_id": {
-                    "type": "string"
                 },
-                "entity_type": {
-                    "$ref": "#/definitions/model.AttachmentType"
-                },
-                "file_name": {
-                    "type": "string"
-                },
-                "mime_type": {
-                    "type": "string"
+                "vehicleType": {
+                    "$ref": "#/definitions/vehicle.Type"
                 }
             }
         },
@@ -1845,7 +1874,7 @@ const docTemplate = `{
                     "$ref": "#/definitions/car.BodyTypeKind"
                 },
                 "brand": {
-                    "$ref": "#/definitions/car.Brand"
+                    "$ref": "#/definitions/car.BrandKind"
                 },
                 "drive_type": {
                     "$ref": "#/definitions/car.DriveTypeKind"
@@ -1874,14 +1903,15 @@ const docTemplate = `{
                 "category",
                 "currency",
                 "date",
-                "vehicle_id"
+                "vehicle_id",
+                "vehicle_type"
             ],
             "properties": {
                 "amount": {
                     "type": "number"
                 },
                 "category": {
-                    "$ref": "#/definitions/expense.Category"
+                    "$ref": "#/definitions/expense.CategoryKind"
                 },
                 "currency": {
                     "type": "string"
@@ -1897,6 +1927,9 @@ const docTemplate = `{
                 },
                 "vehicle_id": {
                     "type": "string"
+                },
+                "vehicle_type": {
+                    "$ref": "#/definitions/vehicle.Type"
                 }
             }
         },
@@ -1913,7 +1946,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "brand": {
-                    "$ref": "#/definitions/moto.Brand"
+                    "$ref": "#/definitions/moto.BrandKind"
                 },
                 "category": {
                     "$ref": "#/definitions/moto.CategoryKind"
@@ -2001,6 +2034,36 @@ const docTemplate = `{
             "properties": {
                 "auditFields": {
                     "$ref": "#/definitions/model.AuditFields"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "entityId": {
+                    "type": "string"
+                },
+                "entityType": {
+                    "$ref": "#/definitions/model.AttachmentType"
+                },
+                "fileName": {
+                    "type": "string"
+                },
+                "filePath": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "mimeType": {
+                    "type": "string"
+                },
+                "uploadedAt": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
                 }
             }
         },
@@ -2033,6 +2096,17 @@ const docTemplate = `{
             }
         },
         "moto.Brand": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/moto.BrandKind"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "moto.BrandKind": {
             "type": "integer",
             "enum": [
                 0,
@@ -2498,7 +2572,18 @@ const docTemplate = `{
             ]
         },
         "moto.Category": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/moto.CategoryKind"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parentCategoryId": {
+                    "$ref": "#/definitions/moto.CategoryKind"
+                }
+            }
         },
         "moto.CategoryKind": {
             "type": "integer",

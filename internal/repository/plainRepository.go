@@ -6,198 +6,73 @@ import (
 	"MyCar/internal/model/expense"
 	"MyCar/internal/model/vehicle/car"
 	"MyCar/internal/model/vehicle/moto"
-	"MyCar/internal/utils"
 	"github.com/google/uuid"
 )
 
-const (
-	usersFile       = "users.json"
-	carsFile        = "cars.json"
-	motosFile       = "motos.json"
-	expensesFile    = "expenses.json"
-	attachmentsFile = "attachments.json"
-)
-
-type PlainRepository struct {
-	users       *BusinessEntityStorage[*auth.User]
-	cars        *BusinessEntityStorage[*car.Car]
-	motos       *BusinessEntityStorage[*moto.Moto]
-	expenses    *BusinessEntityStorage[*expense.Expense]
-	attachments *BusinessEntityStorage[*model.Attachment]
+type CombinedRepository struct {
+	pg    AbstractRepository
+	mongo AbstractRepository
 }
 
-func NewPlainRepository() *PlainRepository {
-	return &PlainRepository{
-		users:       NewBusinessEntityStorage[*auth.User](usersFile),
-		cars:        NewBusinessEntityStorage[*car.Car](carsFile),
-		motos:       NewBusinessEntityStorage[*moto.Moto](motosFile),
-		expenses:    NewBusinessEntityStorage[*expense.Expense](expensesFile),
-		attachments: NewBusinessEntityStorage[*model.Attachment](attachmentsFile),
-	}
+func NewCombinedRepository(pg, mongo AbstractRepository) *CombinedRepository {
+	return &CombinedRepository{pg: pg, mongo: mongo}
 }
 
-func (r *PlainRepository) LoadAll() {
-	r.users.Load()
-	r.cars.Load()
-	r.motos.Load()
-	r.expenses.Load()
-	r.attachments.Load()
-}
-
-func (r *PlainRepository) SaveEntity(entity model.BusinessEntity) (uuid.UUID, *model.ApplicationError) {
-	switch e := entity.(type) {
-	case *car.Car:
-		return r.cars.Save(e)
-	case *moto.Moto:
-		return r.motos.Save(e)
-	case *expense.Expense:
-		return r.expenses.Save(e)
-	case *auth.User:
-		return r.users.Save(e)
+func (r *CombinedRepository) SaveEntity(entity model.BusinessEntity) (uuid.UUID, *model.ApplicationError) {
+	switch entity.(type) {
 	case *model.Attachment:
-		return r.attachments.Save(e)
+		return r.mongo.SaveEntity(entity)
+	default:
+		return r.pg.SaveEntity(entity)
 	}
-	return uuid.Nil, nil
 }
 
-func (r *PlainRepository) DeleteEntity(entity model.BusinessEntity) *model.ApplicationError {
-	switch e := entity.(type) {
-	case *car.Car:
-		return r.cars.Delete(e, true)
-	case *moto.Moto:
-		return r.motos.Delete(e, true)
-	case *expense.Expense:
-		return r.expenses.Delete(e, true)
-	case *auth.User:
-		return r.users.Delete(e, true)
+func (r *CombinedRepository) DeleteEntity(entity model.BusinessEntity) *model.ApplicationError {
+	switch entity.(type) {
 	case *model.Attachment:
-		return r.attachments.Delete(e, true)
+		return r.mongo.DeleteEntity(entity)
+	default:
+		return r.pg.DeleteEntity(entity)
 	}
-	return nil
 }
 
-func (r *PlainRepository) GetUsers() []*auth.User {
-	return r.users.GetAll()
+func (r *CombinedRepository) GetUsers() []*auth.User              { return r.pg.GetUsers() }
+func (r *CombinedRepository) GetCars() []*car.Car                 { return r.pg.GetCars() }
+func (r *CombinedRepository) GetMotos() []*moto.Moto              { return r.pg.GetMotos() }
+func (r *CombinedRepository) GetExpenses() []*expense.Expense     { return r.pg.GetExpenses() }
+func (r *CombinedRepository) GetAttachments() []*model.Attachment { return r.mongo.GetAttachments() }
+func (r *CombinedRepository) GetUserById(id uuid.UUID) (*auth.User, *model.ApplicationError) {
+	return r.pg.GetUserById(id)
 }
-
-func (r *PlainRepository) GetCars() []*car.Car {
-	return r.cars.GetAll()
+func (r *CombinedRepository) GetCarById(id uuid.UUID, userId uuid.UUID) (*car.Car, *model.ApplicationError) {
+	return r.pg.GetCarById(id, userId)
 }
-
-func (r *PlainRepository) GetMotos() []*moto.Moto {
-	return r.motos.GetAll()
+func (r *CombinedRepository) GetMotoById(id uuid.UUID, userId uuid.UUID) (*moto.Moto, *model.ApplicationError) {
+	return r.pg.GetMotoById(id, userId)
 }
-
-func (r *PlainRepository) GetExpenses() []*expense.Expense {
-	return r.expenses.GetAll()
+func (r *CombinedRepository) GetExpenseById(id uuid.UUID, userId uuid.UUID) (*expense.Expense, *model.ApplicationError) {
+	return r.pg.GetExpenseById(id, userId)
 }
-
-func (r *PlainRepository) GetAttachments() []*model.Attachment {
-	return r.attachments.GetAll()
+func (r *CombinedRepository) GetAttachmentById(id uuid.UUID, userId uuid.UUID) (*model.Attachment, *model.ApplicationError) {
+	return r.mongo.GetAttachmentById(id, userId)
 }
-
-func (r *PlainRepository) GetUserById(id uuid.UUID) (*auth.User, *model.ApplicationError) {
-	user, err := r.users.GetById(id)
-	return user, err
+func (r *CombinedRepository) GetUsersCount() int       { return r.pg.GetUsersCount() }
+func (r *CombinedRepository) GetCarsCount() int        { return r.pg.GetCarsCount() }
+func (r *CombinedRepository) GetMotosCount() int       { return r.pg.GetMotosCount() }
+func (r *CombinedRepository) GetExpensesCount() int    { return r.pg.GetExpensesCount() }
+func (r *CombinedRepository) GetAttachmentsCount() int { return r.mongo.GetAttachmentsCount() }
+func (r *CombinedRepository) GetUser(login, password string) (*auth.User, *model.ApplicationError) {
+	return r.pg.GetUser(login, password)
 }
-
-func (r *PlainRepository) GetCarById(id uuid.UUID, userId uuid.UUID) (*car.Car, *model.ApplicationError) {
-	car, err := r.cars.GetById(id)
-	return car, err
+func (r *CombinedRepository) GetCarsByUserId(userId uuid.UUID) []*car.Car {
+	return r.pg.GetCarsByUserId(userId)
 }
-
-func (r *PlainRepository) GetMotoById(id uuid.UUID, userId uuid.UUID) (*moto.Moto, *model.ApplicationError) {
-	moto, err := r.motos.GetById(id)
-	return moto, err
+func (r *CombinedRepository) GetMotosByUserId(userId uuid.UUID) []*moto.Moto {
+	return r.pg.GetMotosByUserId(userId)
 }
-
-func (r *PlainRepository) GetExpenseById(id uuid.UUID, userId uuid.UUID) (*expense.Expense, *model.ApplicationError) {
-	return r.expenses.GetById(id)
+func (r *CombinedRepository) GetExpensesByUserId(userId uuid.UUID) []*expense.Expense {
+	return r.pg.GetExpensesByUserId(userId)
 }
-
-func (r *PlainRepository) GetUsersCount() int {
-	return len(r.users.GetAll())
-}
-
-func (r *PlainRepository) GetCarsCount() int {
-	return len(r.cars.GetAll())
-}
-
-func (r *PlainRepository) GetMotosCount() int {
-	return len(r.motos.GetAll())
-}
-
-func (r *PlainRepository) GetExpensesCount() int {
-	return len(r.expenses.GetAll())
-}
-
-func (r *PlainRepository) GetAttachmentsCount() int {
-	return len(r.expenses.GetAll())
-}
-
-func (r *PlainRepository) GetUser(login, password string) (*auth.User, *model.ApplicationError) {
-	users := r.users.GetAll()
-	for _, user := range users {
-		if user.Login == login {
-			arePasswordsEqual, err := utils.CompareHashAndPassword(user.Password, password)
-			if err != nil {
-				return nil, err
-			}
-			if arePasswordsEqual {
-				return user, nil
-			}
-		}
-	}
-	return nil, model.NewApplicationError(model.ErrorTypeNotFound, "Пользователь не найден", nil)
-}
-
-func (r *PlainRepository) GetCarsByUserId(userId uuid.UUID) []*car.Car {
-	var result []*car.Car
-	for _, c := range r.cars.GetAll() {
-		if c.Vehicle.GetUserId() == userId {
-			result = append(result, c)
-		}
-	}
-	return result
-}
-
-func (r *PlainRepository) GetMotosByUserId(userId uuid.UUID) []*moto.Moto {
-	var result []*moto.Moto
-	for _, m := range r.motos.GetAll() {
-		if m.Vehicle.GetUserId() == userId {
-			result = append(result, m)
-		}
-	}
-	return result
-}
-
-func (r *PlainRepository) GetExpensesByUserId(userId uuid.UUID) []*expense.Expense {
-	var result []*expense.Expense
-	for _, e := range r.expenses.GetAll() {
-		if e.GetCreatedBy() == userId {
-			result = append(result, e)
-		}
-	}
-	return result
-}
-
-func (r *PlainRepository) GetAttachmentById(id uuid.UUID, userId uuid.UUID) (*model.Attachment, *model.ApplicationError) {
-	att, err := r.attachments.GetById(id)
-	if err != nil {
-		return nil, err
-	}
-	if att.GetCreatedBy() != userId {
-		return nil, model.NewApplicationError(model.ErrorTypeNotFound, "Вложение не найдено", nil)
-	}
-	return att, nil
-}
-
-func (r *PlainRepository) GetAttachmentsByUserId(userId uuid.UUID) []*model.Attachment {
-	var result []*model.Attachment
-	for _, a := range r.attachments.GetAll() {
-		if a.GetCreatedBy() == userId {
-			result = append(result, a)
-		}
-	}
-	return result
+func (r *CombinedRepository) GetAttachmentsByUserId(userId uuid.UUID) []*model.Attachment {
+	return r.mongo.GetAttachmentsByUserId(userId)
 }

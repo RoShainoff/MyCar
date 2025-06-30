@@ -22,33 +22,33 @@ const (
 )
 
 type BodyType struct {
-	id            BodyTypeKind
-	name          string
-	parentStyleId BodyTypeKind
+	Id            BodyTypeKind
+	Name          string
+	ParentStyleId BodyTypeKind
 }
 
 var bodyTypes = []BodyType{
-	{id: Sedan, name: "Седан"},
-	{id: Hatchback, name: "Хэтчбек"},
-	{id: Hatchback3Door, name: "Хэтчбек 3 дв.", parentStyleId: Hatchback},
-	{id: Hatchback5Door, name: "Хэтчбек 5 дв.", parentStyleId: Hatchback},
-	{id: Liftback, name: "Лифтбек", parentStyleId: Hatchback},
-	{id: SUV, name: "Внедорожник"},
-	{id: SUV3Door, name: "Внедорожник 3 дв.", parentStyleId: SUV},
-	{id: SUV5Door, name: "Внедорожник 5 дв.", parentStyleId: SUV},
-	{id: Wagon, name: "Универсал"},
-	{id: Coupe, name: "Купе"},
-	{id: Minivan, name: "Минивэн"},
-	{id: Pickup, name: "Пикап"},
-	{id: Limousine, name: "Лимузин"},
-	{id: Van, name: "Фургон"},
-	{id: Cabriolet, name: "Кабриолет"},
+	{Id: Sedan, Name: "Седан"},
+	{Id: Hatchback, Name: "Хэтчбек"},
+	{Id: Hatchback3Door, Name: "Хэтчбек 3 дв.", ParentStyleId: Hatchback},
+	{Id: Hatchback5Door, Name: "Хэтчбек 5 дв.", ParentStyleId: Hatchback},
+	{Id: Liftback, Name: "Лифтбек", ParentStyleId: Hatchback},
+	{Id: SUV, Name: "Внедорожник"},
+	{Id: SUV3Door, Name: "Внедорожник 3 дв.", ParentStyleId: SUV},
+	{Id: SUV5Door, Name: "Внедорожник 5 дв.", ParentStyleId: SUV},
+	{Id: Wagon, Name: "Универсал"},
+	{Id: Coupe, Name: "Купе"},
+	{Id: Minivan, Name: "Минивэн"},
+	{Id: Pickup, Name: "Пикап"},
+	{Id: Limousine, Name: "Лимузин"},
+	{Id: Van, Name: "Фургон"},
+	{Id: Cabriolet, Name: "Кабриолет"},
 }
 
 func (id BodyTypeKind) GetSubstyles() []BodyType {
 	var result []BodyType
 	for _, bs := range bodyTypes {
-		if bs.parentStyleId == id {
+		if bs.ParentStyleId == id {
 			result = append(result, bs)
 		}
 	}
@@ -58,7 +58,7 @@ func (id BodyTypeKind) GetSubstyles() []BodyType {
 func (id BodyTypeKind) GetBodyType() BodyType {
 	var result BodyType
 	for _, c := range bodyTypes {
-		if c.id == id {
+		if c.Id == id {
 			return c
 		}
 	}
@@ -85,7 +85,7 @@ var bodyTypeNames = map[BodyTypeKind]string{
 }
 
 func (b BodyType) String() string {
-	if name, ok := bodyTypeNames[b.id]; ok {
+	if name, ok := bodyTypeNames[b.Id]; ok {
 		return name
 	}
 	return "Неизвестно"

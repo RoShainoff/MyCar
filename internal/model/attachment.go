@@ -13,25 +13,28 @@ const (
 )
 
 type Attachment struct {
-	id          uuid.UUID
-	entityType  AttachmentType
-	entityId    uuid.UUID
-	filePath    string
-	fileName    string
-	mimeType    string
-	uploadedAt  time.Time
-	AuditFields AuditFields
+	Id          uuid.UUID      `bson:"id"`
+	UserId      uuid.UUID      `bson:"user_id"`
+	EntityType  AttachmentType `bson:"entity_type"`
+	EntityId    uuid.UUID      `bson:"entity_id"`
+	FilePath    string         `bson:"file_path"`
+	FileName    string         `bson:"file_name"`
+	MimeType    string         `bson:"mime_type"`
+	UploadedAt  time.Time      `bson:"uploaded_at"`
+	Data        []byte         `bson:"data"`
+	AuditFields AuditFields    `bson:"auditfields"`
 }
 
-func NewAttachment(id uuid.UUID, entityType AttachmentType, entityId uuid.UUID, filePath, fileName, mimeType string, uploadedAt time.Time, createdBy uuid.UUID) *Attachment {
+func NewAttachment(id uuid.UUID, entityType AttachmentType, entityId uuid.UUID, filePath, fileName, mimeType string, uploadedAt time.Time, createdBy uuid.UUID, data []byte) *Attachment {
 	return &Attachment{
-		id:         id,
-		entityType: entityType,
-		entityId:   entityId,
-		filePath:   filePath,
-		fileName:   fileName,
-		mimeType:   mimeType,
-		uploadedAt: uploadedAt,
+		Id:         id,
+		EntityType: entityType,
+		EntityId:   entityId,
+		FilePath:   filePath,
+		FileName:   fileName,
+		MimeType:   mimeType,
+		UploadedAt: uploadedAt,
+		Data:       data,
 		AuditFields: AuditFields{
 			CreatedBy:    createdBy,
 			CreatedAtUtc: time.Now(),
@@ -40,10 +43,10 @@ func NewAttachment(id uuid.UUID, entityType AttachmentType, entityId uuid.UUID, 
 }
 
 func (a *Attachment) GetGeneralInfo() string {
-	return "Attachment: " + a.fileName
+	return "Attachment: " + a.FileName
 }
-func (a *Attachment) GetId() uuid.UUID               { return a.id }
-func (a *Attachment) SetId(id uuid.UUID)             { a.id = id }
+func (a *Attachment) GetId() uuid.UUID               { return a.Id }
+func (a *Attachment) SetId(id uuid.UUID)             { a.Id = id }
 func (a *Attachment) GetCreatedBy() uuid.UUID        { return a.AuditFields.GetCreatedBy() }
 func (a *Attachment) SetCreatedBy(userId uuid.UUID)  { a.AuditFields.SetCreatedBy(userId) }
 func (a *Attachment) GetCreatedAtUtc() time.Time     { return a.AuditFields.GetCreatedAtUtc() }
