@@ -1,473 +1,491 @@
 package moto
 
-type Brand int
+type BrandKind int
 
 const (
-	UnknownBrand         Brand = 0
-	Aermacchi            Brand = 1
-	AJP                  Brand = 2
-	Alfer                Brand = 3
-	Amazonas             Brand = 4
-	AmericanEagle        Brand = 5
-	AmericanIronHorse    Brand = 6
-	Anaig                Brand = 7
-	Apollo               Brand = 8
-	Aprilia              Brand = 9
-	Ardie                Brand = 10
-	Armada               Brand = 11
-	AstonMartin          Brand = 12
-	Ataki                Brand = 13
-	ATK                  Brand = 14
-	Avantis              Brand = 15
-	Bajaj                Brand = 16
-	Baltmotors           Brand = 17
-	Bamx                 Brand = 18
-	Bars                 Brand = 19
-	Bashan               Brand = 20
-	Benda                Brand = 21
-	Benelli              Brand = 22
-	Beta                 Brand = 23
-	Bianchi              Brand = 24
-	Bifei                Brand = 25
-	BigBearChoppers      Brand = 26
-	BigDogMotorcycles    Brand = 27
-	Blata                Brand = 28
-	BoomTrikes           Brand = 29
-	BossHoss             Brand = 30
-	Brabus               Brand = 31
-	BRP                  Brand = 32
-	BRZ                  Brand = 33
-	BSA                  Brand = 34
-	BSE                  Brand = 35
-	Buell                Brand = 36
-	Cagiva               Brand = 37
-	Carver               Brand = 38
-	CCM                  Brand = 39
-	Centurion            Brand = 40
-	CFMoto               Brand = 41
-	CH_Racing            Brand = 42
-	ChangJiang           Brand = 43
-	Cobra                Brand = 44
-	CPI                  Brand = 45
-	CR_S                 Brand = 46
-	Cronus               Brand = 47
-	CRZ                  Brand = 48
-	Curtiss              Brand = 49
-	Cyclone              Brand = 50
-	CZ                   Brand = 51
-	Darex                Brand = 52
-	Dayun                Brand = 53
-	Deller               Brand = 54
-	Derbi                Brand = 55
-	DesertRaven          Brand = 56
-	Draxter              Brand = 57
-	Energica             Brand = 58
-	Eurotex              Brand = 59
-	EVA                  Brand = 60
-	ExpertMoto           Brand = 61
-	Falcon               Brand = 62
-	FidelisEtFortis      Brand = 63
-	Fighter              Brand = 64
-	Forsage              Brand = 65
-	Fosti                Brand = 66
-	Fuego                Brand = 67
-	FullCrew             Brand = 68
-	Futong               Brand = 69
-	FXmoto               Brand = 70
-	Gmax                 Brand = 71
-	Gaokin               Brand = 72
-	GasGas               Brand = 73
-	Geon                 Brand = 74
-	Gilera               Brand = 75
-	GR                   Brand = 76
-	Groza                Brand = 77
-	Gryphon              Brand = 78
-	GXmoto               Brand = 79
-	Hasky                Brand = 80
-	Hero                 Brand = 81
-	Highland             Brand = 82
-	Horwin               Brand = 83
-	Huangpeng            Brand = 84
-	Husaberg             Brand = 85
-	Husqvarna            Brand = 86
-	Hyosung              Brand = 87
-	Indian               Brand = 88
-	Irbis                Brand = 89
-	Iride                Brand = 90
-	ItalianVolt          Brand = 91
-	Jawa                 Brand = 92
-	JHL                  Brand = 93
-	JiangsuSunhou        Brand = 94
-	JMC                  Brand = 95
-	JohnnyPag            Brand = 96
-	Jose                 Brand = 97
-	K2R                  Brand = 98
-	Keeway               Brand = 99
-	Kews                 Brand = 100
-	KinlonMotors         Brand = 101
-	Koshine              Brand = 102
-	Kove                 Brand = 103
-	KXD                  Brand = 104
-	Kymco                Brand = 105
-	Lem                  Brand = 106
-	Lifan                Brand = 107
-	Lito                 Brand = 108
-	Loncin               Brand = 109
-	Magni                Brand = 110
-	Mikilon              Brand = 111
-	Minsk                Brand = 112
-	Montesa              Brand = 113
-	Motax                Brand = 114
-	MotoGuzzi            Brand = 115
-	MotoMorini           Brand = 116
-	Mowgli               Brand = 117
-	MVAgusta             Brand = 118
-	MZ                   Brand = 119
-	Nexus                Brand = 120
-	Nicot                Brand = 121
-	Nitro                Brand = 122
-	NIU                  Brand = 123
-	Norton               Brand = 124
-	Ohvale               Brand = 125
-	Omaks                Brand = 126
-	OrangeCountyChoppers Brand = 127
-	Orion                Brand = 128
-	Oxo                  Brand = 129
-	Pannonia             Brand = 130
-	Patron               Brand = 131
-	Pitrace              Brand = 132
-	PitsterPro           Brand = 133
-	Polaris              Brand = 134
-	Polini               Brand = 135
-	Procida              Brand = 136
-	Progasi              Brand = 137
-	Promax               Brand = 138
-	PWRRacing            Brand = 139
-	QJMotor              Brand = 140
-	Racer                Brand = 141
-	RegalRaptor          Brand = 142
-	Regulmoto            Brand = 143
-	Rewaco               Brand = 144
-	Rhino                Brand = 145
-	Rieju                Brand = 146
-	Rmoto                Brand = 147
-	Rockot               Brand = 148
-	Roliz                Brand = 149
-	RoyalEnfield         Brand = 150
-	S2Motors             Brand = 151
-	Sachs                Brand = 152
-	Sagitta              Brand = 153
-	Saxon                Brand = 154
-	Scanmoto             Brand = 155
-	Scorpa               Brand = 156
-	Sharmax              Brand = 157
-	Sherco               Brand = 158
-	Shineray             Brand = 159
-	SimarglElektro       Brand = 160
-	Simson               Brand = 161
-	Skygo                Brand = 162
-	Sonik                Brand = 163
-	SPR                  Brand = 164
-	SSSR                 Brand = 165
-	Stark                Brand = 166
-	Stels                Brand = 167
-	Stingray             Brand = 168
-	SuperSoco            Brand = 169
-	SurRon               Brand = 170
-	Swift                Brand = 171
-	SWM                  Brand = 172
-	Sym                  Brand = 173
-	Tacita               Brand = 174
-	Talaria              Brand = 175
-	TaoMotor             Brand = 176
-	Tinbot               Brand = 177
-	Titan                Brand = 178
-	TMRacing             Brand = 179
-	TMBK                 Brand = 180
-	Triumph              Brand = 181
-	TRRS                 Brand = 182
-	TVS                  Brand = 183
-	UM                   Brand = 184
-	Upbeat               Brand = 185
-	Vanderhall           Brand = 186
-	Vertigo              Brand = 187
-	Victory              Brand = 188
-	Vinto                Brand = 189
-	Viper                Brand = 190
-	VMC                  Brand = 191
-	Voge                 Brand = 192
-	Voxan                Brand = 193
-	Wanderer             Brand = 194
-	Wanqiang             Brand = 195
-	Wels                 Brand = 196
-	WhiteSiberia         Brand = 197
-	Wuxi                 Brand = 198
-	XGZ                  Brand = 199
-	Xingyue              Brand = 200
-	Xmotos               Brand = 201
-	Yacota               Brand = 202
-	Yamasaki             Brand = 203
-	Yangtze              Brand = 204
-	YCF                  Brand = 205
-	Yinxiang             Brand = 206
-	Zero                 Brand = 207
-	ZIPMotors            Brand = 208
-	ZM                   Brand = 209
-	Zongshen             Brand = 210
-	Zontes               Brand = 211
-	Zundapp              Brand = 212
-	Zuum                 Brand = 213
-	Zuumav               Brand = 214
-	Gyurza               Brand = 215
-	Dnepr                Brand = 216
-	ZID                  Brand = 217
-	IZH                  Brand = 218
-	IzhTechMash          Brand = 219
-	Kovrovets            Brand = 220
-	LvivMotozavod        Brand = 221
-	MMZ                  Brand = 222
-	Motoalfa             Brand = 223
-	Motomir              Brand = 224
-	PMZ                  Brand = 225
-	RMZ                  Brand = 226
-	TMZ                  Brand = 227
-	Ural                 Brand = 228
+	UnknownBrand         BrandKind = 0
+	Aermacchi            BrandKind = 1
+	AJP                  BrandKind = 2
+	Alfer                BrandKind = 3
+	Amazonas             BrandKind = 4
+	AmericanEagle        BrandKind = 5
+	AmericanIronHorse    BrandKind = 6
+	Anaig                BrandKind = 7
+	Apollo               BrandKind = 8
+	Aprilia              BrandKind = 9
+	Ardie                BrandKind = 10
+	Armada               BrandKind = 11
+	AstonMartin          BrandKind = 12
+	Ataki                BrandKind = 13
+	ATK                  BrandKind = 14
+	Avantis              BrandKind = 15
+	Bajaj                BrandKind = 16
+	Baltmotors           BrandKind = 17
+	Bamx                 BrandKind = 18
+	Bars                 BrandKind = 19
+	Bashan               BrandKind = 20
+	Benda                BrandKind = 21
+	Benelli              BrandKind = 22
+	Beta                 BrandKind = 23
+	Bianchi              BrandKind = 24
+	Bifei                BrandKind = 25
+	BigBearChoppers      BrandKind = 26
+	BigDogMotorcycles    BrandKind = 27
+	Blata                BrandKind = 28
+	BoomTrikes           BrandKind = 29
+	BossHoss             BrandKind = 30
+	Brabus               BrandKind = 31
+	BRP                  BrandKind = 32
+	BRZ                  BrandKind = 33
+	BSA                  BrandKind = 34
+	BSE                  BrandKind = 35
+	Buell                BrandKind = 36
+	Cagiva               BrandKind = 37
+	Carver               BrandKind = 38
+	CCM                  BrandKind = 39
+	Centurion            BrandKind = 40
+	CFMoto               BrandKind = 41
+	CH_Racing            BrandKind = 42
+	ChangJiang           BrandKind = 43
+	Cobra                BrandKind = 44
+	CPI                  BrandKind = 45
+	CR_S                 BrandKind = 46
+	Cronus               BrandKind = 47
+	CRZ                  BrandKind = 48
+	Curtiss              BrandKind = 49
+	Cyclone              BrandKind = 50
+	CZ                   BrandKind = 51
+	Darex                BrandKind = 52
+	Dayun                BrandKind = 53
+	Deller               BrandKind = 54
+	Derbi                BrandKind = 55
+	DesertRaven          BrandKind = 56
+	Draxter              BrandKind = 57
+	Energica             BrandKind = 58
+	Eurotex              BrandKind = 59
+	EVA                  BrandKind = 60
+	ExpertMoto           BrandKind = 61
+	Falcon               BrandKind = 62
+	FidelisEtFortis      BrandKind = 63
+	Fighter              BrandKind = 64
+	Forsage              BrandKind = 65
+	Fosti                BrandKind = 66
+	Fuego                BrandKind = 67
+	FullCrew             BrandKind = 68
+	Futong               BrandKind = 69
+	FXmoto               BrandKind = 70
+	Gmax                 BrandKind = 71
+	Gaokin               BrandKind = 72
+	GasGas               BrandKind = 73
+	Geon                 BrandKind = 74
+	Gilera               BrandKind = 75
+	GR                   BrandKind = 76
+	Groza                BrandKind = 77
+	Gryphon              BrandKind = 78
+	GXmoto               BrandKind = 79
+	Hasky                BrandKind = 80
+	Hero                 BrandKind = 81
+	Highland             BrandKind = 82
+	Horwin               BrandKind = 83
+	Huangpeng            BrandKind = 84
+	Husaberg             BrandKind = 85
+	Husqvarna            BrandKind = 86
+	Hyosung              BrandKind = 87
+	Indian               BrandKind = 88
+	Irbis                BrandKind = 89
+	Iride                BrandKind = 90
+	ItalianVolt          BrandKind = 91
+	Jawa                 BrandKind = 92
+	JHL                  BrandKind = 93
+	JiangsuSunhou        BrandKind = 94
+	JMC                  BrandKind = 95
+	JohnnyPag            BrandKind = 96
+	Jose                 BrandKind = 97
+	K2R                  BrandKind = 98
+	Keeway               BrandKind = 99
+	Kews                 BrandKind = 100
+	KinlonMotors         BrandKind = 101
+	Koshine              BrandKind = 102
+	Kove                 BrandKind = 103
+	KXD                  BrandKind = 104
+	Kymco                BrandKind = 105
+	Lem                  BrandKind = 106
+	Lifan                BrandKind = 107
+	Lito                 BrandKind = 108
+	Loncin               BrandKind = 109
+	Magni                BrandKind = 110
+	Mikilon              BrandKind = 111
+	Minsk                BrandKind = 112
+	Montesa              BrandKind = 113
+	Motax                BrandKind = 114
+	MotoGuzzi            BrandKind = 115
+	MotoMorini           BrandKind = 116
+	Mowgli               BrandKind = 117
+	MVAgusta             BrandKind = 118
+	MZ                   BrandKind = 119
+	Nexus                BrandKind = 120
+	Nicot                BrandKind = 121
+	Nitro                BrandKind = 122
+	NIU                  BrandKind = 123
+	Norton               BrandKind = 124
+	Ohvale               BrandKind = 125
+	Omaks                BrandKind = 126
+	OrangeCountyChoppers BrandKind = 127
+	Orion                BrandKind = 128
+	Oxo                  BrandKind = 129
+	Pannonia             BrandKind = 130
+	Patron               BrandKind = 131
+	Pitrace              BrandKind = 132
+	PitsterPro           BrandKind = 133
+	Polaris              BrandKind = 134
+	Polini               BrandKind = 135
+	Procida              BrandKind = 136
+	Progasi              BrandKind = 137
+	Promax               BrandKind = 138
+	PWRRacing            BrandKind = 139
+	QJMotor              BrandKind = 140
+	Racer                BrandKind = 141
+	RegalRaptor          BrandKind = 142
+	Regulmoto            BrandKind = 143
+	Rewaco               BrandKind = 144
+	Rhino                BrandKind = 145
+	Rieju                BrandKind = 146
+	Rmoto                BrandKind = 147
+	Rockot               BrandKind = 148
+	Roliz                BrandKind = 149
+	RoyalEnfield         BrandKind = 150
+	S2Motors             BrandKind = 151
+	Sachs                BrandKind = 152
+	Sagitta              BrandKind = 153
+	Saxon                BrandKind = 154
+	Scanmoto             BrandKind = 155
+	Scorpa               BrandKind = 156
+	Sharmax              BrandKind = 157
+	Sherco               BrandKind = 158
+	Shineray             BrandKind = 159
+	SimarglElektro       BrandKind = 160
+	Simson               BrandKind = 161
+	Skygo                BrandKind = 162
+	Sonik                BrandKind = 163
+	SPR                  BrandKind = 164
+	SSSR                 BrandKind = 165
+	Stark                BrandKind = 166
+	Stels                BrandKind = 167
+	Stingray             BrandKind = 168
+	SuperSoco            BrandKind = 169
+	SurRon               BrandKind = 170
+	Swift                BrandKind = 171
+	SWM                  BrandKind = 172
+	Sym                  BrandKind = 173
+	Tacita               BrandKind = 174
+	Talaria              BrandKind = 175
+	TaoMotor             BrandKind = 176
+	Tinbot               BrandKind = 177
+	Titan                BrandKind = 178
+	TMRacing             BrandKind = 179
+	TMBK                 BrandKind = 180
+	Triumph              BrandKind = 181
+	TRRS                 BrandKind = 182
+	TVS                  BrandKind = 183
+	UM                   BrandKind = 184
+	Upbeat               BrandKind = 185
+	Vanderhall           BrandKind = 186
+	Vertigo              BrandKind = 187
+	Victory              BrandKind = 188
+	Vinto                BrandKind = 189
+	Viper                BrandKind = 190
+	VMC                  BrandKind = 191
+	Voge                 BrandKind = 192
+	Voxan                BrandKind = 193
+	Wanderer             BrandKind = 194
+	Wanqiang             BrandKind = 195
+	Wels                 BrandKind = 196
+	WhiteSiberia         BrandKind = 197
+	Wuxi                 BrandKind = 198
+	XGZ                  BrandKind = 199
+	Xingyue              BrandKind = 200
+	Xmotos               BrandKind = 201
+	Yacota               BrandKind = 202
+	Yamasaki             BrandKind = 203
+	Yangtze              BrandKind = 204
+	YCF                  BrandKind = 205
+	Yinxiang             BrandKind = 206
+	Zero                 BrandKind = 207
+	ZIPMotors            BrandKind = 208
+	ZM                   BrandKind = 209
+	Zongshen             BrandKind = 210
+	Zontes               BrandKind = 211
+	Zundapp              BrandKind = 212
+	Zuum                 BrandKind = 213
+	Zuumav               BrandKind = 214
+	Gyurza               BrandKind = 215
+	Dnepr                BrandKind = 216
+	ZID                  BrandKind = 217
+	IZH                  BrandKind = 218
+	IzhTechMash          BrandKind = 219
+	Kovrovets            BrandKind = 220
+	LvivMotozavod        BrandKind = 221
+	MMZ                  BrandKind = 222
+	Motoalfa             BrandKind = 223
+	Motomir              BrandKind = 224
+	PMZ                  BrandKind = 225
+	RMZ                  BrandKind = 226
+	TMZ                  BrandKind = 227
+	Ural                 BrandKind = 228
 )
 
-var BrandNames = map[Brand]string{
-	Aermacchi:            "Aermacchi",
-	AJP:                  "AJP",
-	Alfer:                "Alfer",
-	Amazonas:             "Amazonas",
-	AmericanEagle:        "American Eagle",
-	AmericanIronHorse:    "American IronHorse",
-	Anaig:                "Anaig",
-	Apollo:               "Apollo",
-	Aprilia:              "Aprilia",
-	Ardie:                "Ardie",
-	Armada:               "Armada",
-	AstonMartin:          "Aston Martin",
-	Ataki:                "Ataki",
-	ATK:                  "ATK",
-	Avantis:              "Avantis",
-	Bajaj:                "Bajaj",
-	Baltmotors:           "Baltmotors",
-	Bamx:                 "Bamx",
-	Bars:                 "Bars",
-	Bashan:               "Bashan",
-	Benda:                "Benda",
-	Benelli:              "Benelli",
-	Beta:                 "Beta",
-	Bianchi:              "Bianchi",
-	Bifei:                "Bifei",
-	BigBearChoppers:      "Big Bear Choppers",
-	BigDogMotorcycles:    "Big Dog Motorcycles",
-	Blata:                "Blata",
-	BoomTrikes:           "Boom Trikes",
-	BossHoss:             "Boss Hoss",
-	Brabus:               "Brabus",
-	BRP:                  "BRP",
-	BRZ:                  "BRZ",
-	BSA:                  "BSA",
-	BSE:                  "BSE",
-	Buell:                "Buell",
-	Cagiva:               "Cagiva",
-	Carver:               "Carver",
-	CCM:                  "CCM",
-	Centurion:            "Centurion",
-	CFMoto:               "CFMoto",
-	CH_Racing:            "CH Racing",
-	ChangJiang:           "Chang-Jiang",
-	Cobra:                "Cobra",
-	CPI:                  "CPI",
-	CR_S:                 "CR & S",
-	Cronus:               "Cronus",
-	CRZ:                  "CRZ",
-	Curtiss:              "Curtiss",
-	Cyclone:              "Cyclone",
-	CZ:                   "CZ",
-	Darex:                "Darex",
-	Dayun:                "Dayun",
-	Deller:               "Deller",
-	Derbi:                "Derbi",
-	DesertRaven:          "Desert Raven",
-	Draxter:              "Draxter",
-	Energica:             "Energica",
-	Eurotex:              "Eurotex",
-	EVA:                  "EVA",
-	ExpertMoto:           "Expert Moto",
-	Falcon:               "Falcon",
-	FidelisEtFortis:      "Fidelis et Fortis",
-	Fighter:              "Fighter",
-	Forsage:              "Forsage",
-	Fosti:                "Fosti",
-	Fuego:                "Fuego",
-	FullCrew:             "Full Crew",
-	Futong:               "Futong",
-	FXmoto:               "FXmoto",
-	Gmax:                 "Gmax",
-	Gaokin:               "Gaokin",
-	GasGas:               "GasGas",
-	Geon:                 "Geon",
-	Gilera:               "Gilera",
-	GR:                   "GR",
-	Groza:                "Groza",
-	Gryphon:              "Gryphon",
-	GXmoto:               "GXmoto",
-	Hasky:                "Hasky",
-	Hero:                 "Hero",
-	Highland:             "Highland",
-	Horwin:               "Horwin",
-	Huangpeng:            "Huangpeng",
-	Husaberg:             "Husaberg",
-	Husqvarna:            "Husqvarna",
-	Hyosung:              "Hyosung",
-	Indian:               "Indian",
-	Irbis:                "Irbis",
-	Iride:                "Iride",
-	ItalianVolt:          "Italian Volt",
-	Jawa:                 "Jawa",
-	JHL:                  "JHL",
-	JiangsuSunhou:        "Jiangsu Sunhou",
-	JMC:                  "JMC",
-	JohnnyPag:            "Johnny Pag",
-	Jose:                 "Jose",
-	K2R:                  "K2R",
-	Keeway:               "Keeway",
-	Kews:                 "Kews",
-	KinlonMotors:         "Kinlon Motors",
-	Koshine:              "Koshine",
-	Kove:                 "Kove",
-	KXD:                  "KXD",
-	Kymco:                "Kymco",
-	Lem:                  "Lem",
-	Lifan:                "Lifan",
-	Lito:                 "Lito",
-	Loncin:               "Loncin",
-	Magni:                "Magni",
-	Mikilon:              "Mikilon",
-	Minsk:                "Minsk",
-	Montesa:              "Montesa",
-	Motax:                "Motax",
-	MotoGuzzi:            "Moto Guzzi",
-	MotoMorini:           "Moto Morini",
-	Mowgli:               "Mowgli",
-	MVAgusta:             "MV Agusta",
-	MZ:                   "MZ",
-	Nexus:                "Nexus",
-	Nicot:                "Nicot",
-	Nitro:                "Nitro",
-	NIU:                  "NIU",
-	Norton:               "Norton",
-	Ohvale:               "Ohvale",
-	Omaks:                "Omaks",
-	OrangeCountyChoppers: "Orange County Choppers",
-	Orion:                "Orion",
-	Oxo:                  "Oxo",
-	Pannonia:             "Pannonia",
-	Patron:               "Patron",
-	Pitrace:              "Pitrace",
-	PitsterPro:           "Pitster Pro",
-	Polaris:              "Polaris",
-	Polini:               "Polini",
-	Procida:              "Procida",
-	Progasi:              "Progasi",
-	Promax:               "Promax",
-	PWRRacing:            "PWR Racing",
-	QJMotor:              "QJ Motor",
-	Racer:                "Racer",
-	RegalRaptor:          "Regal Raptor",
-	Regulmoto:            "Regul Moto",
-	Rewaco:               "Rewaco",
-	Rhino:                "Rhino",
-	Rieju:                "Rieju",
-	Rmoto:                "Rmoto",
-	Rockot:               "Rockot",
-	Roliz:                "Roliz",
-	RoyalEnfield:         "Royal Enfield",
-	S2Motors:             "S2 Motors",
-	Sachs:                "Sachs",
-	Sagitta:              "Sagitta",
-	Saxon:                "Saxon",
-	Scanmoto:             "Scanmoto",
-	Scorpa:               "Scorpa",
-	Sharmax:              "Sharmax",
-	Sherco:               "Sherco",
-	Shineray:             "Shineray",
-	SimarglElektro:       "Simargl Elektro",
-	Simson:               "Simson",
-	Skygo:                "Skygo",
-	Sonik:                "Sonik",
-	SPR:                  "SPR",
-	SSSR:                 "SSSR",
-	Stark:                "Stark",
-	Stels:                "Stels",
-	Stingray:             "Stingray",
-	SuperSoco:            "Super Soco",
-	SurRon:               "Sur-Ron",
-	Swift:                "Swift",
-	SWM:                  "SWM",
-	Sym:                  "SYM",
-	Tacita:               "Tacita",
-	Talaria:              "Talaria",
-	TaoMotor:             "Tao Motor",
-	Tinbot:               "Tinbot",
-	Titan:                "Titan",
-	TMRacing:             "TM Racing",
-	TMBK:                 "TMBK",
-	Triumph:              "Triumph",
-	TRRS:                 "TRRS",
-	TVS:                  "TVS",
-	UM:                   "UM",
-	Upbeat:               "Upbeat",
-	Vanderhall:           "Vanderhall",
-	Vertigo:              "Vertigo",
-	Victory:              "Victory",
-	Vinto:                "Vinto",
-	Viper:                "Viper",
-	VMC:                  "VMC",
-	Voge:                 "Voge",
-	Voxan:                "Voxan",
-	Wanderer:             "Wanderer",
-	Wanqiang:             "Wanqiang",
-	Wels:                 "Wels",
-	WhiteSiberia:         "White Siberia",
-	Wuxi:                 "Wuxi",
-	XGZ:                  "XGZ",
-	Xingyue:              "Xingyue",
-	Xmotos:               "Xmotos",
-	Yacota:               "Yacota",
-	Yamasaki:             "Yamasaki",
-	Yangtze:              "Yangtze",
-	YCF:                  "YCF",
-	Yinxiang:             "Yinxiang",
-	Zero:                 "Zero",
-	ZIPMotors:            "ZIP Motors",
-	ZM:                   "ZM",
-	Zongshen:             "Zongshen",
-	Zontes:               "Zontes",
-	Zundapp:              "Zundapp",
-	Zuum:                 "Zuum",
-	Zuumav:               "Zuumav",
-	Gyurza:               "Гюрза",
-	Dnepr:                "Днепр",
-	ZID:                  "ЗиД",
-	IZH:                  "ИЖ",
-	IzhTechMash:          "ИжТехМаш",
-	Kovrovets:            "Ковровец",
-	LvivMotozavod:        "Львовский мотозавод",
-	MMZ:                  "ММЗ",
-	Motoalfa:             "Мотоальфа",
-	Motomir:              "Мотомир",
-	PMZ:                  "ПМЗ",
-	RMZ:                  "РМЗ",
-	TMZ:                  "ТМЗ (Туламашзавод)",
-	Ural:                 "Урал",
+type Brand struct {
+	Id   BrandKind
+	Name string
 }
 
-func (b Brand) String() string {
-	if name, ok := BrandNames[b]; ok {
-		return name
+var Brands = []Brand{
+	{Id: UnknownBrand, Name: "Неизвестно"},
+	{Id: Aermacchi, Name: "Aermacchi"},
+	{Id: AJP, Name: "AJP"},
+	{Id: Alfer, Name: "Alfer"},
+	{Id: Amazonas, Name: "Amazonas"},
+	{Id: AmericanEagle, Name: "American Eagle"},
+	{Id: AmericanIronHorse, Name: "American IronHorse"},
+	{Id: Anaig, Name: "Anaig"},
+	{Id: Apollo, Name: "Apollo"},
+	{Id: Aprilia, Name: "Aprilia"},
+	{Id: Ardie, Name: "Ardie"},
+	{Id: Armada, Name: "Armada"},
+	{Id: AstonMartin, Name: "Aston Martin"},
+	{Id: Ataki, Name: "Ataki"},
+	{Id: ATK, Name: "ATK"},
+	{Id: Avantis, Name: "Avantis"},
+	{Id: Bajaj, Name: "Bajaj"},
+	{Id: Baltmotors, Name: "Baltmotors"},
+	{Id: Bamx, Name: "Bamx"},
+	{Id: Bars, Name: "Bars"},
+	{Id: Bashan, Name: "Bashan"},
+	{Id: Benda, Name: "Benda"},
+	{Id: Benelli, Name: "Benelli"},
+	{Id: Beta, Name: "Beta"},
+	{Id: Bianchi, Name: "Bianchi"},
+	{Id: Bifei, Name: "Bifei"},
+	{Id: BigBearChoppers, Name: "Big Bear Choppers"},
+	{Id: BigDogMotorcycles, Name: "Big Dog Motorcycles"},
+	{Id: Blata, Name: "Blata"},
+	{Id: BoomTrikes, Name: "Boom Trikes"},
+	{Id: BossHoss, Name: "Boss Hoss"},
+	{Id: Brabus, Name: "Brabus"},
+	{Id: BRP, Name: "BRP"},
+	{Id: BRZ, Name: "BRZ"},
+	{Id: BSA, Name: "BSA"},
+	{Id: BSE, Name: "BSE"},
+	{Id: Buell, Name: "Buell"},
+	{Id: Cagiva, Name: "Cagiva"},
+	{Id: Carver, Name: "Carver"},
+	{Id: CCM, Name: "CCM"},
+	{Id: Centurion, Name: "Centurion"},
+	{Id: CFMoto, Name: "CFMoto"},
+	{Id: CH_Racing, Name: "CH Racing"},
+	{Id: ChangJiang, Name: "Chang-Jiang"},
+	{Id: Cobra, Name: "Cobra"},
+	{Id: CPI, Name: "CPI"},
+	{Id: CR_S, Name: "CR & S"},
+	{Id: Cronus, Name: "Cronus"},
+	{Id: CRZ, Name: "CRZ"},
+	{Id: Curtiss, Name: "Curtiss"},
+	{Id: Cyclone, Name: "Cyclone"},
+	{Id: CZ, Name: "CZ"},
+	{Id: Darex, Name: "Darex"},
+	{Id: Dayun, Name: "Dayun"},
+	{Id: Deller, Name: "Deller"},
+	{Id: Derbi, Name: "Derbi"},
+	{Id: DesertRaven, Name: "Desert Raven"},
+	{Id: Draxter, Name: "Draxter"},
+	{Id: Energica, Name: "Energica"},
+	{Id: Eurotex, Name: "Eurotex"},
+	{Id: EVA, Name: "EVA"},
+	{Id: ExpertMoto, Name: "Expert Moto"},
+	{Id: Falcon, Name: "Falcon"},
+	{Id: FidelisEtFortis, Name: "Fidelis et Fortis"},
+	{Id: Fighter, Name: "Fighter"},
+	{Id: Forsage, Name: "Forsage"},
+	{Id: Fosti, Name: "Fosti"},
+	{Id: Fuego, Name: "Fuego"},
+	{Id: FullCrew, Name: "Full Crew"},
+	{Id: Futong, Name: "Futong"},
+	{Id: FXmoto, Name: "FXmoto"},
+	{Id: Gmax, Name: "Gmax"},
+	{Id: Gaokin, Name: "Gaokin"},
+	{Id: GasGas, Name: "GasGas"},
+	{Id: Geon, Name: "Geon"},
+	{Id: Gilera, Name: "Gilera"},
+	{Id: GR, Name: "GR"},
+	{Id: Groza, Name: "Groza"},
+	{Id: Gryphon, Name: "Gryphon"},
+	{Id: GXmoto, Name: "GXmoto"},
+	{Id: Hasky, Name: "Hasky"},
+	{Id: Hero, Name: "Hero"},
+	{Id: Highland, Name: "Highland"},
+	{Id: Horwin, Name: "Horwin"},
+	{Id: Huangpeng, Name: "Huangpeng"},
+	{Id: Husaberg, Name: "Husaberg"},
+	{Id: Husqvarna, Name: "Husqvarna"},
+	{Id: Hyosung, Name: "Hyosung"},
+	{Id: Indian, Name: "Indian"},
+	{Id: Irbis, Name: "Irbis"},
+	{Id: Iride, Name: "Iride"},
+	{Id: ItalianVolt, Name: "Italian Volt"},
+	{Id: Jawa, Name: "Jawa"},
+	{Id: JHL, Name: "JHL"},
+	{Id: JiangsuSunhou, Name: "Jiangsu Sunhou"},
+	{Id: JMC, Name: "JMC"},
+	{Id: JohnnyPag, Name: "Johnny Pag"},
+	{Id: Jose, Name: "Jose"},
+	{Id: K2R, Name: "K2R"},
+	{Id: Keeway, Name: "Keeway"},
+	{Id: Kews, Name: "Kews"},
+	{Id: KinlonMotors, Name: "Kinlon Motors"},
+	{Id: Koshine, Name: "Koshine"},
+	{Id: Kove, Name: "Kove"},
+	{Id: KXD, Name: "KXD"},
+	{Id: Kymco, Name: "Kymco"},
+	{Id: Lem, Name: "Lem"},
+	{Id: Lifan, Name: "Lifan"},
+	{Id: Lito, Name: "Lito"},
+	{Id: Loncin, Name: "Loncin"},
+	{Id: Magni, Name: "Magni"},
+	{Id: Mikilon, Name: "Mikilon"},
+	{Id: Minsk, Name: "Minsk"},
+	{Id: Montesa, Name: "Montesa"},
+	{Id: Motax, Name: "Motax"},
+	{Id: MotoGuzzi, Name: "Moto Guzzi"},
+	{Id: MotoMorini, Name: "Moto Morini"},
+	{Id: Mowgli, Name: "Mowgli"},
+	{Id: MVAgusta, Name: "MV Agusta"},
+	{Id: MZ, Name: "MZ"},
+	{Id: Nexus, Name: "Nexus"},
+	{Id: Nicot, Name: "Nicot"},
+	{Id: Nitro, Name: "Nitro"},
+	{Id: NIU, Name: "NIU"},
+	{Id: Norton, Name: "Norton"},
+	{Id: Ohvale, Name: "Ohvale"},
+	{Id: Omaks, Name: "Omaks"},
+	{Id: OrangeCountyChoppers, Name: "Orange County Choppers"},
+	{Id: Orion, Name: "Orion"},
+	{Id: Oxo, Name: "Oxo"},
+	{Id: Pannonia, Name: "Pannonia"},
+	{Id: Patron, Name: "Patron"},
+	{Id: Pitrace, Name: "Pitrace"},
+	{Id: PitsterPro, Name: "Pitster Pro"},
+	{Id: Polaris, Name: "Polaris"},
+	{Id: Polini, Name: "Polini"},
+	{Id: Procida, Name: "Procida"},
+	{Id: Progasi, Name: "Progasi"},
+	{Id: Promax, Name: "Promax"},
+	{Id: PWRRacing, Name: "PWR Racing"},
+	{Id: QJMotor, Name: "QJ Motor"},
+	{Id: Racer, Name: "Racer"},
+	{Id: RegalRaptor, Name: "Regal Raptor"},
+	{Id: Regulmoto, Name: "Regul Moto"},
+	{Id: Rewaco, Name: "Rewaco"},
+	{Id: Rhino, Name: "Rhino"},
+	{Id: Rieju, Name: "Rieju"},
+	{Id: Rmoto, Name: "Rmoto"},
+	{Id: Rockot, Name: "Rockot"},
+	{Id: Roliz, Name: "Roliz"},
+	{Id: RoyalEnfield, Name: "Royal Enfield"},
+	{Id: S2Motors, Name: "S2 Motors"},
+	{Id: Sachs, Name: "Sachs"},
+	{Id: Sagitta, Name: "Sagitta"},
+	{Id: Saxon, Name: "Saxon"},
+	{Id: Scanmoto, Name: "Scanmoto"},
+	{Id: Scorpa, Name: "Scorpa"},
+	{Id: Sharmax, Name: "Sharmax"},
+	{Id: Sherco, Name: "Sherco"},
+	{Id: Shineray, Name: "Shineray"},
+	{Id: SimarglElektro, Name: "Simargl Elektro"},
+	{Id: Simson, Name: "Simson"},
+	{Id: Skygo, Name: "Skygo"},
+	{Id: Sonik, Name: "Sonik"},
+	{Id: SPR, Name: "SPR"},
+	{Id: SSSR, Name: "SSSR"},
+	{Id: Stark, Name: "Stark"},
+	{Id: Stels, Name: "Stels"},
+	{Id: Stingray, Name: "Stingray"},
+	{Id: SuperSoco, Name: "Super Soco"},
+	{Id: SurRon, Name: "Sur-Ron"},
+	{Id: Swift, Name: "Swift"},
+	{Id: SWM, Name: "SWM"},
+	{Id: Sym, Name: "SYM"},
+	{Id: Tacita, Name: "Tacita"},
+	{Id: Talaria, Name: "Talaria"},
+	{Id: TaoMotor, Name: "Tao Motor"},
+	{Id: Tinbot, Name: "Tinbot"},
+	{Id: Titan, Name: "Titan"},
+	{Id: TMRacing, Name: "TM Racing"},
+	{Id: TMBK, Name: "TMBK"},
+	{Id: Triumph, Name: "Triumph"},
+	{Id: TRRS, Name: "TRRS"},
+	{Id: TVS, Name: "TVS"},
+	{Id: UM, Name: "UM"},
+	{Id: Upbeat, Name: "Upbeat"},
+	{Id: Vanderhall, Name: "Vanderhall"},
+	{Id: Vertigo, Name: "Vertigo"},
+	{Id: Victory, Name: "Victory"},
+	{Id: Vinto, Name: "Vinto"},
+	{Id: Viper, Name: "Viper"},
+	{Id: VMC, Name: "VMC"},
+	{Id: Voge, Name: "Voge"},
+	{Id: Voxan, Name: "Voxan"},
+	{Id: Wanderer, Name: "Wanderer"},
+	{Id: Wanqiang, Name: "Wanqiang"},
+	{Id: Wels, Name: "Wels"},
+	{Id: WhiteSiberia, Name: "White Siberia"},
+	{Id: Wuxi, Name: "Wuxi"},
+	{Id: XGZ, Name: "XGZ"},
+	{Id: Xingyue, Name: "Xingyue"},
+	{Id: Xmotos, Name: "Xmotos"},
+	{Id: Yacota, Name: "Yacota"},
+	{Id: Yamasaki, Name: "Yamasaki"},
+	{Id: Yangtze, Name: "Yangtze"},
+	{Id: YCF, Name: "YCF"},
+	{Id: Yinxiang, Name: "Yinxiang"},
+	{Id: Zero, Name: "Zero"},
+	{Id: ZIPMotors, Name: "ZIP Motors"},
+	{Id: ZM, Name: "ZM"},
+	{Id: Zongshen, Name: "Zongshen"},
+	{Id: Zontes, Name: "Zontes"},
+	{Id: Zundapp, Name: "Zundapp"},
+	{Id: Zuum, Name: "Zuum"},
+	{Id: Zuumav, Name: "Zuumav"},
+	{Id: Gyurza, Name: "Гюрза"},
+	{Id: Dnepr, Name: "Днепр"},
+	{Id: ZID, Name: "ЗиД"},
+	{Id: IZH, Name: "ИЖ"},
+	{Id: IzhTechMash, Name: "ИжТехМаш"},
+	{Id: Kovrovets, Name: "Ковровец"},
+	{Id: LvivMotozavod, Name: "Львовский мотозавод"},
+	{Id: MMZ, Name: "ММЗ"},
+	{Id: Motoalfa, Name: "Мотоальфа"},
+	{Id: Motomir, Name: "Мотомир"},
+	{Id: PMZ, Name: "ПМЗ"},
+	{Id: RMZ, Name: "РМЗ"},
+	{Id: TMZ, Name: "ТМЗ (Туламашзавод)"},
+	{Id: Ural, Name: "Урал"},
+}
+
+func (bk BrandKind) String() string {
+	for _, b := range Brands {
+		if b.Id == bk {
+			return b.Name
+		}
 	}
 	return "Неизвестно"
+}
+
+func (bk BrandKind) GetBrand() Brand {
+	var result Brand
+	for _, b := range Brands {
+		if b.Id == bk {
+			return b
+		}
+	}
+	return result
 }

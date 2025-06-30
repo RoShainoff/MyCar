@@ -194,7 +194,3 @@ func validatePassword(password string) *model.ApplicationError {
 
 	return nil
 }
-
-func (u *User) Validate() *model.ApplicationError {
-	return validateUser(u.Name, u.Surname, u.Login, u.Password)
-}

@@ -58,11 +58,11 @@ func NewMoto(logInfo bool) *moto.Moto {
 }
 
 func NewExpense(logInfo bool) *expense.Expense {
-	newExpense := expense.NewExpense(uuid.New(), uuid.New(), expense.Fuel, 2500.0, "RUB", 1.0, time.Now(), "Заправка на 2500 рублей")
+	newExpense := expense.NewExpense(uuid.New(), uuid.New(), vehicle.Car, expense.Fuel, 2500.0, "RUB", 1.0, time.Now(), "Заправка на 2500 рублей")
 
 	if logInfo {
 		fmt.Println("Новая трата успешно создана:")
-		fmt.Printf("ID: %d\n", newExpense.GetId())
+		fmt.Printf("ID: %d\n", newExpense.GetCategory())
 		fmt.Printf("CarID: %d\n", newExpense.GetVehicleId())
 		fmt.Printf("Категория: %s\n", newExpense.GetCategory())
 		fmt.Printf("Сумма: %.2f\n", newExpense.GetAmount())

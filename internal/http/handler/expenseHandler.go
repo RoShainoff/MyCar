@@ -2,6 +2,7 @@ package handler
 
 import (
 	"MyCar/internal/model/expense"
+	"MyCar/internal/model/vehicle"
 	"MyCar/internal/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -15,13 +16,14 @@ type ExpenseHandler struct {
 }
 
 type ExpenseRq struct {
-	VehicleId    uuid.UUID        `json:"vehicle_id" binding:"required"`
-	Category     expense.Category `json:"category" binding:"required"`
-	Amount       float64          `json:"amount" binding:"required"`
-	Currency     string           `json:"currency" binding:"required"`
-	ExchangeRate float64          `json:"exchange_rate"`
-	Date         string           `json:"date" binding:"required"`
-	Note         string           `json:"note"`
+	VehicleId    uuid.UUID            `json:"vehicle_id" binding:"required"`
+	VehicleType  vehicle.Type         `json:"vehicle_type" binding:"required"`
+	Category     expense.CategoryKind `json:"category" binding:"required"`
+	Amount       float64              `json:"amount" binding:"required"`
+	Currency     string               `json:"currency" binding:"required"`
+	ExchangeRate float64              `json:"exchange_rate"`
+	Date         string               `json:"date" binding:"required"`
+	Note         string               `json:"note"`
 }
 
 func NewExpenseHandler(s service.AbstractExpenseService) ExpenseHandler {
@@ -48,7 +50,7 @@ func (h *ExpenseHandler) CreateExpense(c *gin.Context) {
 		return
 	}
 	userId := c.MustGet("UserId").(uuid.UUID)
-	newExpense := expense.NewExpense(uuid.Nil, req.VehicleId, req.Category, req.Amount, req.Currency, req.ExchangeRate /*parse date*/, time.Now(), req.Note)
+	newExpense := expense.NewExpense(uuid.Nil, req.VehicleId, req.VehicleType, req.Category, req.Amount, req.Currency, req.ExchangeRate /*parse date*/, time.Now(), req.Note)
 
 	if err := newExpense.Validate(); err != nil {
 		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
@@ -120,7 +122,7 @@ func (h *ExpenseHandler) UpdateExpense(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "Invalid expense ID")
 		return
 	}
-	updatedExpense := expense.NewExpense(id, req.VehicleId, req.Category, req.Amount, req.Currency, req.ExchangeRate /*parse date*/, time.Now(), req.Note)
+	updatedExpense := expense.NewExpense(id, req.VehicleId, req.VehicleType, req.Category, req.Amount, req.Currency, req.ExchangeRate /*parse date*/, time.Now(), req.Note)
 
 	if err := updatedExpense.Validate(); err != nil {
 		errorResponse(c, http.StatusBadRequest, fmt.Sprintf("Validation error: %s", err.Error()))
@@ -156,9 +158,8 @@ func (h *ExpenseHandler) DeleteExpense(c *gin.Context) {
 		errorResponse(c, http.StatusBadRequest, "Invalid expense ID")
 		return
 	}
-
-	deleteErr := h.service.DeleteExpense(id, userId)
-	if deleteErr != nil {
+	err = h.service.DeleteExpense(id, userId)
+	if err != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}

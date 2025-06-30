@@ -15,12 +15,12 @@ type Car struct {
 	TransmissionType TransmissionType
 }
 
-func NewCar(id uuid.UUID, userId uuid.UUID, fuelType vehicle.FuelType, brand Brand, year int, plate string, driveType DriveTypeKind, bodyTypeKind BodyTypeKind, transmissionTypeKind TransmissionTypeKind) *Car {
+func NewCar(id uuid.UUID, userId uuid.UUID, fuelType vehicle.FuelType, brand BrandKind, year int, plate string, driveType DriveTypeKind, bodyTypeKind BodyTypeKind, transmissionTypeKind TransmissionTypeKind) *Car {
 	newVehicle, _ := vehicle.NewVehicle(id, userId, fuelType, vehicle.Car, year, plate)
 
 	return &Car{
 		*newVehicle,
-		brand,
+		brand.GetBrand(),
 		driveType.GetDriveType(),
 		bodyTypeKind.GetBodyType(),
 		transmissionTypeKind.GetTransmissionType(),
@@ -48,7 +48,7 @@ func (c *Car) GetBodyType() BodyType {
 }
 
 func (c *Car) GetBodyTypeKind() BodyTypeKind {
-	return c.BodyType.id
+	return c.BodyType.Id
 }
 
 func (c *Car) SetBodyType(bodyTypeKind BodyTypeKind) {
@@ -75,13 +75,13 @@ func (c *Car) Validate() error {
 	if err := c.Vehicle.Validate(); err != nil {
 		return err
 	}
-	if c.Brand == UnknownBrand {
+	if c.Brand.Id == UnknownBrand {
 		return errors.New("brand must be specified")
 	}
 	if c.DriveType.Id == UnknownDriveType {
 		return errors.New("drive type must be specified")
 	}
-	if c.BodyType.id == BodyStyleNone {
+	if c.BodyType.Id == BodyStyleNone {
 		return errors.New("body type must be specified")
 	}
 	if c.TransmissionType.Id == TransmissionTypeUnknown {

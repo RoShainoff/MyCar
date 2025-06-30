@@ -74,7 +74,7 @@ func GetAppropriateApiError(appError *ApplicationError) *ApiError {
 	case ErrorTypeNotFound:
 		return newApiError(404, appError.Message, appError.Err)
 	case ErrorTypeAuth:
-		return newApiError(401, appError.Message, appError.Err)
+		return newApiError(400, appError.Message, appError.Err)
 	}
 
 	return newApiError(500, "Ошибка сервера", nil)
